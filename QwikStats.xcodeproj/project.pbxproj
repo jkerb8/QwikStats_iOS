@@ -1,0 +1,833 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1FD1C5D8A72E1AC867880E9E /* Pods_QwikStatsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94792DBFC0AF9B94BC88D2D7 /* Pods_QwikStatsUITests.framework */; };
+		211657881D454F370035D6B4 /* PresentedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211657871D454F370035D6B4 /* PresentedTableViewController.swift */; };
+		2116578C1D4551500035D6B4 /* PlayTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2116578B1D4551500035D6B4 /* PlayTypeController.swift */; };
+		2116578E1D47063B0035D6B4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2116578D1D47063B0035D6B4 /* GameViewController.swift */; };
+		213A04C51D497D170050FF8F /* Pods_QwikStats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 213CB19F1D39C3D4007595F6 /* Pods_QwikStats.framework */; };
+		213A04C71D4AD4640050FF8F /* RunViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213A04C61D4AD4640050FF8F /* RunViewController.swift */; };
+		213A04C91D4AD8960050FF8F /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213A04C81D4AD8960050FF8F /* ResultViewController.swift */; };
+		214D8FDE1D2224D7009C3A83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FDD1D2224D7009C3A83 /* AppDelegate.swift */; };
+		214D8FE01D2224D7009C3A83 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FDF1D2224D7009C3A83 /* ViewController.swift */; };
+		214D8FE31D2224D7009C3A83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 214D8FE11D2224D7009C3A83 /* Main.storyboard */; };
+		214D8FE51D2224D7009C3A83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 214D8FE41D2224D7009C3A83 /* Assets.xcassets */; };
+		214D8FE81D2224D7009C3A83 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 214D8FE61D2224D7009C3A83 /* LaunchScreen.storyboard */; };
+		214D8FF31D2224D7009C3A83 /* QwikStatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FF21D2224D7009C3A83 /* QwikStatsTests.swift */; };
+		214D8FFE1D2224D7009C3A83 /* QwikStatsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FFD1D2224D7009C3A83 /* QwikStatsUITests.swift */; };
+		21F8457D1D371373006E3A7F /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8457C1D371373006E3A7F /* Game.swift */; };
+		21F8457F1D371537006E3A7F /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8457E1D371537006E3A7F /* Team.swift */; };
+		21F845811D371545006E3A7F /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F845801D371545006E3A7F /* Play.swift */; };
+		21F845831D371551006E3A7F /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F845821D371551006E3A7F /* Player.swift */; };
+		FD00FD8A008727CEAC05698A /* Pods_QwikStatsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 867C3FFD70132B047B2F9D0B /* Pods_QwikStatsTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		213CB19E1D39C3D4007595F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 213CB1971D39C3D4007595F6 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4852B1F4FBA1D393E7586134DC99BBAC;
+			remoteInfo = "Pods-QwikStats";
+		};
+		213CB1A01D39C3D4007595F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 213CB1971D39C3D4007595F6 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 24CCAFAFAD24A2CF6C8C4F8C5FE17BBC;
+			remoteInfo = "Pods-QwikStatsTests";
+		};
+		213CB1A21D39C3D4007595F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 213CB1971D39C3D4007595F6 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C781F01ABBC22B434F3367B2DDA3A501;
+			remoteInfo = "Pods-QwikStatsUITests";
+		};
+		213CB1A41D39C3D4007595F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 213CB1971D39C3D4007595F6 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AB703CBD577B5D9C824D105494EDE315;
+			remoteInfo = "Toast-Swift";
+		};
+		214D8FEF1D2224D7009C3A83 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 214D8FD21D2224D7009C3A83 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 214D8FD91D2224D7009C3A83;
+			remoteInfo = QwikStats;
+		};
+		214D8FFA1D2224D7009C3A83 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 214D8FD21D2224D7009C3A83 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 214D8FD91D2224D7009C3A83;
+			remoteInfo = QwikStats;
+		};
+		21FC5AB91D43E302001D3603 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 213CB1971D39C3D4007595F6 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEB9FE428CAF34CD1ADC79679D0A3557;
+			remoteInfo = MZAppearance;
+		};
+		21FC5ABB1D43E302001D3603 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 213CB1971D39C3D4007595F6 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A17B985AE4F0D335E77D0EC307C50992;
+			remoteInfo = MZFormSheetPresentationController;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		211657871D454F370035D6B4 /* PresentedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentedTableViewController.swift; sourceTree = "<group>"; };
+		2116578B1D4551500035D6B4 /* PlayTypeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayTypeController.swift; sourceTree = "<group>"; };
+		2116578D1D47063B0035D6B4 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		213A04C61D4AD4640050FF8F /* RunViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunViewController.swift; sourceTree = "<group>"; };
+		213A04C81D4AD8960050FF8F /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		213CB1971D39C3D4007595F6 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
+		214D8FDA1D2224D7009C3A83 /* QwikStats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QwikStats.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		214D8FDD1D2224D7009C3A83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		214D8FDF1D2224D7009C3A83 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		214D8FE21D2224D7009C3A83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		214D8FE41D2224D7009C3A83 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		214D8FE71D2224D7009C3A83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		214D8FE91D2224D7009C3A83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		214D8FEE1D2224D7009C3A83 /* QwikStatsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QwikStatsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		214D8FF21D2224D7009C3A83 /* QwikStatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QwikStatsTests.swift; sourceTree = "<group>"; };
+		214D8FF41D2224D7009C3A83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		214D8FF91D2224D7009C3A83 /* QwikStatsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QwikStatsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		214D8FFD1D2224D7009C3A83 /* QwikStatsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QwikStatsUITests.swift; sourceTree = "<group>"; };
+		214D8FFF1D2224D7009C3A83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21F8457C1D371373006E3A7F /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		21F8457E1D371537006E3A7F /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		21F845801D371545006E3A7F /* Play.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Play.swift; sourceTree = "<group>"; };
+		21F845821D371551006E3A7F /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		2F7C6C0DD66D9F00B6AF170F /* Pods-QwikStatsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikStatsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-QwikStatsTests/Pods-QwikStatsTests.release.xcconfig"; sourceTree = "<group>"; };
+		5A60028DB0ED3E88CAB6C60A /* Pods_QwikStats.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QwikStats.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F6F69D4F5D8EA1E125E875E /* Pods-QwikStatsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikStatsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QwikStatsUITests/Pods-QwikStatsUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		867C3FFD70132B047B2F9D0B /* Pods_QwikStatsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QwikStatsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		94792DBFC0AF9B94BC88D2D7 /* Pods_QwikStatsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QwikStatsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2631E3DE66739273B69898A /* Pods-QwikStats.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikStats.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QwikStats/Pods-QwikStats.debug.xcconfig"; sourceTree = "<group>"; };
+		AA597CC0046F50B887C5672F /* Pods-QwikStats.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikStats.release.xcconfig"; path = "Pods/Target Support Files/Pods-QwikStats/Pods-QwikStats.release.xcconfig"; sourceTree = "<group>"; };
+		B550B0A29D1055F1FE8D27DC /* Pods-QwikStatsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikStatsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-QwikStatsUITests/Pods-QwikStatsUITests.release.xcconfig"; sourceTree = "<group>"; };
+		BCFDDA91FDB39567319853FF /* Pods-QwikStatsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QwikStatsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QwikStatsTests/Pods-QwikStatsTests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		214D8FD71D2224D7009C3A83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				213A04C51D497D170050FF8F /* Pods_QwikStats.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		214D8FEB1D2224D7009C3A83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD00FD8A008727CEAC05698A /* Pods_QwikStatsTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		214D8FF61D2224D7009C3A83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FD1C5D8A72E1AC867880E9E /* Pods_QwikStatsUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		213CB1981D39C3D4007595F6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				21FC5ABA1D43E302001D3603 /* MZAppearance.framework */,
+				21FC5ABC1D43E302001D3603 /* MZFormSheetPresentationController.framework */,
+				213CB19F1D39C3D4007595F6 /* Pods_QwikStats.framework */,
+				213CB1A11D39C3D4007595F6 /* Pods_QwikStatsTests.framework */,
+				213CB1A31D39C3D4007595F6 /* Pods_QwikStatsUITests.framework */,
+				213CB1A51D39C3D4007595F6 /* Toast_Swift.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		214D8FD11D2224D6009C3A83 = {
+			isa = PBXGroup;
+			children = (
+				214D8FDC1D2224D7009C3A83 /* QwikStats */,
+				214D8FF11D2224D7009C3A83 /* QwikStatsTests */,
+				214D8FFC1D2224D7009C3A83 /* QwikStatsUITests */,
+				214D8FDB1D2224D7009C3A83 /* Products */,
+				3479204A87E6ECD015BE2747 /* Pods */,
+				49853535E910C3EF5B08253A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		214D8FDB1D2224D7009C3A83 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				214D8FDA1D2224D7009C3A83 /* QwikStats.app */,
+				214D8FEE1D2224D7009C3A83 /* QwikStatsTests.xctest */,
+				214D8FF91D2224D7009C3A83 /* QwikStatsUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		214D8FDC1D2224D7009C3A83 /* QwikStats */ = {
+			isa = PBXGroup;
+			children = (
+				214D8FDD1D2224D7009C3A83 /* AppDelegate.swift */,
+				214D8FDF1D2224D7009C3A83 /* ViewController.swift */,
+				214D8FE11D2224D7009C3A83 /* Main.storyboard */,
+				214D8FE41D2224D7009C3A83 /* Assets.xcassets */,
+				214D8FE61D2224D7009C3A83 /* LaunchScreen.storyboard */,
+				214D8FE91D2224D7009C3A83 /* Info.plist */,
+				21F8457C1D371373006E3A7F /* Game.swift */,
+				21F8457E1D371537006E3A7F /* Team.swift */,
+				21F845801D371545006E3A7F /* Play.swift */,
+				21F845821D371551006E3A7F /* Player.swift */,
+				211657871D454F370035D6B4 /* PresentedTableViewController.swift */,
+				2116578B1D4551500035D6B4 /* PlayTypeController.swift */,
+				2116578D1D47063B0035D6B4 /* GameViewController.swift */,
+				213A04C61D4AD4640050FF8F /* RunViewController.swift */,
+				213A04C81D4AD8960050FF8F /* ResultViewController.swift */,
+			);
+			path = QwikStats;
+			sourceTree = "<group>";
+		};
+		214D8FF11D2224D7009C3A83 /* QwikStatsTests */ = {
+			isa = PBXGroup;
+			children = (
+				214D8FF21D2224D7009C3A83 /* QwikStatsTests.swift */,
+				214D8FF41D2224D7009C3A83 /* Info.plist */,
+			);
+			path = QwikStatsTests;
+			sourceTree = "<group>";
+		};
+		214D8FFC1D2224D7009C3A83 /* QwikStatsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				214D8FFD1D2224D7009C3A83 /* QwikStatsUITests.swift */,
+				214D8FFF1D2224D7009C3A83 /* Info.plist */,
+			);
+			path = QwikStatsUITests;
+			sourceTree = "<group>";
+		};
+		3479204A87E6ECD015BE2747 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A2631E3DE66739273B69898A /* Pods-QwikStats.debug.xcconfig */,
+				AA597CC0046F50B887C5672F /* Pods-QwikStats.release.xcconfig */,
+				BCFDDA91FDB39567319853FF /* Pods-QwikStatsTests.debug.xcconfig */,
+				2F7C6C0DD66D9F00B6AF170F /* Pods-QwikStatsTests.release.xcconfig */,
+				6F6F69D4F5D8EA1E125E875E /* Pods-QwikStatsUITests.debug.xcconfig */,
+				B550B0A29D1055F1FE8D27DC /* Pods-QwikStatsUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		49853535E910C3EF5B08253A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				213CB1971D39C3D4007595F6 /* Pods.xcodeproj */,
+				5A60028DB0ED3E88CAB6C60A /* Pods_QwikStats.framework */,
+				867C3FFD70132B047B2F9D0B /* Pods_QwikStatsTests.framework */,
+				94792DBFC0AF9B94BC88D2D7 /* Pods_QwikStatsUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		214D8FD91D2224D7009C3A83 /* QwikStats */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 214D90021D2224D7009C3A83 /* Build configuration list for PBXNativeTarget "QwikStats" */;
+			buildPhases = (
+				3EF41AA1C13166C4C7621B7E /* [CP] Check Pods Manifest.lock */,
+				214D8FD61D2224D7009C3A83 /* Sources */,
+				214D8FD71D2224D7009C3A83 /* Frameworks */,
+				214D8FD81D2224D7009C3A83 /* Resources */,
+				8B408C6B2D3ED3DCB8E44115 /* [CP] Embed Pods Frameworks */,
+				7A48CFC464A0DA835E90C1A0 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QwikStats;
+			productName = QwikStats;
+			productReference = 214D8FDA1D2224D7009C3A83 /* QwikStats.app */;
+			productType = "com.apple.product-type.application";
+		};
+		214D8FED1D2224D7009C3A83 /* QwikStatsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 214D90051D2224D7009C3A83 /* Build configuration list for PBXNativeTarget "QwikStatsTests" */;
+			buildPhases = (
+				83E21E6447FA948840EF55C0 /* [CP] Check Pods Manifest.lock */,
+				214D8FEA1D2224D7009C3A83 /* Sources */,
+				214D8FEB1D2224D7009C3A83 /* Frameworks */,
+				214D8FEC1D2224D7009C3A83 /* Resources */,
+				7ED2B6FF32F42451049BE438 /* [CP] Embed Pods Frameworks */,
+				23DB55D34904A1058E9255FB /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				214D8FF01D2224D7009C3A83 /* PBXTargetDependency */,
+			);
+			name = QwikStatsTests;
+			productName = QwikStatsTests;
+			productReference = 214D8FEE1D2224D7009C3A83 /* QwikStatsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		214D8FF81D2224D7009C3A83 /* QwikStatsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 214D90081D2224D7009C3A83 /* Build configuration list for PBXNativeTarget "QwikStatsUITests" */;
+			buildPhases = (
+				BDC34CB209B2B83C4F814544 /* [CP] Check Pods Manifest.lock */,
+				214D8FF51D2224D7009C3A83 /* Sources */,
+				214D8FF61D2224D7009C3A83 /* Frameworks */,
+				214D8FF71D2224D7009C3A83 /* Resources */,
+				0187DD8B903711400A50D675 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				214D8FFB1D2224D7009C3A83 /* PBXTargetDependency */,
+			);
+			name = QwikStatsUITests;
+			productName = QwikStatsUITests;
+			productReference = 214D8FF91D2224D7009C3A83 /* QwikStatsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		214D8FD21D2224D7009C3A83 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Jonathan Kerbelis";
+				TargetAttributes = {
+					214D8FD91D2224D7009C3A83 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					214D8FED1D2224D7009C3A83 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 214D8FD91D2224D7009C3A83;
+					};
+					214D8FF81D2224D7009C3A83 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 214D8FD91D2224D7009C3A83;
+					};
+				};
+			};
+			buildConfigurationList = 214D8FD51D2224D7009C3A83 /* Build configuration list for PBXProject "QwikStats" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 214D8FD11D2224D6009C3A83;
+			productRefGroup = 214D8FDB1D2224D7009C3A83 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 213CB1981D39C3D4007595F6 /* Products */;
+					ProjectRef = 213CB1971D39C3D4007595F6 /* Pods.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				214D8FD91D2224D7009C3A83 /* QwikStats */,
+				214D8FED1D2224D7009C3A83 /* QwikStatsTests */,
+				214D8FF81D2224D7009C3A83 /* QwikStatsUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		213CB19F1D39C3D4007595F6 /* Pods_QwikStats.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Pods_QwikStats.framework;
+			remoteRef = 213CB19E1D39C3D4007595F6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		213CB1A11D39C3D4007595F6 /* Pods_QwikStatsTests.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Pods_QwikStatsTests.framework;
+			remoteRef = 213CB1A01D39C3D4007595F6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		213CB1A31D39C3D4007595F6 /* Pods_QwikStatsUITests.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Pods_QwikStatsUITests.framework;
+			remoteRef = 213CB1A21D39C3D4007595F6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		213CB1A51D39C3D4007595F6 /* Toast_Swift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Toast_Swift.framework;
+			remoteRef = 213CB1A41D39C3D4007595F6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		21FC5ABA1D43E302001D3603 /* MZAppearance.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MZAppearance.framework;
+			remoteRef = 21FC5AB91D43E302001D3603 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		21FC5ABC1D43E302001D3603 /* MZFormSheetPresentationController.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MZFormSheetPresentationController.framework;
+			remoteRef = 21FC5ABB1D43E302001D3603 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		214D8FD81D2224D7009C3A83 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				214D8FE81D2224D7009C3A83 /* LaunchScreen.storyboard in Resources */,
+				214D8FE51D2224D7009C3A83 /* Assets.xcassets in Resources */,
+				214D8FE31D2224D7009C3A83 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		214D8FEC1D2224D7009C3A83 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		214D8FF71D2224D7009C3A83 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0187DD8B903711400A50D675 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QwikStatsUITests/Pods-QwikStatsUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		23DB55D34904A1058E9255FB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QwikStatsTests/Pods-QwikStatsTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3EF41AA1C13166C4C7621B7E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7A48CFC464A0DA835E90C1A0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QwikStats/Pods-QwikStats-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7ED2B6FF32F42451049BE438 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QwikStatsTests/Pods-QwikStatsTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		83E21E6447FA948840EF55C0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8B408C6B2D3ED3DCB8E44115 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QwikStats/Pods-QwikStats-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BDC34CB209B2B83C4F814544 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		214D8FD61D2224D7009C3A83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				214D8FE01D2224D7009C3A83 /* ViewController.swift in Sources */,
+				2116578C1D4551500035D6B4 /* PlayTypeController.swift in Sources */,
+				211657881D454F370035D6B4 /* PresentedTableViewController.swift in Sources */,
+				2116578E1D47063B0035D6B4 /* GameViewController.swift in Sources */,
+				213A04C71D4AD4640050FF8F /* RunViewController.swift in Sources */,
+				214D8FDE1D2224D7009C3A83 /* AppDelegate.swift in Sources */,
+				21F8457F1D371537006E3A7F /* Team.swift in Sources */,
+				21F845831D371551006E3A7F /* Player.swift in Sources */,
+				21F8457D1D371373006E3A7F /* Game.swift in Sources */,
+				21F845811D371545006E3A7F /* Play.swift in Sources */,
+				213A04C91D4AD8960050FF8F /* ResultViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		214D8FEA1D2224D7009C3A83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				214D8FF31D2224D7009C3A83 /* QwikStatsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		214D8FF51D2224D7009C3A83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				214D8FFE1D2224D7009C3A83 /* QwikStatsUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		214D8FF01D2224D7009C3A83 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 214D8FD91D2224D7009C3A83 /* QwikStats */;
+			targetProxy = 214D8FEF1D2224D7009C3A83 /* PBXContainerItemProxy */;
+		};
+		214D8FFB1D2224D7009C3A83 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 214D8FD91D2224D7009C3A83 /* QwikStats */;
+			targetProxy = 214D8FFA1D2224D7009C3A83 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		214D8FE11D2224D7009C3A83 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				214D8FE21D2224D7009C3A83 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		214D8FE61D2224D7009C3A83 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				214D8FE71D2224D7009C3A83 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		214D90001D2224D7009C3A83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		214D90011D2224D7009C3A83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		214D90031D2224D7009C3A83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2631E3DE66739273B69898A /* Pods-QwikStats.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = QwikStats/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = QwikCut.KerbySoft.QwikStats;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		214D90041D2224D7009C3A83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA597CC0046F50B887C5672F /* Pods-QwikStats.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = QwikStats/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = QwikCut.KerbySoft.QwikStats;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		214D90061D2224D7009C3A83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BCFDDA91FDB39567319853FF /* Pods-QwikStatsTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = QwikStatsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = QwikCut.KerbySoft.QwikStatsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QwikStats.app/QwikStats";
+			};
+			name = Debug;
+		};
+		214D90071D2224D7009C3A83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F7C6C0DD66D9F00B6AF170F /* Pods-QwikStatsTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = QwikStatsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = QwikCut.KerbySoft.QwikStatsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QwikStats.app/QwikStats";
+			};
+			name = Release;
+		};
+		214D90091D2224D7009C3A83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F6F69D4F5D8EA1E125E875E /* Pods-QwikStatsUITests.debug.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = QwikStatsUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = QwikCut.KerbySoft.QwikStatsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = QwikStats;
+			};
+			name = Debug;
+		};
+		214D900A1D2224D7009C3A83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B550B0A29D1055F1FE8D27DC /* Pods-QwikStatsUITests.release.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = QwikStatsUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = QwikCut.KerbySoft.QwikStatsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = QwikStats;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		214D8FD51D2224D7009C3A83 /* Build configuration list for PBXProject "QwikStats" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				214D90001D2224D7009C3A83 /* Debug */,
+				214D90011D2224D7009C3A83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		214D90021D2224D7009C3A83 /* Build configuration list for PBXNativeTarget "QwikStats" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				214D90031D2224D7009C3A83 /* Debug */,
+				214D90041D2224D7009C3A83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		214D90051D2224D7009C3A83 /* Build configuration list for PBXNativeTarget "QwikStatsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				214D90061D2224D7009C3A83 /* Debug */,
+				214D90071D2224D7009C3A83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		214D90081D2224D7009C3A83 /* Build configuration list for PBXNativeTarget "QwikStatsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				214D90091D2224D7009C3A83 /* Debug */,
+				214D900A1D2224D7009C3A83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 214D8FD21D2224D7009C3A83 /* Project object */;
+}

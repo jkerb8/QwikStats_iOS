@@ -1,0 +1,18 @@
+PODS:
+  - MZAppearance (1.1.6)
+  - MZFormSheetPresentationController (2.4.1):
+    - MZAppearance
+  - Toast-Swift (1.3.0)
+
+DEPENDENCIES:
+  - MZFormSheetPresentationController
+  - Toast-Swift (~> 1.3.0)
+
+SPEC CHECKSUMS:
+  MZAppearance: 0c06d3fa9cc55142f1da14bc8631fbe8fd6e19d5
+  MZFormSheetPresentationController: 730bf8879cd637d84462ef5343fca65ad6bf1fc0
+  Toast-Swift: 25c3d98db42dc70d9a77b5006ee000e0becb458e
+
+PODFILE CHECKSUM: f41203e1ee57e449f91825d64c20602ee4aabe56
+
+COCOAPODS: 1.0.1
