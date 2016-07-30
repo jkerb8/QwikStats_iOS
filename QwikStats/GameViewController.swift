@@ -12,6 +12,8 @@ import MZFormSheetPresentationController
 
 var globalPlay: Play!
 var fieldSize: Int!
+var ydLnData = [String]()
+var ydLnStrings = [String]()
 
 class GameViewController: UIViewController {
 
@@ -37,7 +39,6 @@ class GameViewController: UIViewController {
     var gameDataList = [String]()
     var statsList = [String]()
     
-    var ydLnList = [String]()
     var dirPath = "", gameName = "", matchupName = ""
     var csvPlayList = "play_list.csv"
     var csvGameData = "game_data.csv"
@@ -64,11 +65,13 @@ class GameViewController: UIViewController {
         fieldSize = 100
         
         for i in 0.stride(to: -50, by: -1){
-            ydLnList.append(String(i))
+            ydLnData.append(String(i))
+            ydLnStrings.append(" \(String(i)) ")
         }
         
         for i in 50.stride(to: -1, by: -1) {
-            ydLnList.append(String(i))
+            ydLnData.append(String(i))
+            ydLnStrings.append(" \(String(i)) ")
         }
         
         //get homeTeamName, awayTeamName, day, month, year, division, fieldSize

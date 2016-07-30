@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "347A018D4DBCC26CDED662A10F6A1334"
-               BuildableName = "Toast_Swift.framework"
-               BlueprintName = "Toast-Swift"
+               BlueprintIdentifier = "7EC1417298041145E9B1A4C7B395C179"
+               BuildableName = "AKPickerView_Swift.framework"
+               BlueprintName = "AKPickerView-Swift"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "347A018D4DBCC26CDED662A10F6A1334"
-            BuildableName = "Toast_Swift.framework"
-            BlueprintName = "Toast-Swift"
+            BlueprintIdentifier = "7EC1417298041145E9B1A4C7B395C179"
+            BuildableName = "AKPickerView_Swift.framework"
+            BlueprintName = "AKPickerView-Swift"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

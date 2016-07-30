@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AKPickerView-Swift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MZAppearance.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,7 +42,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>37F44F0D0D02EAA17163DCE01F609D2A</key>
+		<key>0EB28F1288C7D8BCC8F790BC4E0E7B82</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>347A018D4DBCC26CDED662A10F6A1334</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7EC1417298041145E9B1A4C7B395C179</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -53,11 +68,6 @@
 			<true/>
 		</dict>
 		<key>D2EB66FD380E12E9660B9A5AE3DA873F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E61BA2B3960B875AEA056D4F3AD26710</key>
 		<dict>
 			<key>primary</key>
 			<true/>

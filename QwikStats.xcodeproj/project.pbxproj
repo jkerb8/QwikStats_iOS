@@ -11,7 +11,6 @@
 		211657881D454F370035D6B4 /* PresentedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211657871D454F370035D6B4 /* PresentedTableViewController.swift */; };
 		2116578C1D4551500035D6B4 /* PlayTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2116578B1D4551500035D6B4 /* PlayTypeController.swift */; };
 		2116578E1D47063B0035D6B4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2116578D1D47063B0035D6B4 /* GameViewController.swift */; };
-		213A04C51D497D170050FF8F /* Pods_QwikStats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 213CB19F1D39C3D4007595F6 /* Pods_QwikStats.framework */; };
 		213A04C71D4AD4640050FF8F /* RunViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213A04C61D4AD4640050FF8F /* RunViewController.swift */; };
 		213A04C91D4AD8960050FF8F /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213A04C81D4AD8960050FF8F /* ResultViewController.swift */; };
 		214D8FDE1D2224D7009C3A83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FDD1D2224D7009C3A83 /* AppDelegate.swift */; };
@@ -21,6 +20,7 @@
 		214D8FE81D2224D7009C3A83 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 214D8FE61D2224D7009C3A83 /* LaunchScreen.storyboard */; };
 		214D8FF31D2224D7009C3A83 /* QwikStatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FF21D2224D7009C3A83 /* QwikStatsTests.swift */; };
 		214D8FFE1D2224D7009C3A83 /* QwikStatsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FFD1D2224D7009C3A83 /* QwikStatsUITests.swift */; };
+		2187BD421D4C5AAF005FA398 /* Pods_QwikStats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 213CB19F1D39C3D4007595F6 /* Pods_QwikStats.framework */; };
 		21F8457D1D371373006E3A7F /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8457C1D371373006E3A7F /* Game.swift */; };
 		21F8457F1D371537006E3A7F /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8457E1D371537006E3A7F /* Team.swift */; };
 		21F845811D371545006E3A7F /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F845801D371545006E3A7F /* Play.swift */; };
@@ -70,6 +70,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 214D8FD91D2224D7009C3A83;
 			remoteInfo = QwikStats;
+		};
+		21722EC31D4C5A8500210615 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 213CB1971D39C3D4007595F6 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A6B7249E7F232FB9F791438E8E43E3BB;
+			remoteInfo = "AKPickerView-Swift";
 		};
 		21FC5AB91D43E302001D3603 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -127,7 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				213A04C51D497D170050FF8F /* Pods_QwikStats.framework in Frameworks */,
+				2187BD421D4C5AAF005FA398 /* Pods_QwikStats.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +160,7 @@
 		213CB1981D39C3D4007595F6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				21722EC41D4C5A8500210615 /* AKPickerView_Swift.framework */,
 				21FC5ABA1D43E302001D3603 /* MZAppearance.framework */,
 				21FC5ABC1D43E302001D3603 /* MZFormSheetPresentationController.framework */,
 				213CB19F1D39C3D4007595F6 /* Pods_QwikStats.framework */,
@@ -201,8 +209,8 @@
 				211657871D454F370035D6B4 /* PresentedTableViewController.swift */,
 				2116578B1D4551500035D6B4 /* PlayTypeController.swift */,
 				2116578D1D47063B0035D6B4 /* GameViewController.swift */,
-				213A04C61D4AD4640050FF8F /* RunViewController.swift */,
 				213A04C81D4AD8960050FF8F /* ResultViewController.swift */,
+				213A04C61D4AD4640050FF8F /* RunViewController.swift */,
 			);
 			path = QwikStats;
 			sourceTree = "<group>";
@@ -389,6 +397,13 @@
 			fileType = wrapper.framework;
 			path = Toast_Swift.framework;
 			remoteRef = 213CB1A41D39C3D4007595F6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		21722EC41D4C5A8500210615 /* AKPickerView_Swift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AKPickerView_Swift.framework;
+			remoteRef = 21722EC31D4C5A8500210615 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		21FC5ABA1D43E302001D3603 /* MZAppearance.framework */ = {

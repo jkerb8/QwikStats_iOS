@@ -404,14 +404,6 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c3W-O6-oop">
-                                <rect key="frame" x="119" y="157" width="99" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="checkMaxLength:" destination="yGS-2b-rzU" eventType="editingDidEnd" id="SCG-TL-b6S"/>
-                                </connections>
-                            </textField>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HXs-np-2Ej">
                                 <rect key="frame" x="79" y="236" width="51" height="31"/>
                                 <connections>
@@ -442,24 +434,28 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ctF-Ph-6oz">
-                                <rect key="frame" x="119" y="63" width="99" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="checkMaxLength:" destination="yGS-2b-rzU" eventType="editingChanged" id="VbZ-xZ-gcO"/>
-                                </connections>
-                            </textField>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OqZ-Fi-Unh" customClass="AKPickerView">
+                                <rect key="frame" x="79" y="152" width="186" height="41"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y54-xB-FBj" customClass="AKPickerView">
+                                <rect key="frame" x="79" y="65" width="186" height="41"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
-                        <outlet property="gnLsTextField" destination="ctF-Ph-6oz" id="FK1-Cw-FbU"/>
+                        <outlet property="gnLsLabel" destination="Uq6-DH-P2K" id="i3u-9h-Oxt"/>
+                        <outlet property="gnLsPicker" destination="Y54-xB-FBj" id="YlL-2I-gmM"/>
+                        <outlet property="leftBtn" destination="YWK-91-fRy" id="Rqo-7t-n1y"/>
+                        <outlet property="rightBtn" destination="7Bq-9g-Jew" id="ck8-fu-doP"/>
                         <outlet property="safetySwitch" destination="HXs-np-2Ej" id="PGh-OA-jNf"/>
                         <outlet property="touchdownSwitch" destination="8wN-Yu-rbt" id="Qo5-7p-6IJ"/>
-                        <outlet property="ydLnTextField" destination="c3W-O6-oop" id="ft0-tl-8sP"/>
+                        <outlet property="ydLnLabel" destination="xBE-J5-bCs" id="zPc-he-mFY"/>
+                        <outlet property="ydLnPicker" destination="OqZ-Fi-Unh" id="0NZ-XO-X2a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="amw-Fv-irB" userLabel="First Responder" sceneMemberID="firstResponder"/>

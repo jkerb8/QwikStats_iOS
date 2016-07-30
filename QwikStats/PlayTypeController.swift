@@ -14,31 +14,19 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     @IBOutlet var playTypeLabel: UILabel!
     @IBOutlet var playTypePicker: UIPickerView!
     var pickerData: [String] = ["Run", "Pass", "Penalty", "Kickoff", "Punt", "Field Goal", "PAT", "2 Pt. Conversion"]
-    var passingString: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         self.playTypePicker.dataSource = self
         self.playTypePicker.delegate = self
         
+        if globalPlay.playType != "" {
+            self.playTypePicker.selectRow(pickerData.indexOf(globalPlay.playType)!, inComponent: 0, animated: true)
+        }
+        
         //self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .Plain, target: self, action: #selector(NSStream.close))
-        
-        //just testing passing info to this controller
-        if let text = self.passingString {
-            playTypeLabel.text = text
-        }
-        
-        if let play = globalPlay {
-            if play.playerNumber != -1 {
-                playTypeLabel.text = String(play.playerNumber)
-            }
-        }
-        else {
-            playTypeLabel.text = "Spicy Boi"
-        }
+
     }
     
     func numberOfComponentsInPickerView (pickerView: UIPickerView) -> Int {
@@ -50,6 +38,8 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        globalPlay.playType = pickerData[row]
         return pickerData[row]
     }
 
@@ -69,9 +59,12 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
 
     @IBAction func cancelBtn(sender: UIButton) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismiss()
     }
     
+    func dismiss() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
     func runDialog() {
         let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("RunViewController")// as! UIViewController

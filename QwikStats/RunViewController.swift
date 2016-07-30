@@ -72,8 +72,8 @@ class RunViewController: UIViewController {
     }
     
     func save() {
-        if let num = numberTextField.text {
-            globalPlay.playerNumber = Int(num)!
+        if let num = Int(numberTextField.text!) {
+            globalPlay.playerNumber = num
         }
     }
     
