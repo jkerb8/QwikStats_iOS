@@ -63,12 +63,13 @@ class RunViewController: UIViewController {
     }
     
     @IBAction func saveBtn(sender: UIButton) {
+        saved = true
         save()
         dismiss()
     }
     
     @IBAction func cancelBtn(sender: UIButton) {
-        dismiss()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func save() {
@@ -79,6 +80,13 @@ class RunViewController: UIViewController {
     
     func dismiss() {
         self.dismissViewControllerAnimated(true, completion: nil)
+        
+        if let temp = saved {
+            if temp {
+                let vc = presentingViewController as! GameViewController
+                vc.savePlay()
+            }
+        }
     }
 
     func playTypeDialog() {

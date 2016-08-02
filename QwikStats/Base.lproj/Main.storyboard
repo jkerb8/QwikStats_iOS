@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -60,7 +60,7 @@
         <!--GameViewController-->
         <scene sceneID="tea-V3-4XI">
             <objects>
-                <viewController title="GameViewController" id="oEw-Wd-BlP" customClass="GameViewController" customModule="QwikStats" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GameViewController" title="GameViewController" id="oEw-Wd-BlP" customClass="GameViewController" customModule="QwikStats" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vXv-H4-LgY"/>
                         <viewControllerLayoutGuide type="bottom" id="Xal-O6-oml"/>
@@ -150,6 +150,7 @@
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qIP-ZW-WV2">
                                 <rect key="frame" x="0.0" y="212" width="414" height="524"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="possession_football" translatesAutoresizingMaskIntoConstraints="NO" id="Ei8-f8-mTe">
                                 <rect key="frame" x="105" y="103" width="31" height="25"/>
@@ -407,13 +408,13 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HXs-np-2Ej">
                                 <rect key="frame" x="79" y="236" width="51" height="31"/>
                                 <connections>
-                                    <action selector="safetySwitchChanged:" destination="yGS-2b-rzU" eventType="valueChanged" id="Ahn-mY-bRx"/>
+                                    <action selector="switchChanged:" destination="yGS-2b-rzU" eventType="valueChanged" id="KIF-g0-VSj"/>
                                 </connections>
                             </switch>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8wN-Yu-rbt">
                                 <rect key="frame" x="216" y="236" width="51" height="31"/>
                                 <connections>
-                                    <action selector="touchdownSwitchChanged:" destination="yGS-2b-rzU" eventType="valueChanged" id="MKz-PD-fcs"/>
+                                    <action selector="switchChanged:" destination="yGS-2b-rzU" eventType="valueChanged" id="rHh-a0-Eop"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Safety" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ha4-jq-1Wc">

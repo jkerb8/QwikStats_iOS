@@ -9,6 +9,7 @@
 import UIKit
 import MZFormSheetPresentationController
 import AKPickerView_Swift
+import Toast_Swift
 
 class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerViewDelegate {
     
@@ -23,9 +24,12 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
     @IBOutlet var leftBtn: UIButton!
     
     var play: Play!
-    var gnLsData = [String]()
+    var gnLsData = [Int]()
     var gnLsStrings = [String]()
-    //var ydLnData = [String]()
+    
+    var ogYdLn: Int = 0
+    var ogGnLs: Int = 0
+    var pickerNum: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +53,12 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         gnLsPicker.dataSource = self
         gnLsPicker.delegate = self
         
-        //gnLsPicker.center = CGPointMake(self.preferredContentSize.width/2, gnLsLabel.center.y - 20)
-        //ydLnPicker.center = CGPointMake(self.preferredContentSize.width/2, ydLnLabel.center.y - 20)
+        pickerNum = 0
+        
+        ogGnLs = gnLsData.indexOf(0)!
+        ogYdLn = ydLnData.indexOf(globalPlay.ydLn)!
+        gnLsPicker.selectItem(ogGnLs)
+        //ydLnPicker.selectItem(ogYdLn)
     }
     
     func makeData(prevYdLn: Int) {
@@ -70,7 +78,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         }
         
         for i in minIndex.stride(to: maxIndex+1, by: 1) {
-            gnLsData.append(String(i))
+            gnLsData.append(i)
             gnLsStrings.append(" \(String(i)) ")
         }
         
@@ -127,46 +135,48 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
     
     func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
         //this is the code for when they select an item
+        pickerNum += 1
+        
         if pickerView == gnLsPicker {
-            //move the ydLnPicker accordingly
+            if pickerNum == 1 {
+                ydLnPicker.selectItem(gnLsPicker.selectedItem, animated: true)
+            }
+            else {
+                pickerNum = 0
+            }
         }
-        else {
-            //move the gnLsPicker accordingly
+        else if pickerView == ydLnPicker{
+            if pickerNum == 1{
+                gnLsPicker.selectItem(ydLnPicker.selectedItem, animated: true)
+            }
+            else {
+                pickerNum = 0
+            }
         }
         
     }
     
-    @IBAction func safetySwitchChanged(sender: UISwitch) {
-        if sender.on {
-            touchdownSwitch.setOn(false, animated: true)
-            //ydLnTextField.text = "0"
-            
-            var gnLs: Int
-            if globalPlay.prevYdLn < 0 {
-                gnLs = globalPlay.prevYdLn
+    @IBAction func switchChanged(sender: UISwitch) {
+        if sender == safetySwitch {
+            if sender.on{
+                touchdownSwitch.setOn(false, animated: true)
+                gnLsPicker.selectItem(0, animated: true)
             }
             else {
-                gnLs = fieldSize - globalPlay.prevYdLn
+                gnLsPicker.selectItem(ogGnLs, animated: true)
             }
-            //gnLsTextField.text = String(gnLs)
         }
-    }
-    
-    @IBAction func touchdownSwitchChanged(sender: UISwitch) {
-        if sender.on {
-            safetySwitch.setOn(false, animated: true)
-            //ydLnTextField.text = "0"
-            
-            var gnLs: Int
-            if globalPlay.prevYdLn < 0 {
-                gnLs = globalPlay.prevYdLn + fieldSize
+        else if sender == touchdownSwitch {
+            if sender.on{
+                safetySwitch.setOn(false, animated: true)
+                gnLsPicker.selectItem(gnLsData.count - 1, animated: true)
             }
             else {
-                gnLs = globalPlay.prevYdLn
+                gnLsPicker.selectItem(ogGnLs, animated: true)
             }
-            //gnLsTextField.text = String(gnLs)
         }
     }
+
     
     @IBAction func rightBtnClicked(sender: UIButton) {
         save()
@@ -178,27 +188,31 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
     }
     
     @IBAction func saveBtnClicked(sender: UIButton) {
+        saved = true
         save()
         dismiss()
     }
     
     @IBAction func cancelBtnClicked(sender: UIButton) {
-        dismiss()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func save() {
-        /*if let gnLs = Int(gnLsTextField.text!) {
-            globalPlay.gnLs = gnLs
-        }
-        if let ydLn = Int(ydLnTextField.text!) {
-            globalPlay.ydLn = ydLn
-        }*/
+        globalPlay.ydLn = getYdLnFromIndex(ydLnPicker.selectedItem)
+        globalPlay.gnLs = gnLsData[gnLsPicker.selectedItem]
         globalPlay.safetyFlag = safetySwitch.on
         globalPlay.touchdownFlag = touchdownSwitch.on
     }
     
     func dismiss() {
         self.dismissViewControllerAnimated(true, completion: nil)
+        
+        if let temp = saved {
+            if temp {
+                let vc = presentingViewController as! GameViewController
+                vc.savePlay()
+            }
+        }
     }
     
     func runDialog() {
@@ -225,5 +239,9 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         self.dismissViewControllerAnimated(true, completion: {
             parent.presentViewController(formSheetController, animated: true, completion: nil)
         })
+    }
+    
+    func showMessage(message: String) {
+        self.view.makeToast(message, duration: 3.0, position: .Bottom)
     }
 }

@@ -49,21 +49,37 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 
 
     @IBAction func leftBtn(sender: UIButton) {
+        save()
     }
 
     @IBAction func rightBtn(sender: UIButton) {
+        save()
         runDialog()
     }
 
     @IBAction func saveBtn(sender: UIButton) {
+        saved = true
+        save()
+        dismiss()
     }
 
     @IBAction func cancelBtn(sender: UIButton) {
-        dismiss()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func dismiss() {
         self.dismissViewControllerAnimated(true, completion: nil)
+        
+        if let temp = saved {
+            if temp {
+                let vc = presentingViewController as! GameViewController
+                vc.savePlay()
+            }
+        }
+    }
+    
+    func save() {
+        globalPlay.playType = pickerData[playTypePicker.selectedRowInComponent(0)]
     }
     
     func runDialog() {

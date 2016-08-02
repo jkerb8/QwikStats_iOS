@@ -11,8 +11,10 @@ import Toast_Swift
 import MZFormSheetPresentationController
 
 var globalPlay: Play!
+var saved: Bool!
+var flow: Bool!
 var fieldSize: Int!
-var ydLnData = [String]()
+var ydLnData = [Int]()
 var ydLnStrings = [String]()
 
 class GameViewController: UIViewController {
@@ -50,11 +52,17 @@ class GameViewController: UIViewController {
     var game: Game!
     var gamePlays = [Play]()
     var projDir: FILE!
-    var flow=true, saved=false, canceled=false, homeTeamStart=false, updateFlag=false
+    var flow=true, saved=false, canceled=false, homeTeamStart=false, updateFlag = false
+    var buttonWidth: CGFloat = 394
+    var buttonHeight: CGFloat = 50
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        updateFlag = false
+        
+        playScrollView.contentSize = CGSizeMake(414, 524)
         
         //var day: Int = 0
         //var month: Int = 0
@@ -65,12 +73,12 @@ class GameViewController: UIViewController {
         fieldSize = 100
         
         for i in 0.stride(to: -50, by: -1){
-            ydLnData.append(String(i))
+            ydLnData.append(i)
             ydLnStrings.append(" \(String(i)) ")
         }
         
         for i in 50.stride(to: -1, by: -1) {
-            ydLnData.append(String(i))
+            ydLnData.append(i)
             ydLnStrings.append(" \(String(i)) ")
         }
         
@@ -87,21 +95,13 @@ class GameViewController: UIViewController {
         awayTeamNameView.text = awayTeamName
         homeTeamNameView.text = homeTeamName
         
-        homePossImageView.hidden = true
-        
-        if let play = globalPlay {
-            showMessage("PlayerNumber is \(play.playerNumber)")
-        }
-        else {
-            showMessage("Play is nil")
-        }
-        
+        updateVisuals()
+
         //set scoreboard font stuff
         
         //if opening game, go to openGame()
         
         //else go to openingKickoffDialog()
-        
         
         // Do any additional setup after loading the view.
     }
@@ -116,7 +116,8 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func newPlayBtn(sender: UIButton) {
-        //self.performSegueWithIdentifier("newPlaySegue", sender: self)
+        saved = false
+        globalPlay = Play(currentGame: game)
         playTypeDialog()
         
     }
@@ -145,6 +146,138 @@ class GameViewController: UIViewController {
         }
         
         self.presentViewController(formSheetController, animated: true, completion: nil)
+
+    }
+    
+    func savePlay() {
+        if updateFlag {
+            //removeButton(gamePlays[gamePlays.count - 1])
+            gamePlays.removeAtIndex(gamePlays.count - 1)
+            gameDataList.removeAtIndex(gameDataList.count - 1)
+        }
+        
+        if (qtrLabel.text) != nil{
+            if qtrLabel.text == "Halftime" {
+                qtrLabel.text = ""
+                game.qtr = 3
+            }
+        }
+        
+        globalPlay.playCount = buttonList.count + 1
+        globalPlay.offensiveTeam = getOffensiveTeam()
+        globalPlay = getResult(globalPlay)
+        updateFlag = false
+        updateGameData(globalPlay)
+        updateVisuals()
+        addButton(globalPlay)
+        gamePlays.append(globalPlay)
+        //updateStats(globalPlay)
+        
+        if globalPlay.possFlag {
+            game.homeTeam.addRecent(globalPlay)
+        }
+        else {
+            game.awayTeam.addRecent(globalPlay)
+        }
+        
+        var output: String = "\(globalPlay.prevDist),\(globalPlay.prevDown),\(globalPlay.downNum),\(globalPlay.dist),\(globalPlay.fgDistance),\(globalPlay.fgMadeFlag),\(globalPlay.fieldPos),\(globalPlay.ydLn),\(globalPlay.gnLs),\(globalPlay.incompleteFlag),\(globalPlay.playCount),\(globalPlay.playerNumber),\(globalPlay.playType),\(globalPlay.qtr),\(globalPlay.recNumber),\(globalPlay.returnFlag),\(globalPlay.touchdownFlag),\(globalPlay.defNumber),\(globalPlay.fumbleFlag),\(globalPlay.interceptionFlag),\(globalPlay.touchbackFlag),\(globalPlay.faircatchFlag),\(globalPlay.returnYds),\(globalPlay.fumbleRecFlag),\(globalPlay.tackleFlag),\(globalPlay.sackFlag),\(globalPlay.possFlag),\(globalPlay.safetyFlag),\(globalPlay.defensivePenalty),\(globalPlay.returnedYdLn),\(globalPlay.prevYdLn),\(globalPlay.firstDn),\(globalPlay.playCall),\(globalPlay.formation),\(globalPlay.hash),\(globalPlay.playDir),\(globalPlay.offensiveTeam)"
+        
+        if globalPlay.tacklers.count > 0 {
+            for i in 0.stride(to: globalPlay.tacklers.count, by: 1){
+                output += "," + String(i)
+            }
+        }
+        
+        output += "\n"
+        
+        gameDataList.append(output)
+        
+        saved = false
+        //playList data here if needed
+    }
+    
+    func addButton(play: Play) {
+        let prevNum = buttonList.count
+        
+        var margin: CGFloat = 55
+        for i in (buttonList.count-1).stride(to: -1, by: -1) {
+            buttonList[i].frame = CGRectMake(10, margin, buttonWidth, buttonHeight)
+            margin += 55
+        }
+        
+        let button = UIButton.init(type: UIButtonType.System) as UIButton
+            button.frame = CGRectMake(10, 5, buttonWidth, buttonHeight)
+            button.backgroundColor = UIColor.clearColor()
+            button.setTitle(globalPlay.result, forState: UIControlState.Normal)
+            button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            button.addTarget(self, action: #selector(playBtnPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+            button.tag = prevNum
+            self.playScrollView.addSubview(button)
+        
+        buttonList.append(button)
+    }
+    
+    func playBtnPressed(sender: UIButton) {
+        if sender.tag == (buttonList.count-1) {
+            showMessage("Most Recent button was pressed")
+        }
+        else {
+            showMessage("Play number \(sender.tag + 1) was pressed")
+        }
+    }
+    
+    func updateGameData(play: Play) {
+        game.qtr = play.qtr
+        game.dist = play.dist
+        game.down = play.downNum
+        game.firstDn = play.firstDn
+        game.hash = play.hash
+        
+        if play.returnedYdLn == -51 {
+            game.ydLn = play.ydLn
+        }
+        else {
+            game.ydLn = play.returnedYdLn
+        }
+        
+        game.possFlag = play.possFlag
+        game.homeTeam.teamScore = play.homeScore
+        game.awayTeam.teamScore = play.awayScore
+    }
+    
+    func updateVisuals() {
+        if game.down == 0 {
+            downLabel.text = " "
+            distLabel.text = " "
+        }
+        else {
+            downLabel.text = String(game.down)
+            distLabel.text = String(game.dist)
+        }
+        
+        ydLnLabel.text = String(game.ydLn)
+        awayScoreLabel.text = String(game.awayTeam.teamScore)
+        homeScoreLabel.text = String(game.homeTeam.teamScore)
+        qtrLabel.text = String(game.qtr)
+        
+        if game.possFlag {
+            homePossImageView.hidden = false
+            awayPossImageView.hidden = true
+        }
+        else {
+            homePossImageView.hidden = true
+            awayPossImageView.hidden = false
+        }
+    }
+    
+    func getOffensiveTeam() -> String{
+        if game.possFlag {
+            return game.homeTeam.teamName
+        }
+        else {
+            return game.awayTeam.teamName
+        }
     }
     
     func getResult(currentPlay: Play) -> Play {
