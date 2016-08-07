@@ -21,6 +21,14 @@
 		214D8FF31D2224D7009C3A83 /* QwikStatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FF21D2224D7009C3A83 /* QwikStatsTests.swift */; };
 		214D8FFE1D2224D7009C3A83 /* QwikStatsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FFD1D2224D7009C3A83 /* QwikStatsUITests.swift */; };
 		2187BD421D4C5AAF005FA398 /* Pods_QwikStats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 213CB19F1D39C3D4007595F6 /* Pods_QwikStats.framework */; };
+		2189E0A81D56DA320016CF86 /* PasserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0A71D56DA320016CF86 /* PasserViewController.swift */; };
+		2189E0B11D56DA4B0016CF86 /* ReturnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0B01D56DA4B0016CF86 /* ReturnerViewController.swift */; };
+		2189E0B31D56DA5F0016CF86 /* PenaltyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0B21D56DA5F0016CF86 /* PenaltyViewController.swift */; };
+		2189E0B51D56DA6D0016CF86 /* ExtraPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0B41D56DA6D0016CF86 /* ExtraPointViewController.swift */; };
+		2189E0B71D56DA790016CF86 /* FieldGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0B61D56DA790016CF86 /* FieldGoalViewController.swift */; };
+		2189E0B91D56DA9F0016CF86 /* FumRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0B81D56DA9F0016CF86 /* FumRecoveryViewController.swift */; };
+		2189E0BB1D56DAA80016CF86 /* TackleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0BA1D56DAA80016CF86 /* TackleViewController.swift */; };
+		2189E0BD1D56DAB30016CF86 /* HashDirViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0BC1D56DAB30016CF86 /* HashDirViewController.swift */; };
 		21F8457D1D371373006E3A7F /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8457C1D371373006E3A7F /* Game.swift */; };
 		21F8457F1D371537006E3A7F /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8457E1D371537006E3A7F /* Team.swift */; };
 		21F845811D371545006E3A7F /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F845801D371545006E3A7F /* Play.swift */; };
@@ -114,6 +122,14 @@
 		214D8FF91D2224D7009C3A83 /* QwikStatsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QwikStatsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		214D8FFD1D2224D7009C3A83 /* QwikStatsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QwikStatsUITests.swift; sourceTree = "<group>"; };
 		214D8FFF1D2224D7009C3A83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2189E0A71D56DA320016CF86 /* PasserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasserViewController.swift; sourceTree = "<group>"; };
+		2189E0B01D56DA4B0016CF86 /* ReturnerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnerViewController.swift; sourceTree = "<group>"; };
+		2189E0B21D56DA5F0016CF86 /* PenaltyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenaltyViewController.swift; sourceTree = "<group>"; };
+		2189E0B41D56DA6D0016CF86 /* ExtraPointViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtraPointViewController.swift; sourceTree = "<group>"; };
+		2189E0B61D56DA790016CF86 /* FieldGoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldGoalViewController.swift; sourceTree = "<group>"; };
+		2189E0B81D56DA9F0016CF86 /* FumRecoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FumRecoveryViewController.swift; sourceTree = "<group>"; };
+		2189E0BA1D56DAA80016CF86 /* TackleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TackleViewController.swift; sourceTree = "<group>"; };
+		2189E0BC1D56DAB30016CF86 /* HashDirViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashDirViewController.swift; sourceTree = "<group>"; };
 		21F8457C1D371373006E3A7F /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		21F8457E1D371537006E3A7F /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		21F845801D371545006E3A7F /* Play.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Play.swift; sourceTree = "<group>"; };
@@ -211,6 +227,14 @@
 				2116578D1D47063B0035D6B4 /* GameViewController.swift */,
 				213A04C81D4AD8960050FF8F /* ResultViewController.swift */,
 				213A04C61D4AD4640050FF8F /* RunViewController.swift */,
+				2189E0A71D56DA320016CF86 /* PasserViewController.swift */,
+				2189E0B01D56DA4B0016CF86 /* ReturnerViewController.swift */,
+				2189E0B21D56DA5F0016CF86 /* PenaltyViewController.swift */,
+				2189E0B41D56DA6D0016CF86 /* ExtraPointViewController.swift */,
+				2189E0B61D56DA790016CF86 /* FieldGoalViewController.swift */,
+				2189E0B81D56DA9F0016CF86 /* FumRecoveryViewController.swift */,
+				2189E0BA1D56DAA80016CF86 /* TackleViewController.swift */,
+				2189E0BC1D56DAB30016CF86 /* HashDirViewController.swift */,
 			);
 			path = QwikStats;
 			sourceTree = "<group>";
@@ -581,12 +605,20 @@
 				2116578C1D4551500035D6B4 /* PlayTypeController.swift in Sources */,
 				211657881D454F370035D6B4 /* PresentedTableViewController.swift in Sources */,
 				2116578E1D47063B0035D6B4 /* GameViewController.swift in Sources */,
+				2189E0BB1D56DAA80016CF86 /* TackleViewController.swift in Sources */,
 				213A04C71D4AD4640050FF8F /* RunViewController.swift in Sources */,
 				214D8FDE1D2224D7009C3A83 /* AppDelegate.swift in Sources */,
+				2189E0BD1D56DAB30016CF86 /* HashDirViewController.swift in Sources */,
 				21F8457F1D371537006E3A7F /* Team.swift in Sources */,
+				2189E0B11D56DA4B0016CF86 /* ReturnerViewController.swift in Sources */,
 				21F845831D371551006E3A7F /* Player.swift in Sources */,
 				21F8457D1D371373006E3A7F /* Game.swift in Sources */,
 				21F845811D371545006E3A7F /* Play.swift in Sources */,
+				2189E0A81D56DA320016CF86 /* PasserViewController.swift in Sources */,
+				2189E0B31D56DA5F0016CF86 /* PenaltyViewController.swift in Sources */,
+				2189E0B91D56DA9F0016CF86 /* FumRecoveryViewController.swift in Sources */,
+				2189E0B51D56DA6D0016CF86 /* ExtraPointViewController.swift in Sources */,
+				2189E0B71D56DA790016CF86 /* FieldGoalViewController.swift in Sources */,
 				213A04C91D4AD8960050FF8F /* ResultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

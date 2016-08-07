@@ -10,12 +10,14 @@ import UIKit
 import Toast_Swift
 import MZFormSheetPresentationController
 
+var game: Game!
 var globalPlay: Play!
 var saved: Bool!
 var flow: Bool!
 var fieldSize: Int!
 var ydLnData = [Int]()
 var ydLnStrings = [String]()
+var gamePlays = [Play]()
 
 class GameViewController: UIViewController {
 
@@ -49,8 +51,6 @@ class GameViewController: UIViewController {
     var csvDefHomeStats = "home_defensive_stats_list.csv"
     var csvDefAwayStats = "away_defensive_stats_list.csv"
     var themeColor = "#6d9e31"
-    var game: Game!
-    var gamePlays = [Play]()
     var projDir: FILE!
     var flow=true, saved=false, canceled=false, homeTeamStart=false, updateFlag = false
     var buttonWidth: CGFloat = 394
@@ -89,6 +89,7 @@ class GameViewController: UIViewController {
         awayTeamName = "AwayTeam"
         homeTeamName = "HomeTeam"
         game = Game(awayName: awayTeamName, homeName: homeTeamName, division: "Varsity", day: 1, month: 1, year: 2016, fieldSize: 100)
+        gamePlays = [Play]()
         
         globalPlay = Play(currentGame: game)
         
@@ -475,18 +476,21 @@ class GameViewController: UIViewController {
         }
         
         if play.sackFlag {
-            playResult += " sacked by number \(play.tacklers[0])"
-            switch (play.tacklers.count) {
-            case 1: break
-            case 2:
-                playResult += " and \(play.tacklers[1])"
-            default:
-                for i in 1.stride(to: play.tacklers.count, by: 1) {
-                    if i == (play.tacklers.count - 1) {
-                        playResult += " and \(play.tacklers[i])"
-                    }
-                    else {
-                        playResult += " \(play.tacklers[i])"
+            playResult += " sacked"
+            if play.tacklers.count > 0 {
+                playResult += " by number \(play.tacklers[0])"
+                switch (play.tacklers.count) {
+                case 1: break
+                case 2:
+                    playResult += " and \(play.tacklers[1])"
+                default:
+                    for i in 1.stride(to: play.tacklers.count, by: 1) {
+                        if i == (play.tacklers.count - 1) {
+                            playResult += " and \(play.tacklers[i])"
+                        }
+                        else {
+                            playResult += " \(play.tacklers[i])"
+                        }
                     }
                 }
             }

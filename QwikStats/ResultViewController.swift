@@ -57,8 +57,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         
         ogGnLs = gnLsData.indexOf(0)!
         ogYdLn = ydLnData.indexOf(globalPlay.ydLn)!
-        gnLsPicker.selectItem(ogGnLs)
-        //ydLnPicker.selectItem(ogYdLn)
+        gnLsPicker.selectItem(gnLsData.indexOf(globalPlay.gnLs)!)
     }
     
     func makeData(prevYdLn: Int) {
@@ -109,12 +108,6 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         return ydLn
     }
     
-    @IBAction func checkMaxLength(sender: AnyObject) {
-        if sender.text?.characters.count > 3 {
-            sender.deleteBackward()
-        }
-    }
-    
     func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
         if pickerView == gnLsPicker {
             return self.gnLsData.count
@@ -135,8 +128,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
     
     func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
         //this is the code for when they select an item
-        pickerNum += 1
-        
+        pickerNum += 1        
         if pickerView == gnLsPicker {
             if pickerNum == 1 {
                 ydLnPicker.selectItem(gnLsPicker.selectedItem, animated: true)
@@ -154,6 +146,19 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
             }
         }
         
+        if pickerView.selectedItem == (ydLnData.count - 1) {
+            touchdownSwitch.setOn(true, animated: true)
+        }
+        else {
+            touchdownSwitch.setOn(false, animated: true)
+        }
+        
+        if pickerView.selectedItem == 0 {
+            safetySwitch.setOn(true, animated: true)
+        }
+        else {
+            safetySwitch.setOn(false, animated: true)
+        }
     }
     
     @IBAction func switchChanged(sender: UISwitch) {
@@ -184,7 +189,17 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
     
     @IBAction func leftBtnClicked(sender: UIButton) {
         save()
-        runDialog()
+        if globalPlay.playType == "Pass" {
+            if globalPlay.sackFlag || globalPlay.interceptionFlag {
+                passerDialog()
+            }
+            else {
+                runDialog("Receiver")
+            }
+        }
+        else {
+            runDialog("Runner")
+        }
     }
     
     @IBAction func saveBtnClicked(sender: UIButton) {
@@ -215,7 +230,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         }
     }
     
-    func runDialog() {
+    func runDialog(text: String) {
         let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("RunViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
@@ -231,7 +246,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
             let navigationController = vc
             let presentedViewController = navigationController as! RunViewController
             presentedViewController.view?.layoutIfNeeded()
-            presentedViewController.titleLabel?.text = "Runner"
+            presentedViewController.titleLabel?.text = text
         }
         
         let parent: UIViewController! = self.presentingViewController
@@ -243,5 +258,31 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
     
     func showMessage(message: String) {
         self.view.makeToast(message, duration: 3.0, position: .Bottom)
+    }
+    
+    func passerDialog() {
+        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PasserViewController")// as! UIViewController
+        let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
+        formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
+        //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
+        //width is first, height is second
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 400)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        
+        
+        //let presentedViewController = navigationController as! RunViewController
+        //presentedViewController.play = self.play
+        
+        formSheetController.willPresentContentViewControllerHandler = { vc in
+            let navigationController = vc
+            let presentedViewController = navigationController as! PasserViewController
+            presentedViewController.view?.layoutIfNeeded()
+        }
+        
+        let parent: UIViewController! = self.presentingViewController
+        
+        self.dismissViewControllerAnimated(true, completion: {
+            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        })
     }
 }
