@@ -58,7 +58,7 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
         pickerNum = 0
         
         ogGnLs = gnLsData.indexOf(0)!
-        ogYdLn = ydLnData.indexOf(globalPlay.ydLn)!
+        ogYdLn = ydLnData.indexOf(globalPlay.prevYdLn)!
         penYdsPicker.selectItem(gnLsData.indexOf(abs(globalPlay.gnLs))!)
     }
     
@@ -66,15 +66,12 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
         //make the gnls data
         var minIndex = 0, maxIndex = 0
         if prevYdLn < 0 {
-            minIndex = prevYdLn
             maxIndex = fieldSize + prevYdLn
         }
         else if prevYdLn == 0 {
-            minIndex = prevYdLn
             maxIndex = fieldSize
         }
         else {
-            minIndex = -1*(fieldSize - prevYdLn)
             maxIndex = prevYdLn
         }
         
@@ -106,9 +103,22 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
     func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
         //this is the code for when they select an item
         pickerNum += 1
+        var i = 0
         if pickerView == penYdsPicker {
             if pickerNum == 1 {
-                ydLnPicker.selectItem(penYdsPicker.selectedItem, animated: true)
+                if offenseSwitch.on {
+                    i = ogYdLn - penYdsPicker.selectedItem
+                }
+                else if defenseSwitch.on {
+                    i = ogYdLn + penYdsPicker.selectedItem
+                }
+                if i<0 {
+                    i=0
+                }
+                else if i>fieldSize-1 {
+                    i = fieldSize-1
+                }
+                ydLnPicker.selectItem(i, animated: true)
             }
             else {
                 pickerNum = 0
@@ -116,7 +126,7 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
         }
         else if pickerView == ydLnPicker{
             if pickerNum == 1{
-                penYdsPicker.selectItem(ydLnPicker.selectedItem, animated: true)
+                //we don't need to change nuthin
             }
             else {
                 pickerNum = 0
@@ -125,35 +135,22 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
     }
     
     @IBAction func ydBtnClicked(sender: UIButton) {
-        let prev = ydLnData.indexOf(globalPlay.prevYdLn)
-        var newYdLn: Int
-        var diff: Int = 0
+        //let prev = ydLnData.indexOf(globalPlay.prevYdLn)
+        //var newYdLn: Int
+        //var diff: Int = 0
         
         if sender == fiveYdBtn {
-            diff = 5
+            //diff = 5
+            penYdsPicker.selectItem(5, animated: true)
         }
         else if sender == tenYdBtn {
-            diff = 10
+            //diff = 10
+            penYdsPicker.selectItem(10, animated: true)
         }
         else if sender == fifteenYdBtn {
-            diff = 15
+            //diff = 15
+            penYdsPicker.selectItem(15, animated: true)
         }
-        
-        if offenseSwitch.on {
-            newYdLn = prev! - diff
-        }
-        else {
-            newYdLn = prev! + diff
-        }
-        
-        if newYdLn < 0 {
-            newYdLn = 1
-        }
-        else if newYdLn > fieldSize-1 {
-            newYdLn = fieldSize-1
-        }
-        
-        ydLnPicker.selectItem(newYdLn, animated: true)
     }
     
     @IBAction func leftBtn(sender: UIButton) {
@@ -180,16 +177,7 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
         if sender == offenseSwitch {
             if sender.on{
                 defenseSwitch.setOn(false, animated: true)
-                let i = ydLnData.indexOf(globalPlay.prevYdLn)! - gnLsData[penYdsPicker.selectedItem]
-                if i < 0 {
-                    ydLnPicker.selectItem(1, animated: true)
-                }
-                else if i > (fieldSize-1) {
-                    ydLnPicker.selectItem(fieldSize-1, animated: true)
-                }
-                else {
-                    ydLnPicker.selectItem(i, animated: true)
-                }
+                penYdsPicker.selectItem(penYdsPicker.selectedItem, animated: true)
             }
             else {
                 if defenseSwitch.on == false {
@@ -200,16 +188,7 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
         else {
             if sender.on{
                 offenseSwitch.setOn(false, animated: true)
-                let i = ydLnData.indexOf(globalPlay.prevYdLn)! + gnLsData[penYdsPicker.selectedItem]
-                if i < 0 {
-                    ydLnPicker.selectItem(1, animated: true)
-                }
-                else if i > (fieldSize-1) {
-                    ydLnPicker.selectItem(fieldSize-1, animated: true)
-                }
-                else {
-                    ydLnPicker.selectItem(i, animated: true)
-                }
+                penYdsPicker.selectItem(penYdsPicker.selectedItem, animated: true)
             }
             else {
                 if offenseSwitch.on == false {

@@ -162,6 +162,7 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
                 touchbackSwitch.setOn(false, animated: true)
                 safetySwitch.setOn(false, animated: true)
                 ydLnPicker.selectItem(ydLnData.count - 1, animated: true)
+                returnYdsPicker.selectItem(gnLsData.count-1, animated: true)
             }
             
         case fairCatchSwitch:

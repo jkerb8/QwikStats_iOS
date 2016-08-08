@@ -209,11 +209,12 @@ class GameViewController: UIViewController {
         let button = UIButton.init(type: UIButtonType.System) as UIButton
             button.frame = CGRectMake(10, 5, buttonWidth, buttonHeight)
             button.backgroundColor = UIColor.clearColor()
-            button.setTitle(globalPlay.result, forState: UIControlState.Normal)
+            button.setTitle("Play \(prevNum+1) - \(globalPlay.result)", forState: UIControlState.Normal)
             button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             button.addTarget(self, action: #selector(playBtnPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
             button.tag = prevNum
+            button.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
             self.playScrollView.addSubview(button)
         
         buttonList.append(button)
@@ -423,8 +424,7 @@ class GameViewController: UIViewController {
                 else {
                     play.downNum = 0
                     play.dist = 0
-                    play.ydLn = -15
-                    play.possFlag = !play.possFlag
+                    play.ydLn = 0
                 }
             case "Penalty":
                 if play.safetyFlag {
