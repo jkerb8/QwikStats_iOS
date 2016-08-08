@@ -540,6 +540,130 @@
             </objects>
             <point key="canvasLocation" x="763" y="1846"/>
         </scene>
+        <!--PenaltyViewController-->
+        <scene sceneID="8M4-2a-nha">
+            <objects>
+                <viewController storyboardIdentifier="PenaltyViewController" title="PenaltyViewController" id="TtZ-NE-iFB" customClass="PenaltyViewController" customModule="QwikStats" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HVx-Ka-3nl"/>
+                        <viewControllerLayoutGuide type="bottom" id="QuM-pE-2dD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0gK-QS-2Gd">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aD4-5N-g0o">
+                                <rect key="frame" x="0.0" y="109" width="70" height="70"/>
+                                <state key="normal" title="Button" image="ic_action_navigation_chevron_left"/>
+                                <connections>
+                                    <action selector="leftBtn:" destination="TtZ-NE-iFB" eventType="touchUpInside" id="hJv-Gz-yN4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HeM-eE-ua5">
+                                <rect key="frame" x="275" y="109" width="70" height="70"/>
+                                <state key="normal" title="Button" image="ic_action_image_navigate_next"/>
+                                <connections>
+                                    <action selector="rightBtn:" destination="TtZ-NE-iFB" eventType="touchUpInside" id="VtC-0O-4Tl"/>
+                                </connections>
+                            </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H6O-31-3hu">
+                                <rect key="frame" x="150" y="254" width="51" height="31"/>
+                                <connections>
+                                    <action selector="switchChanged:" destination="TtZ-NE-iFB" eventType="valueChanged" id="0p7-sy-6At"/>
+                                </connections>
+                            </switch>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cxs-xB-JJT">
+                                <rect key="frame" x="150" y="323" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Offense" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1yR-Uf-iJP">
+                                <rect key="frame" x="123" y="225" width="103" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Defense" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hRK-l3-dKN">
+                                <rect key="frame" x="125" y="294" width="99" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Penalty Yards" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUJ-Uc-J5d">
+                                <rect key="frame" x="97" y="20" width="154" height="35"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VTP-qN-bsP" customClass="AKPickerView">
+                                <rect key="frame" x="81" y="152" width="186" height="41"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lWW-SS-tBz" customClass="AKPickerView">
+                                <rect key="frame" x="81" y="60" width="186" height="41"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Yard Line" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ppc-VS-Zv6">
+                                <rect key="frame" x="102" y="109" width="136" height="35"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4JL-hP-Svp">
+                                <rect key="frame" x="61" y="362" width="89" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelBtn:" destination="TtZ-NE-iFB" eventType="touchUpInside" id="eqR-U6-26u"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3A-wf-neY">
+                                <rect key="frame" x="198" y="362" width="89" height="30"/>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveBtn:" destination="TtZ-NE-iFB" eventType="touchUpInside" id="oV9-ov-Afh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jwB-E1-Z2u">
+                                <rect key="frame" x="61" y="187" width="46" height="30"/>
+                                <state key="normal" title="5"/>
+                                <connections>
+                                    <action selector="recent1Btn:" destination="lmp-Ad-SQ1" eventType="touchUpInside" id="Jiq-yu-bhq"/>
+                                    <action selector="ydBtnClicked:" destination="TtZ-NE-iFB" eventType="touchUpInside" id="x82-2f-ZNg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OjJ-Nh-IsY">
+                                <rect key="frame" x="151" y="187" width="46" height="30"/>
+                                <state key="normal" title="10"/>
+                                <connections>
+                                    <action selector="recent2Btn:" destination="lmp-Ad-SQ1" eventType="touchUpInside" id="hS1-vu-cUe"/>
+                                    <action selector="ydBtnClicked:" destination="TtZ-NE-iFB" eventType="touchUpInside" id="bxp-Ef-39q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E1j-WN-eT4">
+                                <rect key="frame" x="241" y="187" width="46" height="30"/>
+                                <state key="normal" title="15"/>
+                                <connections>
+                                    <action selector="recent3Btn:" destination="lmp-Ad-SQ1" eventType="touchUpInside" id="G5o-Hf-eCF"/>
+                                    <action selector="ydBtnClicked:" destination="TtZ-NE-iFB" eventType="touchUpInside" id="W80-wl-eyU"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
+                    <connections>
+                        <outlet property="defenseSwitch" destination="Cxs-xB-JJT" id="Cvg-VC-kAR"/>
+                        <outlet property="fifteenYdBtn" destination="E1j-WN-eT4" id="X9x-lr-4s5"/>
+                        <outlet property="fiveYdBtn" destination="jwB-E1-Z2u" id="P7a-Vo-BBf"/>
+                        <outlet property="offenseSwitch" destination="H6O-31-3hu" id="deE-bb-7aI"/>
+                        <outlet property="penYdsPicker" destination="lWW-SS-tBz" id="wug-Ww-ycZ"/>
+                        <outlet property="tenYdBtn" destination="OjJ-Nh-IsY" id="Rk8-tB-n7f"/>
+                        <outlet property="ydLnPicker" destination="VTP-qN-bsP" id="hSf-z1-8Jo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0ti-gd-aq5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1406" y="1846"/>
+        </scene>
         <!--RunViewController-->
         <scene sceneID="1bC-Yv-zXn">
             <objects>

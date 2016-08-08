@@ -83,31 +83,6 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         
     }
     
-    func getIndexFromYdLn(prevYdLn: Int) -> Int {
-        var index = 0
-        if prevYdLn <= 0 {
-            index = -1 * prevYdLn
-        }
-        else {
-            index = fieldSize - prevYdLn
-        }
-        return index
-    }
-    
-    func getYdLnFromIndex(index: Int) -> Int {
-        var ydLn = 0
-        if index<(fieldSize/2) {
-            ydLn = -1 * index
-        }
-        else if (index == (fieldSize+1)) {
-            ydLn = 0
-        }
-        else {
-            ydLn = fieldSize - index
-        }
-        return ydLn
-    }
-    
     func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
         if pickerView == gnLsPicker {
             return self.gnLsData.count
@@ -213,7 +188,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
     }
     
     func save() {
-        globalPlay.ydLn = getYdLnFromIndex(ydLnPicker.selectedItem)
+        globalPlay.ydLn = ydLnData[ydLnPicker.selectedItem]
         globalPlay.gnLs = gnLsData[gnLsPicker.selectedItem]
         globalPlay.safetyFlag = safetySwitch.on
         globalPlay.touchdownFlag = touchdownSwitch.on
