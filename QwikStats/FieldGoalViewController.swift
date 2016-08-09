@@ -21,6 +21,8 @@ class FieldGoalViewController: UIViewController {
         super.viewDidLoad()
         
         resultSwitch.setOn(globalPlay.fgMadeFlag, animated: true)
+        kickerNumText.keyboardType = UIKeyboardType.NumberPad
+        distanceText.keyboardType = UIKeyboardType.NumberPad
         
         if globalPlay.playerNumber != -1 {
             kickerNumText.text = String(globalPlay.playerNumber)

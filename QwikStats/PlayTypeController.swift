@@ -182,7 +182,7 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 500)
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 520)
         formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
         
         

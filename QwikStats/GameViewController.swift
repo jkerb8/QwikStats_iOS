@@ -292,7 +292,11 @@ class GameViewController: UIViewController {
                     playResult = "Number \(play.playerNumber) pass completed to number \(play.recNumber) for \(play.gnLs) yards"
                 }
                 else if (play.interceptionFlag) {
-                    playResult = "Number \(play.playerNumber) pass intercepted by numer \(play.defNumber)"
+                    playResult = "Number \(play.playerNumber) pass"
+                    if play.recNumber != -1 {
+                        playResult += " intended for number \(play.recNumber)"
+                    }
+                    playResult += " intercepted by number \(play.defNumber)"
                     play.possFlag = !play.possFlag
                     play.downNum = 1
                     play.dist = 10
@@ -512,7 +516,6 @@ class GameViewController: UIViewController {
                     }
                 }
             }
-            playResult += " for \(play.gnLs) yards"
         }
         
         if play.fumbleFlag && !play.fumbleRecFlag {

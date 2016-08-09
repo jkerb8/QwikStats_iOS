@@ -10,7 +10,7 @@ import UIKit
 import MZFormSheetPresentationController
 import AKPickerView_Swift
 
-class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPickerViewDelegate  {
+class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPickerViewDelegate {
     
     @IBOutlet var numberTextField: UITextField!
     @IBOutlet var returnYdsPicker: AKPickerView!
@@ -26,6 +26,8 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        numberTextField.keyboardType = UIKeyboardType.NumberPad
         
         noReturnSwitch.setOn(globalPlay.returnFlag, animated: true)
         touchdownSwitch.setOn(globalPlay.touchdownFlag, animated: true)

@@ -160,6 +160,12 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
     
     @IBAction func rightBtnClicked(sender: UIButton) {
         save()
+        if globalPlay.interceptionFlag{
+            turnoverDialog()
+        }
+        else {
+            tackleDialog()
+        }
     }
     
     @IBAction func leftBtnClicked(sender: UIButton) {
@@ -251,6 +257,58 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         formSheetController.willPresentContentViewControllerHandler = { vc in
             let navigationController = vc
             let presentedViewController = navigationController as! PasserViewController
+            presentedViewController.view?.layoutIfNeeded()
+        }
+        
+        let parent: UIViewController! = self.presentingViewController
+        
+        self.dismissViewControllerAnimated(true, completion: {
+            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        })
+    }
+    
+    func turnoverDialog() {
+        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("FumRecoveryViewController")// as! UIViewController
+        let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
+        formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
+        //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
+        //width is first, height is second
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 450)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        
+        
+        //let presentedViewController = navigationController as! RunViewController
+        //presentedViewController.play = self.play
+        
+        formSheetController.willPresentContentViewControllerHandler = { vc in
+            let navigationController = vc
+            let presentedViewController = navigationController as! FumRecoveryViewController
+            presentedViewController.view?.layoutIfNeeded()
+        }
+        
+        let parent: UIViewController! = self.presentingViewController
+        
+        self.dismissViewControllerAnimated(true, completion: {
+            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        })
+    }
+    
+    func tackleDialog() {
+        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("TackleViewController")// as! UIViewController
+        let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
+        formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
+        //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
+        //width is first, height is second
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        
+        
+        //let presentedViewController = navigationController as! RunViewController
+        //presentedViewController.play = self.play
+        
+        formSheetController.willPresentContentViewControllerHandler = { vc in
+            let navigationController = vc
+            let presentedViewController = navigationController as! TackleViewController
             presentedViewController.view?.layoutIfNeeded()
         }
         

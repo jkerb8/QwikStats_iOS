@@ -120,7 +120,7 @@ class PasserViewController: UIViewController {
     
     @IBAction func rightBtn(sender: UIButton) {
         save()
-        if globalPlay.sackFlag || globalPlay.interceptionFlag {
+        if globalPlay.sackFlag {
             resultDialog()
         }
         else {
