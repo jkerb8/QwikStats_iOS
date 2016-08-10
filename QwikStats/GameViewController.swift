@@ -197,6 +197,50 @@ class GameViewController: UIViewController {
         //playList data here if needed
     }
     
+    func makeDirectory() -> Bool {
+        if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
+            let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("QwikStats").absoluteString
+            let fileManager = NSFileManager.defaultManager()
+            var isDir: ObjCBool = false
+            if fileManager.fileExistsAtPath(folder, isDirectory: &isDir) {
+                if isDir {
+                    return true
+                }
+                else {
+                    do {
+                        try fileManager.createDirectoryAtPath(folder, withIntermediateDirectories: false, attributes: nil)
+                        return true
+                    }
+                    catch let error as NSError{
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
+    func saveGame() {
+        if makeDirectory() {
+            let file = csvGameData
+            
+            if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
+                let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("QwikStats").absoluteString
+                let path = NSURL(fileURLWithPath: folder).URLByAppendingPathComponent(file)
+                for i in 0.stride(to: gameDataList.count, by: 1) {
+                    let text = gameDataList[i] + "\n"
+                    do {
+                        try text.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+                    }
+                    catch {
+                        showMessage("There was a problem writing data to your device")
+                    }
+                }
+            }
+        }
+        //export()
+    }
+    
     func addButton(play: Play) {
         let prevNum = buttonList.count
         

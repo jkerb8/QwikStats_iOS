@@ -13,6 +13,9 @@ import Toast_Swift
 class TackleViewController: UIViewController {
     @IBOutlet var numberTextField: UITextField!
     @IBOutlet var addTacklerBtn: UIButton!
+    @IBOutlet var saveBtn: UIButton!
+    @IBOutlet var cancelBtn: UIButton!
+    
     var additionalTacklers = [UITextField]()
     
     let textHeight: CGFloat = 30
@@ -24,11 +27,19 @@ class TackleViewController: UIViewController {
     var btnYPos: CGFloat = 128
     let btnXPos: CGFloat = 152
     let plusY: CGFloat = 45
+    let windowX: CGFloat = 350
+    var windowY: CGFloat = 200
+    let saveWidth: CGFloat = 89
+    let saveHeight: CGFloat = 30
+    var saveY: CGFloat = 166
+    let saveX: CGFloat = 199
+    let cancelX: CGFloat = 62
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         numberTextField.keyboardType = UIKeyboardType.NumberPad
+        self.view.superview?.translatesAutoresizingMaskIntoConstraints = true
         
         if globalPlay.tacklers.count > 0 {
             numberTextField.text = String(globalPlay.tacklers[0])
@@ -52,21 +63,33 @@ class TackleViewController: UIViewController {
         else {
             textYPos += plusY
             btnYPos += plusY
+            windowY += plusY
+            saveY += plusY
+            
+            self.view.superview?.bounds = CGRectMake(0, 0, windowX, windowY)
+            self.preferredContentSize = CGSizeMake(windowX, windowY   )
             
             let textField = UITextField.init(frame: CGRectMake(textXPos, textYPos, textWidth, textHeight))
             textField.addTarget(self, action: #selector(checkMaxLength(_:)), forControlEvents: UIControlEvents.EditingChanged)
-            textField.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
+            textField.addTarget(self, action: #selector(textFieldTouched(_:)), forControlEvents: UIControlEvents.AllEvents)
+            textField.textAlignment = .Center
             textField.tag = id
+            textField.keyboardType = UIKeyboardType.NumberPad
             
             if globalPlay.tacklers.count > id {
                 textField.text = String(globalPlay.tacklers[id])
             }
             
             additionalTacklers.append(textField)
+            addTacklerBtn.translatesAutoresizingMaskIntoConstraints = true
+            saveBtn.translatesAutoresizingMaskIntoConstraints = true
+            cancelBtn.translatesAutoresizingMaskIntoConstraints = true
             addTacklerBtn.frame = CGRectMake(btnXPos, btnYPos, btnWidth, btnHeight)
+            saveBtn.frame = CGRectMake(saveX, saveY, saveWidth, saveHeight)
+            cancelBtn.frame = CGRectMake(cancelX, saveY, saveWidth, saveHeight)
             
-            //self.view.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height + plusY)
             self.view.addSubview(textField)
+            self.view.translatesAutoresizingMaskIntoConstraints = true
         }
     }
     
@@ -74,6 +97,10 @@ class TackleViewController: UIViewController {
         if sender.text?.characters.count > 2 {
             sender.deleteBackward()
         }
+    }
+    
+    @IBAction func textFieldTouched(sender: UITextField) {
+        self.view.superview?.bounds = CGRectMake(0, 0, windowX, windowY)
     }
     
     @IBAction func leftBtn(sender: UIButton) {

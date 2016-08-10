@@ -299,7 +299,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 200)
         formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
         
         

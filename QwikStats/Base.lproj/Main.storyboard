@@ -1007,6 +1007,7 @@
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <action selector="checkMaxLength:" destination="E4z-ZN-KCd" eventType="editingChanged" id="Moh-7J-HM9"/>
+                                    <action selector="textFieldTouched:" destination="E4z-ZN-KCd" eventType="touchUpInside" id="0SI-Wx-984"/>
                                 </connections>
                             </textField>
                         </subviews>
@@ -1016,7 +1017,9 @@
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
                         <outlet property="addTacklerBtn" destination="PoK-oC-Ad7" id="7nK-03-DXz"/>
+                        <outlet property="cancelBtn" destination="MaE-Eq-IbC" id="i4b-js-oHc"/>
                         <outlet property="numberTextField" destination="ctk-bN-3IX" id="kZz-fp-mCD"/>
+                        <outlet property="saveBtn" destination="0gh-It-WQk" id="syF-tL-PFL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PwJ-iW-wJN" userLabel="First Responder" sceneMemberID="firstResponder"/>

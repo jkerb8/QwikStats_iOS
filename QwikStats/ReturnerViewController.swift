@@ -213,7 +213,7 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
     
     @IBAction func rightBtn(sender: UIButton) {
         save()
-        //tackleDialog()
+        tackleDialog()
     }
     
     @IBAction func saveBtn(sender: UIButton) {
@@ -276,4 +276,29 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
         })
     }
     
+    func tackleDialog() {
+        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("TackleViewController")// as! UIViewController
+        let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
+        formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
+        //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
+        //width is first, height is second
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 200)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        
+        
+        //let presentedViewController = navigationController as! RunViewController
+        //presentedViewController.play = self.play
+        
+        formSheetController.willPresentContentViewControllerHandler = { vc in
+            let navigationController = vc
+            let presentedViewController = navigationController as! TackleViewController
+            presentedViewController.view?.layoutIfNeeded()
+        }
+        
+        let parent: UIViewController! = self.presentingViewController
+        
+        self.dismissViewControllerAnimated(true, completion: {
+            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        })
+    }
 }
