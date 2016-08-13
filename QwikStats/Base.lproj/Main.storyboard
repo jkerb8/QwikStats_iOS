@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="r2F-e1-tJD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -47,15 +47,17 @@
                         <color key="backgroundColor" red="0.59905321169545533" green="0.84833733974358971" blue="0.23840900385283173" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="yly-4k-r2t"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
-                        <segue destination="oEw-Wd-BlP" kind="show" identifier="mainToGame" id="F6l-nv-b8I"/>
+                        <segue destination="Yvc-VK-tlX" kind="show" identifier="NewGameSegue" id="0gX-pP-gs3"/>
+                        <segue destination="oEw-Wd-BlP" kind="show" identifier="OpenGameSegue" id="K5g-Sm-6GM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="324.5" y="424.5"/>
+            <point key="canvasLocation" x="606" y="453"/>
         </scene>
         <!--GameViewController-->
         <scene sceneID="tea-V3-4XI">
@@ -189,7 +191,95 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B1K-Qg-xh7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="876" y="424"/>
+            <point key="canvasLocation" x="1082" y="-351"/>
+        </scene>
+        <!--NewGameViewController-->
+        <scene sceneID="yxA-qR-vci">
+            <objects>
+                <viewController storyboardIdentifier="NewGameViewController" title="NewGameViewController" id="Yvc-VK-tlX" customClass="NewGameViewController" customModule="QwikStats" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="oQP-jo-dYx"/>
+                        <viewControllerLayoutGuide type="bottom" id="Shw-ys-5LB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Uip-jx-HUC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DSA-LQ-tdb">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Home Team" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FEe-Gi-QnV">
+                                        <rect key="frame" x="58" y="0.0" width="299" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Away Team" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CbM-Iw-Dhk">
+                                        <rect key="frame" x="58" y="48" width="299" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Division" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e92-cg-ZFC">
+                                        <rect key="frame" x="113" y="86" width="188" height="35"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="23"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="RPW-8u-yQR">
+                                        <rect key="frame" x="0.0" y="400" width="414" height="216"/>
+                                        <date key="date" timeIntervalSinceReferenceDate="492637700.49398202">
+                                            <!--2016-08-11 19:48:20 +0000-->
+                                        </date>
+                                        <date key="minimumDate" timeIntervalSinceReferenceDate="491738400">
+                                            <!--2016-08-01 10:00:00 +0000-->
+                                        </date>
+                                    </datePicker>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y2m-P6-PvD">
+                                        <rect key="frame" x="49" y="129" width="316" height="90"/>
+                                    </pickerView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Field Size" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YZc-x2-NO6">
+                                        <rect key="frame" x="113" y="227" width="188" height="35"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="23"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Game Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iwT-cD-WYr">
+                                        <rect key="frame" x="113" y="368" width="188" height="35"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="23"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Pa-Rh-00d">
+                                        <rect key="frame" x="49" y="270" width="316" height="90"/>
+                                    </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfx-T8-1AP">
+                                        <rect key="frame" x="124" y="621" width="167" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <state key="normal" title="Start Game">
+                                            <color key="titleColor" red="0.4610881785" green="0.64847756410000001" blue="0.1885704255" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="startGame:" destination="Yvc-VK-tlX" eventType="touchUpInside" id="ShE-qP-q4O"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="awayTeamTextField" destination="CbM-Iw-Dhk" id="66X-nc-0a3"/>
+                        <outlet property="datePicker" destination="RPW-8u-yQR" id="1LJ-Aw-01P"/>
+                        <outlet property="divisionPicker" destination="y2m-P6-PvD" id="ybA-WP-rlt"/>
+                        <outlet property="fieldSizePicker" destination="1Pa-Rh-00d" id="JJE-oQ-c9z"/>
+                        <outlet property="homeTeamTextField" destination="FEe-Gi-QnV" id="NrN-vV-ZCE"/>
+                        <outlet property="scrollView" destination="DSA-LQ-tdb" id="gMQ-o2-td3"/>
+                        <segue destination="oEw-Wd-BlP" kind="show" identifier="StartNewGameSegue" id="fnV-As-r4j"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ynB-RJ-EMp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1205" y="453"/>
         </scene>
         <!--PlayTypeController-->
         <scene sceneID="jVJ-aA-VOg">
@@ -1222,10 +1312,31 @@
             </objects>
             <point key="canvasLocation" x="1406" y="1190"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bJM-iU-bto">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="r2F-e1-tJD" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="d3a-0o-gs9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="73n-ss-jOq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VVQ-nT-kmu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="30" y="453"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ic_action_image_navigate_next" width="128" height="128"/>
         <image name="ic_action_navigation_chevron_left" width="128" height="128"/>
         <image name="possession_football" width="38" height="28"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="fnV-As-r4j"/>
+    </inferredMetricsTieBreakers>
 </document>

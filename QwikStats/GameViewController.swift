@@ -56,6 +56,13 @@ class GameViewController: UIViewController {
     var buttonWidth: CGFloat = 394
     var buttonHeight: CGFloat = 50
     
+    var homeTeamName: String = ""
+    var awayTeamName: String = ""
+    var division: String = ""
+    var day = 1
+    var month = 1
+    var year = 2016
+    var fldSize = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,14 +70,7 @@ class GameViewController: UIViewController {
         updateFlag = false
         
         playScrollView.contentSize = CGSizeMake(414, 524)
-        
-        //var day: Int = 0
-        //var month: Int = 0
-        //var year: Int = 0
-        var homeTeamName = ""
-        var awayTeamName = ""
-        //var division = ""
-        fieldSize = 100
+        self.navigationController?.navigationBarHidden = true
         
         for i in 0.stride(to: -50, by: -1){
             ydLnData.append(i)
@@ -82,13 +82,11 @@ class GameViewController: UIViewController {
             ydLnStrings.append(" \(String(i)) ")
         }
         
-        //get homeTeamName, awayTeamName, day, month, year, division, fieldSize
-        //make dirPath and gameName from them
-        
         //placeholder until that is sorted out
-        awayTeamName = "AwayTeam"
-        homeTeamName = "HomeTeam"
-        game = Game(awayName: awayTeamName, homeName: homeTeamName, division: "Varsity", day: 1, month: 1, year: 2016, fieldSize: 100)
+        //awayTeamName = "AwayTeam"
+        //homeTeamName = "HomeTeam"
+        fieldSize = self.fldSize
+        game = Game(awayName: awayTeamName, homeName: homeTeamName, division: division, day: day, month: month, year: year, fieldSize: fieldSize)
         gamePlays = [Play]()
         
         globalPlay = Play(currentGame: game)

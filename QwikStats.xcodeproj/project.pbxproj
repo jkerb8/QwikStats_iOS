@@ -13,6 +13,7 @@
 		2116578E1D47063B0035D6B4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2116578D1D47063B0035D6B4 /* GameViewController.swift */; };
 		213A04C71D4AD4640050FF8F /* RunViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213A04C61D4AD4640050FF8F /* RunViewController.swift */; };
 		213A04C91D4AD8960050FF8F /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213A04C81D4AD8960050FF8F /* ResultViewController.swift */; };
+		213B87DE1D5CD054000D3DB9 /* NewGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213B87DD1D5CD054000D3DB9 /* NewGameViewController.swift */; };
 		214D8FDE1D2224D7009C3A83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FDD1D2224D7009C3A83 /* AppDelegate.swift */; };
 		214D8FE01D2224D7009C3A83 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FDF1D2224D7009C3A83 /* ViewController.swift */; };
 		214D8FE31D2224D7009C3A83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 214D8FE11D2224D7009C3A83 /* Main.storyboard */; };
@@ -108,6 +109,7 @@
 		2116578D1D47063B0035D6B4 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		213A04C61D4AD4640050FF8F /* RunViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunViewController.swift; sourceTree = "<group>"; };
 		213A04C81D4AD8960050FF8F /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		213B87DD1D5CD054000D3DB9 /* NewGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGameViewController.swift; sourceTree = "<group>"; };
 		213CB1971D39C3D4007595F6 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		214D8FDA1D2224D7009C3A83 /* QwikStats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QwikStats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		214D8FDD1D2224D7009C3A83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				2189E0B81D56DA9F0016CF86 /* FumRecoveryViewController.swift */,
 				2189E0BA1D56DAA80016CF86 /* TackleViewController.swift */,
 				2189E0BC1D56DAB30016CF86 /* HashDirViewController.swift */,
+				213B87DD1D5CD054000D3DB9 /* NewGameViewController.swift */,
 			);
 			path = QwikStats;
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 				2189E0B31D56DA5F0016CF86 /* PenaltyViewController.swift in Sources */,
 				2189E0B91D56DA9F0016CF86 /* FumRecoveryViewController.swift in Sources */,
 				2189E0B51D56DA6D0016CF86 /* ExtraPointViewController.swift in Sources */,
+				213B87DE1D5CD054000D3DB9 /* NewGameViewController.swift in Sources */,
 				2189E0B71D56DA790016CF86 /* FieldGoalViewController.swift in Sources */,
 				213A04C91D4AD8960050FF8F /* ResultViewController.swift in Sources */,
 			);
