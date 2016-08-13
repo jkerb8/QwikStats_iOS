@@ -43,7 +43,7 @@ class GameViewController: UIViewController {
     var gameDataList = [String]()
     var statsList = [String]()
     
-    var dirPath = "", gameName = "", matchupName = ""
+    var gameFolder = "", gameName = "", matchupName = ""
     var csvPlayList = "play_list.csv"
     var csvGameData = "game_data.csv"
     var csvOffHomeStats = "home_offensive_stats_list.csv"
@@ -94,7 +94,15 @@ class GameViewController: UIViewController {
         awayTeamNameView.text = awayTeamName
         homeTeamNameView.text = homeTeamName
         
+        gameName = "\(month)_\(day)_\(year)_\(division)_\(fieldSize)_\(homeTeamName)_vs_\(awayTeamName)"
+        matchupName = "\(awayTeamName) vs. \(homeTeamName)"
+        
         updateVisuals()
+        
+        let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first
+        let folder = NSURL(fileURLWithPath: dir!).URLByAppendingPathComponent("QwikStats").absoluteString
+        gameFolder = NSURL(fileURLWithPath: folder).URLByAppendingPathComponent(gameName).absoluteString
+    
 
         //set scoreboard font stuff
         
@@ -122,6 +130,27 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func undoBtn(sender: UIButton) {
+    }
+    
+    @IBAction func menuBtn(sender: UIButton) {
+        let alertController = UIAlertController(title: "Game Menu", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alertController.addAction(cancelAction)
+        
+        let exitAction = UIAlertAction(title: "Exit Game", style: .Default) { (action) in
+            //need unWind Segue
+        }
+        alertController.addAction(exitAction)
+        
+        let nextQtrAction = UIAlertAction(title: "Next Qtr", style: .Default) { (action) in
+            
+        }
+        alertController.addAction(nextQtrAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func playTypeDialog() {
@@ -207,7 +236,7 @@ class GameViewController: UIViewController {
                 else {
                     do {
                         try fileManager.createDirectoryAtPath(folder, withIntermediateDirectories: false, attributes: nil)
-                        return true
+                        return createGameFolder(folder)
                     }
                     catch let error as NSError{
                         print(error.localizedDescription)
@@ -218,20 +247,67 @@ class GameViewController: UIViewController {
         return false
     }
     
+    func createGameFolder(dir: String) -> Bool {
+        let fileManager = NSFileManager.defaultManager()
+        var isDir: ObjCBool = false
+        if fileManager.fileExistsAtPath(gameFolder, isDirectory: &isDir) {
+            if isDir {
+                return true
+            }
+            else {
+                do {
+                    try fileManager.createDirectoryAtPath(gameFolder, withIntermediateDirectories: false, attributes: nil)
+                    return true
+                }
+                catch let error as NSError{
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        return false
+    }
+
     func saveGame() {
         if makeDirectory() {
             let file = csvGameData
+            let fileManager = NSFileManager.defaultManager()
+            let path = NSURL(fileURLWithPath: gameFolder).URLByAppendingPathComponent(file)
+            //var isDir: ObjCBool = false
             
-            if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
-                let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("QwikStats").absoluteString
-                let path = NSURL(fileURLWithPath: folder).URLByAppendingPathComponent(file)
-                for i in 0.stride(to: gameDataList.count, by: 1) {
-                    let text = gameDataList[i] + "\n"
-                    do {
-                        try text.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+            if fileManager.fileExistsAtPath(path.path!){
+                
+                //let pathString = path.absoluteString
+                /*if fileManager.fileExistsAtPath(pathString, isDirectory: &isDir) {
+                    if isDir {
+                        do {
+                            try fileManager.removeItemAtPath(pathString)
+                        }
+                        catch let error as NSError {
+                            showMessage("Error Saving: could not overwrite old file")
+                            print(error.localizedDescription)
+                        }
                     }
-                    catch {
-                        showMessage("There was a problem writing data to your device")
+                }*/
+                if let fileHandle  = try? NSFileHandle(forWritingToURL: path) {
+                    defer {
+                        fileHandle.closeFile()
+                    }
+                
+                    for i in 0.stride(to: gameDataList.count, by: 1) {
+                        let text = gameDataList[i] + "\n"
+                        if i == 0 {
+                            do {
+                                try text.writeToURL(path, atomically: true, encoding: NSUTF8StringEncoding)
+                            }
+                            catch {
+                                showMessage("There was a problem writing data to your device")
+                            }
+                        }
+                        else {
+                            let data = text.dataUsingEncoding(NSUTF8StringEncoding)
+                            fileHandle.seekToEndOfFile()
+                            fileHandle.writeData(data!)
+                        }
                     }
                 }
             }

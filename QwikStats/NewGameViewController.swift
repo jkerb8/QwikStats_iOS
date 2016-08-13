@@ -91,7 +91,12 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             //set properties on the destination view controller
             destinationVC.homeTeamName = homeTeamTextField.text!
             destinationVC.awayTeamName = awayTeamTextField.text!
-            destinationVC.fldSize = Int(fieldSizeData[fieldSizePicker.selectedRowInComponent(0)])
+            if fieldSizePicker.selectedRowInComponent(0) == 0 {
+                destinationVC.fldSize = 100
+            }
+            else  {
+                destinationVC.fldSize = 80
+            }
             destinationVC.division = divisionData[divisionPicker.selectedRowInComponent(0)]
             
             let formatter = NSDateFormatter()

@@ -167,6 +167,15 @@
                                     <action selector="newPlayBtn:" destination="oEw-Wd-BlP" eventType="touchUpInside" id="d7f-NC-OQW"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QXG-uF-a1v">
+                                <rect key="frame" x="368" y="64" width="46" height="30"/>
+                                <state key="normal" title="Menu">
+                                    <color key="titleColor" red="0.4610881785" green="0.64847756410000001" blue="0.1885704255" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuBtn:" destination="oEw-Wd-BlP" eventType="touchUpInside" id="SCN-fK-MK7"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
