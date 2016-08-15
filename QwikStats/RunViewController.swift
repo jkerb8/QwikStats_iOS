@@ -110,7 +110,7 @@ class RunViewController: UIViewController {
     
     @IBAction func rightBtn(sender: UIButton) {
         save()
-        if globalPlay.playType == "Pass" || globalPlay.interceptionFlag {
+        if globalPlay.playType == "Pass" && globalPlay.interceptionFlag {
             turnoverDialog()
         }
         else {

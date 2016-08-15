@@ -33,11 +33,14 @@ class GameViewController: UIViewController {
     @IBOutlet var distLabel: UILabel!
     @IBOutlet var ydLnLabel: UILabel!
     @IBOutlet var qtrLabel: UILabel!
+    var qtrText: String = ""
 
     @IBOutlet var awayPossImageView: UIImageView!
     @IBOutlet var homePossImageView: UIImageView!
     
     @IBOutlet var playScrollView: UIScrollView!
+    @IBOutlet var newPlayBtn: UIButton!
+    @IBOutlet var undoPlayBtn: UIButton!
     
     var buttonList = [UIButton]()
     var gameDataList = [String]()
@@ -86,6 +89,9 @@ class GameViewController: UIViewController {
         //awayTeamName = "AwayTeam"
         //homeTeamName = "HomeTeam"
         fieldSize = self.fldSize
+        if fldSize == 0 {
+            fieldSize = 100
+        }
         game = Game(awayName: awayTeamName, homeName: homeTeamName, division: division, day: day, month: month, year: year, fieldSize: fieldSize)
         gamePlays = [Play]()
         
@@ -108,7 +114,8 @@ class GameViewController: UIViewController {
         
         //if opening game, go to openGame()
         
-        //else go to openingKickoffDialog()
+        //else go to ...
+        openingKickoffDialog()
         
         // Do any additional setup after loading the view.
     }
@@ -130,25 +137,192 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func undoBtn(sender: UIButton) {
+        if qtrText == "End of Game" {
+            returnToFourthDialog()
+        }
+        else if qtrText == "Halftime" {
+            returnToSecondDialog()
+        }
+        else if buttonList.count > 0 {
+            undoPlayDialog()
+        }
+        else {
+            showMessage("No plays to undo...")
+            openingKickoffDialog()
+        }
+        
     }
     
-    @IBAction func menuBtn(sender: UIButton) {
-        let alertController = UIAlertController(title: "Game Menu", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+    func undoPlayDialog() {
+        let alertController = UIAlertController(title: "Undo Play", message: "Are you sure you want to undo the last play?", preferredStyle: UIAlertControllerStyle.Alert)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
         }
         alertController.addAction(cancelAction)
         
+        let okAction = UIAlertAction(title: "Yes", style: .Default) { (action) in
+            if !self.updateFlag {
+                self.showMessage("Play Deleted")
+            }
+            
+            if (self.buttonList.count > 1) {
+                self.updateGameData(gamePlays[gamePlays.count - 2])
+                self.undoStats(gamePlays[gamePlays.count - 1])
+            }
+            else {
+                game.completeReset()
+            }
+            
+            self.removeButton(gamePlays[gamePlays.count - 1])
+            gamePlays.removeAtIndex(gamePlays.count - 1)
+            self.gameDataList.removeAtIndex(self.gameDataList.count - 1)
+            self.updateVisuals()
+            
+        }
+        alertController.addAction(okAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func returnToFourthDialog() {
+        let alertController = UIAlertController(title: "Undo Play", message: "Return to the 4th Quarter?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alertController.addAction(cancelAction)
+        
+        let okAction = UIAlertAction(title: "Yes", style: .Default) { (action) in
+            self.newPlayBtn.enabled = true
+            self.qtrText = ""
+            self.updateGameData(gamePlays[gamePlays.count - 1])
+            self.updateVisuals()
+        }
+        alertController.addAction(okAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func returnToSecondDialog() {
+        let alertController = UIAlertController(title: "Undo Play", message: "Return to the 2nd Quarter?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alertController.addAction(cancelAction)
+        
+        let okAction = UIAlertAction(title: "Yes", style: .Default) { (action) in
+            self.qtrText = ""
+            game.qtr = 2
+            self.updateGameData(gamePlays[gamePlays.count - 1])
+            self.updateVisuals()
+        }
+        alertController.addAction(okAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    @IBAction func menuBtn(sender: UIButton) {
+        let alertController = UIAlertController(title: "Game Menu", message: "Choose an option", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alertController.addAction(cancelAction)
+        
+        let saveGameAction = UIAlertAction(title: "Save Game", style: .Default) { (action) in
+            self.saveGame()
+        }
+        alertController.addAction(saveGameAction)
+        
         let exitAction = UIAlertAction(title: "Exit Game", style: .Default) { (action) in
-            //need unWind Segue
+            self.exitGameDialog()
         }
         alertController.addAction(exitAction)
         
         let nextQtrAction = UIAlertAction(title: "Next Qtr", style: .Default) { (action) in
-            
+            var qtr = game.qtr
+            qtr += 1
+            if qtr > 4 {
+                self.qtrLabel.text = ""
+                self.qtrText = "End of Game"
+                self.newPlayBtn.enabled = false
+            }
+            else if qtr == 3 {
+                //startSecondHalf()
+                self.updateVisuals()
+                self.qtrLabel.text = ""
+                self.qtrText = "Halftime"
+                game.qtr = qtr
+            }
+            else {
+                game.qtr = qtr
+                self.updateVisuals()
+            }
         }
         alertController.addAction(nextQtrAction)
+        
+        let exportAction = UIAlertAction(title: "Export", style: .Default) { (action) in
+            //export()
+        }
+        alertController.addAction(exportAction)
+        
+        let manualUpdateAction = UIAlertAction(title: "Manual Update", style: .Default) { (action) in
+            //manualUpdate()
+        }
+        alertController.addAction(manualUpdateAction)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (action) in
+            //settings()
+        }
+        alertController.addAction(settingsAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func exitGameDialog() {
+        let alertController = UIAlertController(title: "Exiting Game", message: "Would you like to save?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alertController.addAction(cancelAction)
+        
+        let exitAction = UIAlertAction(title: "Save and Exit", style: .Default) { (action) in
+            self.saveGame()
+            self.performSegueWithIdentifier("unwindToViewController", sender: self)
+        }
+        alertController.addAction(exitAction)
+        
+        let nextQtrAction = UIAlertAction(title: "Exit Without Saving", style: .Default) { (action) in
+            self.performSegueWithIdentifier("unwindToViewController", sender: self)
+        }
+        alertController.addAction(nextQtrAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func openingKickoffDialog() {
+        let alertController = UIAlertController(title: "Opening Kickoff", message: "Which team is kicking off to begin the game?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let cancelAction = UIAlertAction(title: game.homeTeam.teamName, style: .Default) { (action) in
+            if !game.possFlag {
+                self.changePossession()
+            }
+            self.homeTeamStart = true
+            self.showMessage("\(game.homeTeam.teamName) will kick to \(game.awayTeam.teamName) to begin the game")
+        }
+        alertController.addAction(cancelAction)
+        
+        let okAction = UIAlertAction(title: game.awayTeam.teamName, style: .Default) { (action) in
+            if game.possFlag {
+                self.changePossession()
+            }
+            self.homeTeamStart = false
+            self.showMessage("\(game.awayTeam.teamName) will kick to \(game.homeTeam.teamName) to begin the game")
+        }
+        alertController.addAction(okAction)
         
         self.presentViewController(alertController, animated: true, completion: nil)
     }
@@ -199,7 +373,7 @@ class GameViewController: UIViewController {
         updateVisuals()
         addButton(globalPlay)
         gamePlays.append(globalPlay)
-        //updateStats(globalPlay)
+        updateStats(globalPlay)
         
         if globalPlay.possFlag {
             game.homeTeam.addRecent(globalPlay)
@@ -226,21 +400,21 @@ class GameViewController: UIViewController {
     
     func makeDirectory() -> Bool {
         if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
-            let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("QwikStats").absoluteString
+            let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("QwikStats").path!
             let fileManager = NSFileManager.defaultManager()
-            var isDir: ObjCBool = false
-            if fileManager.fileExistsAtPath(folder, isDirectory: &isDir) {
-                if isDir {
-                    return true
+            if fileManager.fileExistsAtPath(folder) {
+                print("QwikStats folder exists...")
+                return createGameFolder(folder)
+            }
+            else {
+                do {
+                    print("Creating QwikStats folder...")
+                    try fileManager.createDirectoryAtPath(folder, withIntermediateDirectories: false, attributes: nil)
+                    return createGameFolder(folder)
                 }
-                else {
-                    do {
-                        try fileManager.createDirectoryAtPath(folder, withIntermediateDirectories: false, attributes: nil)
-                        return createGameFolder(folder)
-                    }
-                    catch let error as NSError{
-                        print(error.localizedDescription)
-                    }
+                catch let error as NSError{
+                    print("Failed to create Qwikstats folder")
+                    print(error.localizedDescription)
                 }
             }
         }
@@ -249,32 +423,38 @@ class GameViewController: UIViewController {
     
     func createGameFolder(dir: String) -> Bool {
         let fileManager = NSFileManager.defaultManager()
-        var isDir: ObjCBool = false
-        if fileManager.fileExistsAtPath(gameFolder, isDirectory: &isDir) {
-            if isDir {
+        let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent(gameName).path!
+        if fileManager.fileExistsAtPath(folder) {
+            print("Game Directory exists")
+            return true
+        }
+        else {
+            do {
+                print("creating game folder...")
+                try fileManager.createDirectoryAtPath(folder, withIntermediateDirectories: false, attributes: nil)
                 return true
             }
-            else {
-                do {
-                    try fileManager.createDirectoryAtPath(gameFolder, withIntermediateDirectories: false, attributes: nil)
-                    return true
-                }
-                catch let error as NSError{
-                    print(error.localizedDescription)
-                }
+            catch let error as NSError{
+                print("Failed to create Game folder")
+                print(error.localizedDescription)
             }
         }
         return false
     }
 
     func saveGame() {
+        if gameDataList.count == 0 {
+            showMessage("At least one play must be inputted before a save")
+            return
+        }
+        
         if makeDirectory() {
             let file = csvGameData
             let fileManager = NSFileManager.defaultManager()
             let path = NSURL(fileURLWithPath: gameFolder).URLByAppendingPathComponent(file)
             //var isDir: ObjCBool = false
             
-            if fileManager.fileExistsAtPath(path.path!){
+            //if fileManager.fileExistsAtPath(path){
                 
                 //let pathString = path.absoluteString
                 /*if fileManager.fileExistsAtPath(pathString, isDirectory: &isDir) {
@@ -288,30 +468,35 @@ class GameViewController: UIViewController {
                         }
                     }
                 }*/
-                if let fileHandle  = try? NSFileHandle(forWritingToURL: path) {
-                    defer {
-                        fileHandle.closeFile()
-                    }
-                
-                    for i in 0.stride(to: gameDataList.count, by: 1) {
-                        let text = gameDataList[i] + "\n"
-                        if i == 0 {
-                            do {
-                                try text.writeToURL(path, atomically: true, encoding: NSUTF8StringEncoding)
-                            }
-                            catch {
-                                showMessage("There was a problem writing data to your device")
-                            }
-                        }
-                        else {
-                            let data = text.dataUsingEncoding(NSUTF8StringEncoding)
-                            fileHandle.seekToEndOfFile()
-                            fileHandle.writeData(data!)
-                        }
-                    }
+            let temp = gameDataList[0] + "\n"
+            do {
+                try temp.writeToURL(path, atomically: true, encoding: NSUTF8StringEncoding)
+                self.showMessage("Game Saved")
+                print("Game Saved")
+            }
+            catch {
+                showMessage("There was a problem writing data to your device")
+            }
+            
+            if let fileHandle  = try? NSFileHandle(forWritingToURL: path) {
+                defer {
+                    fileHandle.closeFile()
+                }
+            
+                for i in 1.stride(to: gameDataList.count, by: 1) {
+                    let text = gameDataList[i] + "\n"
+        
+                    let data = text.dataUsingEncoding(NSUTF8StringEncoding)
+                    fileHandle.seekToEndOfFile()
+                    fileHandle.writeData(data!)
                 }
             }
+            else {
+                print("fileHandle not working")
+            }
+            //}
         }
+        print(gameFolder)
         //export()
     }
     
@@ -336,6 +521,18 @@ class GameViewController: UIViewController {
             self.playScrollView.addSubview(button)
         
         buttonList.append(button)
+    }
+    
+    func removeButton(play: Play) {
+        buttonList[buttonList.count - 1].hidden = true
+        buttonList.removeAtIndex(buttonList.count - 1)
+        
+        var margin: CGFloat = 5
+        for i in (buttonList.count - 1).stride(to: -1, by: -1) {
+            buttonList[i].frame = CGRectMake(10, margin, buttonWidth, buttonHeight)
+            margin += 55
+        }
+        
     }
     
     func playBtnPressed(sender: UIButton) {
@@ -719,8 +916,273 @@ class GameViewController: UIViewController {
         return play
     }
     
+    func updateStats(play: Play) {
+        var currentPlayer: Player, recPlayer: Player, defPlayer: Player, tacklerPlayer: Player
+        var tempOffTeam: Team, tempDefTeam: Team
+        
+        if play.possFlag {
+            tempOffTeam = game.homeTeam
+            tempDefTeam = game.awayTeam
+        }
+        else {
+            tempOffTeam = game.awayTeam
+            tempDefTeam = game.homeTeam
+        }
+        
+        if play.playerNumber != -1 {
+            if let player = tempOffTeam.getPlayer(play.playerNumber, offensive: true) {
+                currentPlayer = player
+            }
+            else {
+                currentPlayer = Player(offensive: true, number: play.playerNumber)
+                tempOffTeam.addPlayer(currentPlayer)
+            }
+            
+            if play.recNumber != -1 {
+                if let player = tempOffTeam.getPlayer(play.recNumber, offensive: true) {
+                    recPlayer = player
+                }
+                else {
+                    recPlayer = Player(offensive: true, number: play.recNumber)
+                    tempOffTeam.addPlayer(recPlayer)
+                }
+            }
+            
+            if play.defNumber != -1 {
+                if let player = tempDefTeam.getPlayer(play.defNumber, offensive: false) {
+                    defPlayer = player
+                }
+                else {
+                    defPlayer = Player(offensive: false, number: play.defNumber)
+                    tempDefTeam.addPlayer(defPlayer)
+                }
+            }
+        }
+        
+        switch play.playType {
+        case "Pass":
+            tempOffTeam.getPlayer(play.playerNumber, offensive: true)?.updatePassStats(play.gnLs, pic: play.interceptionFlag, incompletion: play.incompleteFlag, td: play.touchdownFlag, fum: play.fumbleFlag)
+            if play.tackleFlag && play.tacklers.count > 0 {
+                var group = false
+                if play.tacklers.count > 1 {
+                    group = true
+                }
+                
+                for i in 0.stride(to: play.tacklers.count, by: 1) {
+                    if let player = tempDefTeam.getPlayer(play.tacklers[i], offensive: false) {
+                        tacklerPlayer = player
+                    }
+                    else {
+                        tacklerPlayer = Player(offensive: false, number: play.tacklers[i])
+                        tempDefTeam.addPlayer(tacklerPlayer)
+                    }
+                    tempDefTeam.getPlayer(play.tacklers[i], offensive: false)?.updateDefStats(false, tackle: play.tackleFlag, loss: play.lossFlag, fumblerec: false, forcedfum: play.fumbleFlag, sack: play.sackFlag, td: false, group: group)
+                }
+            }
+            if !play.interceptionFlag && !play.incompleteFlag && play.recNumber != -1 {
+                tempOffTeam.getPlayer(play.recNumber, offensive: true)?.updateRecStats(play.gnLs, fumb: play.fumbleFlag, td: play.touchdownFlag)
+            }
+            if (play.interceptionFlag || play.fumbleRecFlag) && play.defNumber != -1 {
+                tempDefTeam.getPlayer(play.defNumber, offensive: false)?.updateDefStats(play.interceptionFlag, tackle: false, loss: play.lossFlag, fumblerec: play.fumbleRecFlag, forcedfum: false, sack: false, td: play.touchdownFlag, group: false)
+            }
+
+        case "Run" :
+            tempOffTeam.getPlayer(play.playerNumber, offensive: true)?.updateRunStats(play.gnLs, fumb: play.fumbleFlag, td: play.touchdownFlag)
+            if play.tackleFlag && play.tacklers.count > 0 {
+                var group = false
+                if play.tacklers.count > 1 {
+                    group = true
+                }
+                
+                for i in 0.stride(to: play.tacklers.count, by: 1) {
+                    if let player = tempDefTeam.getPlayer(play.tacklers[i], offensive: false) {
+                        tacklerPlayer = player
+                    }
+                    else {
+                        tacklerPlayer = Player(offensive: false, number: play.tacklers[i])
+                        tempDefTeam.addPlayer(tacklerPlayer)
+                    }
+                    tempDefTeam.getPlayer(play.tacklers[i], offensive: false)?.updateDefStats(false, tackle: play.tackleFlag, loss: play.lossFlag, fumblerec: false, forcedfum: play.fumbleFlag, sack: play.sackFlag, td: false, group: group)
+                }
+            }
+            if play.fumbleRecFlag && play.defNumber != -1 {
+                tempDefTeam.getPlayer(play.defNumber, offensive: false)?.updateDefStats(false, tackle: false, loss: play.lossFlag, fumblerec: play.fumbleRecFlag, forcedfum: false, sack: false, td: play.touchdownFlag, group: false)
+            }
+        
+        case "Field Goal":
+            break
+        
+        case "Kickoff":
+            tempOffTeam.getPlayer(play.playerNumber, offensive: true)?.updateKickRetStats(play.returnYds, fumb: play.fumbleFlag, td: play.touchdownFlag)
+            if play.tackleFlag && play.tacklers.count > 0 {
+                var group = false
+                if play.tacklers.count > 1 {
+                    group = true
+                }
+                
+                for i in 0.stride(to: play.tacklers.count, by: 1) {
+                    if let player = tempDefTeam.getPlayer(play.tacklers[i], offensive: false) {
+                        tacklerPlayer = player
+                    }
+                    else {
+                        tacklerPlayer = Player(offensive: false, number: play.tacklers[i])
+                        tempDefTeam.addPlayer(tacklerPlayer)
+                    }
+                    tempDefTeam.getPlayer(play.tacklers[i], offensive: false)?.updateDefStats(false, tackle: play.tackleFlag, loss: play.lossFlag, fumblerec: false, forcedfum: play.fumbleFlag, sack: play.sackFlag, td: false, group: group)
+                }
+            }
+            if play.fumbleRecFlag && play.defNumber != -1 {
+                tempDefTeam.getPlayer(play.defNumber, offensive: false)?.updateDefStats(false, tackle: false, loss: false, fumblerec: play.fumbleRecFlag, forcedfum: false, sack: false, td: play.touchdownFlag, group: false)
+            }
+            
+        case "Punt":
+            tempOffTeam.getPlayer(play.playerNumber, offensive: true)?.updateKickRetStats(play.returnYds, fumb: play.fumbleFlag, td: play.touchdownFlag)
+            if play.tackleFlag && play.tacklers.count > 0 {
+                var group = false
+                if play.tacklers.count > 1 {
+                    group = true
+                }
+                
+                for i in 0.stride(to: play.tacklers.count, by: 1) {
+                    if let player = tempDefTeam.getPlayer(play.tacklers[i], offensive: false) {
+                        tacklerPlayer = player
+                    }
+                    else {
+                        tacklerPlayer = Player(offensive: false, number: play.tacklers[i])
+                        tempDefTeam.addPlayer(tacklerPlayer)
+                    }
+                    tempDefTeam.getPlayer(play.tacklers[i], offensive: false)?.updateDefStats(false, tackle: play.tackleFlag, loss: play.lossFlag, fumblerec: false, forcedfum: play.fumbleFlag, sack: play.sackFlag, td: false, group: group)
+                }
+            }
+            if play.fumbleRecFlag && play.defNumber != -1 {
+                tempDefTeam.getPlayer(play.defNumber, offensive: false)?.updateDefStats(false, tackle: false, loss: false, fumblerec: play.fumbleRecFlag, forcedfum: false, sack: false, td: play.touchdownFlag, group: false)
+            }
+            
+        case "PAT": break
+            
+        case "2 Pt. Conversion": break
+            
+        case "Penalty": break
+        
+        default: break
+            
+        }
+        
+        if play.possFlag {
+            game.homeTeam = tempOffTeam
+            game.awayTeam = tempDefTeam
+        }
+        else {
+            game.homeTeam = tempDefTeam
+            game.awayTeam = tempOffTeam
+        }
+        
+    }
     
-    
-    
+    func undoStats(play: Play) {
+        var tempOffTeam: Team, tempDefTeam: Team
+        
+        if play.possFlag {
+            tempOffTeam = game.homeTeam
+            tempDefTeam = game.awayTeam
+        }
+        else {
+            tempOffTeam = game.awayTeam
+            tempDefTeam = game.homeTeam
+        }
+        
+        if play.playerNumber != -1 {
+            switch play.playType {
+            case "Pass":
+                tempOffTeam.getPlayer(play.playerNumber, offensive: true)?.undoPassStats(play.gnLs, pic: play.interceptionFlag, incompletion: play.incompleteFlag, td: play.touchdownFlag, fum: play.fumbleFlag)
+                if play.tackleFlag && play.tacklers.count > 0 {
+                    var group = false
+                    if play.tacklers.count > 1 {
+                        group = true
+                    }
+                    
+                    for i in 0.stride(to: play.tacklers.count, by: 1) {
+                        tempDefTeam.getPlayer(play.tacklers[i], offensive: false)?.undoDefStats(false, tackle: play.tackleFlag, loss: play.lossFlag, fumblerec: false, forcedfum: play.fumbleFlag, sack: play.sackFlag, td: false, group: group)
+                    }
+                }
+                if !play.interceptionFlag && !play.incompleteFlag && play.recNumber != -1 {
+                    tempOffTeam.getPlayer(play.recNumber, offensive: true)?.undoRecStats(play.gnLs, fumb: play.fumbleFlag, td: play.touchdownFlag)
+                }
+                if (play.interceptionFlag || play.fumbleRecFlag) && play.defNumber != -1 {
+                    tempDefTeam.getPlayer(play.defNumber, offensive: false)?.undoDefStats(play.interceptionFlag, tackle: false, loss: play.lossFlag, fumblerec: play.fumbleRecFlag, forcedfum: false, sack: false, td: play.touchdownFlag, group: false)
+                }
+                
+            case "Run" :
+                tempOffTeam.getPlayer(play.playerNumber, offensive: true)?.undoRunStats(play.gnLs, fumb: play.fumbleFlag, td: play.touchdownFlag)
+                if play.tackleFlag && play.tacklers.count > 0 {
+                    var group = false
+                    if play.tacklers.count > 1 {
+                        group = true
+                    }
+                    
+                    for i in 0.stride(to: play.tacklers.count, by: 1) {
+                        tempDefTeam.getPlayer(play.tacklers[i], offensive: false)?.undoDefStats(false, tackle: play.tackleFlag, loss: play.lossFlag, fumblerec: false, forcedfum: play.fumbleFlag, sack: play.sackFlag, td: false, group: group)
+                    }
+                }
+                if play.fumbleRecFlag && play.defNumber != -1 {
+                    tempDefTeam.getPlayer(play.defNumber, offensive: false)?.undoDefStats(false, tackle: false, loss: play.lossFlag, fumblerec: play.fumbleRecFlag, forcedfum: false, sack: false, td: play.touchdownFlag, group: false)
+                }
+                
+            case "Field Goal":
+                break
+                
+            case "Kickoff":
+                tempOffTeam.getPlayer(play.playerNumber, offensive: true)?.undoKickRetStats(play.returnYds, fumb: play.fumbleFlag, td: play.touchdownFlag)
+                if play.tackleFlag && play.tacklers.count > 0 {
+                    var group = false
+                    if play.tacklers.count > 1 {
+                        group = true
+                    }
+                    
+                    for i in 0.stride(to: play.tacklers.count, by: 1) {
+                        tempDefTeam.getPlayer(play.tacklers[i], offensive: false)?.undoDefStats(false, tackle: play.tackleFlag, loss: play.lossFlag, fumblerec: false, forcedfum: play.fumbleFlag, sack: play.sackFlag, td: false, group: group)
+                    }
+                }
+                if play.fumbleRecFlag && play.defNumber != -1 {
+                    tempDefTeam.getPlayer(play.defNumber, offensive: false)?.undoDefStats(false, tackle: false, loss: false, fumblerec: play.fumbleRecFlag, forcedfum: false, sack: false, td: play.touchdownFlag, group: false)
+                }
+                
+            case "Punt":
+                tempOffTeam.getPlayer(play.playerNumber, offensive: true)?.undoKickRetStats(play.returnYds, fumb: play.fumbleFlag, td: play.touchdownFlag)
+                if play.tackleFlag && play.tacklers.count > 0 {
+                    var group = false
+                    if play.tacklers.count > 1 {
+                        group = true
+                    }
+                    
+                    for i in 0.stride(to: play.tacklers.count, by: 1) {
+                        tempDefTeam.getPlayer(play.tacklers[i], offensive: false)?.undoDefStats(false, tackle: play.tackleFlag, loss: play.lossFlag, fumblerec: false, forcedfum: play.fumbleFlag, sack: play.sackFlag, td: false, group: group)
+                    }
+                }
+                if play.fumbleRecFlag && play.defNumber != -1 {
+                    tempDefTeam.getPlayer(play.defNumber, offensive: false)?.undoDefStats(false, tackle: false, loss: false, fumblerec: play.fumbleRecFlag, forcedfum: false, sack: false, td: play.touchdownFlag, group: false)
+                }
+                
+            case "PAT": break
+                
+            case "2 Pt. Conversion": break
+                
+            case "Penalty": break
+                
+            default: break
+                
+            }
+            
+            if play.possFlag {
+                game.homeTeam = tempOffTeam
+                game.awayTeam = tempDefTeam
+            }
+            else {
+                game.homeTeam = tempDefTeam
+                game.awayTeam = tempOffTeam
+            }
+        }
+        
+    }
     
 }

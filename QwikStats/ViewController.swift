@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 class ViewController: UIViewController {
     
@@ -21,32 +22,54 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func showMessage(message: String) {
+        self.view.makeToast(message, duration: 3.0, position: .Bottom)
+    }
+    
     @IBAction func newGameBtn(sender: UIButton) {
         self.performSegueWithIdentifier("NewGameSegue", sender: self)
     }
     
     @IBAction func openGameBtn(sender: UIButton) {
-        self.performSegueWithIdentifier("OpenGameSegue", sender: self)
-        /*let vc = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as! GameViewController
-        let navigationController = UINavigationController(rootViewController: vc)
-        self.presentViewController(navigationController, animated: true, completion: nil)
-        */
         
+        
+        let fileManager = NSFileManager.defaultManager()
+        if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
+            let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("QwikStats").path!
+            if fileManager.fileExistsAtPath(folder) {
+                do {
+                    let dirContents = try fileManager.contentsOfDirectoryAtPath(folder)
+                    print(dirContents)
+                    
+                    if dirContents.count == 0 {
+                        showMessage("No saved games on this device")
+                        return
+                    }
+                    
+                    self.performSegueWithIdentifier("OpenGameSegue", sender: self)
+                    
+                }
+                catch let error as NSError {
+                    print(error.localizedDescription)
+                }
+            }
+            else {
+                showMessage("No saved games on this device")
+                return
+            }
+        }
+
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        if (segue.identifier == "OpenGameSegue") {
-            //get a reference to the destination view controller
-            let destinationVC:GameViewController = segue.destinationViewController as! GameViewController
-            
-            //set properties on the destination view controller
-            destinationVC.homeTeamName = "Auburn"
-            destinationVC.awayTeamName = "Alabama"
-            //etc...
-        }
+
     }
 
     @IBAction func settingsBtn(sender: UIButton) {
+        
+    }
+    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         
     }
     

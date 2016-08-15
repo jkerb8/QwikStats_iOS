@@ -5,10 +5,59 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--OpenGameViewController-->
+        <scene sceneID="htV-HX-5uy">
+            <objects>
+                <viewController storyboardIdentifier="OpenGameViewController" title="OpenGameViewController" id="lbH-iG-WLt" customClass="OpenGameViewController" customModule="QwikStats" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="g1x-0d-Cmi"/>
+                        <viewControllerLayoutGuide type="bottom" id="gv4-H2-eQB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iod-OI-QZC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Pbo-q4-Pfe">
+                                <rect key="frame" x="0.0" y="64" width="414" height="430"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dqt-pN-VbO">
+                                <rect key="frame" x="53" y="524" width="131" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Delete Game">
+                                    <color key="titleColor" red="0.4610881785" green="0.64847756410000001" blue="0.1885704255" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteGameBtn:" destination="lbH-iG-WLt" eventType="touchUpInside" id="gil-de-HvB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfx-VT-tsa">
+                                <rect key="frame" x="230" y="524" width="131" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Open Game">
+                                    <color key="titleColor" red="0.4610881785" green="0.64847756410000001" blue="0.1885704255" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="openGameBtn:" destination="lbH-iG-WLt" eventType="touchUpInside" id="y1R-De-kC4"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="tableView" destination="Pbo-q4-Pfe" id="jgq-H0-zF6"/>
+                        <segue destination="oEw-Wd-BlP" kind="presentation" identifier="LoadGameSegue" id="cEJ-lh-7Zo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wkW-JH-sgX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="540" y="-351"/>
+        </scene>
+        <!--ViewController-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="QwikStats" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" title="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="QwikStats" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -52,7 +101,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <segue destination="Yvc-VK-tlX" kind="show" identifier="NewGameSegue" id="0gX-pP-gs3"/>
-                        <segue destination="oEw-Wd-BlP" kind="show" identifier="OpenGameSegue" id="K5g-Sm-6GM"/>
+                        <segue destination="lbH-iG-WLt" kind="show" identifier="OpenGameSegue" id="nbg-E9-uQu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -191,14 +240,18 @@
                         <outlet property="homePossImageView" destination="IwP-VI-3dR" id="gbe-g5-ClE"/>
                         <outlet property="homeScoreLabel" destination="1HX-Ik-6JF" id="EPc-hL-IBQ"/>
                         <outlet property="homeTeamNameView" destination="cYP-Wr-7VG" id="X2T-kD-6Yo"/>
+                        <outlet property="newPlayBtn" destination="HRl-kF-XoU" id="tKZ-7r-JEV"/>
                         <outlet property="playScrollView" destination="qIP-ZW-WV2" id="mW5-4P-m4Z"/>
                         <outlet property="qtrLabel" destination="4N0-oZ-WJd" id="wRf-Tu-DhR"/>
                         <outlet property="qtrNoEditLabel" destination="MQh-d7-6a7" id="meS-fl-Hax"/>
+                        <outlet property="undoPlayBtn" destination="mdO-5a-byC" id="nxP-KA-x3z"/>
                         <outlet property="ydLnLabel" destination="JOK-jE-Ql0" id="yoR-bd-jpT"/>
                         <outlet property="ydLnNoEditLabel" destination="xEe-7v-iqP" id="aa3-XC-5lN"/>
+                        <segue destination="15X-In-mcR" kind="unwind" identifier="unwindToViewController" unwindAction="prepareForUnwind:" id="Zlt-jf-NyV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B1K-Qg-xh7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="15X-In-mcR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1082" y="-351"/>
         </scene>
@@ -283,12 +336,12 @@
                         <outlet property="fieldSizePicker" destination="1Pa-Rh-00d" id="JJE-oQ-c9z"/>
                         <outlet property="homeTeamTextField" destination="FEe-Gi-QnV" id="NrN-vV-ZCE"/>
                         <outlet property="scrollView" destination="DSA-LQ-tdb" id="gMQ-o2-td3"/>
-                        <segue destination="oEw-Wd-BlP" kind="show" identifier="StartNewGameSegue" id="fnV-As-r4j"/>
+                        <segue destination="oEw-Wd-BlP" kind="presentation" identifier="StartNewGameSegue" id="fnV-As-r4j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ynB-RJ-EMp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1205" y="453"/>
+            <point key="canvasLocation" x="1135" y="453"/>
         </scene>
         <!--PlayTypeController-->
         <scene sceneID="jVJ-aA-VOg">
@@ -1337,7 +1390,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VVQ-nT-kmu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="30" y="453"/>
+            <point key="canvasLocation" x="4" y="453"/>
         </scene>
     </scenes>
     <resources>
@@ -1346,6 +1399,6 @@
         <image name="possession_football" width="38" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fnV-As-r4j"/>
+        <segue reference="cEJ-lh-7Zo"/>
     </inferredMetricsTieBreakers>
 </document>
