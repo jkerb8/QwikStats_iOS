@@ -66,6 +66,7 @@ class GameViewController: UIViewController {
     var month = 1
     var year = 2016
     var fldSize = 0
+    var openingPastGame = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,10 +113,13 @@ class GameViewController: UIViewController {
 
         //set scoreboard font stuff
         
-        //if opening game, go to openGame()
-        
-        //else go to ...
-        openingKickoffDialog()
+        if openingPastGame {
+            print("Opening Game..")
+            openGame()
+        }
+        else {
+            openingKickoffDialog()
+        }
         
         // Do any additional setup after loading the view.
     }
@@ -398,6 +402,151 @@ class GameViewController: UIViewController {
         //playList data here if needed
     }
     
+    func openGame() {
+        if makeDirectory() {
+            let file = csvGameData
+            //let fileManager = NSFileManager.defaultManager()
+            let path = NSURL(fileURLWithPath: gameFolder).URLByAppendingPathComponent(file)
+            var text = ""
+            var lines = [String]()
+            var line = ""
+            var cntr = 0
+            
+            print(path.absoluteString)
+            /*if let aStreamReader = StreamReader(path: path) {
+                print("Starting StreamReader...")
+                defer {
+                    print("Closing StreamReader...")
+                    aStreamReader.close()
+                }*/
+            do {
+                try text = NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding) as String
+                print("File Length: \(text.characters.count)")
+                lines = text.componentsSeparatedByString("\n")
+                
+                var max = lines.count
+                for i in 0.stride(to: max, by: 1) {
+                    if i < lines.count {
+                        if lines[i] == "" {
+                            lines.removeAtIndex(i)
+                            max -= 1
+                        }
+                    }
+                }
+                text = ""
+            }
+            catch {
+                showMessage("Could not open file")
+                return
+            }
+            
+            while cntr < lines.count {
+                line = lines[cntr]
+                if line != "" {
+                    if line == "END" {
+                        updateVisuals()
+                        qtrText = "End of Game"
+                        qtrLabel.text = ""
+                        newPlayBtn.enabled = false
+                        game.qtr = 4
+                        homeTeamStart = !gamePlays[0].possFlag
+                    }
+                    else if line == "HALF" {
+                        updateVisuals()
+                        qtrText = "Halftime"
+                        qtrLabel.text = ""
+                        game.qtr = 3
+                        homeTeamStart = !gamePlays[0].possFlag
+                    }
+                    else if line.characters.count == 1 {
+                        qtrText = ""
+                        game.qtr = Int(line)!
+                        updateVisuals()
+                        homeTeamStart = !gamePlays[0].possFlag
+                    }
+                    else {
+                        let words = line.componentsSeparatedByString(",")
+                        
+                        var play = Play(currentGame: game)
+                        
+                        play.prevDist = Int(words[0])!
+                        play.prevDown = Int(words[1])!
+                        play.downNum = Int(words[2])!
+                        play.dist = Int(words[3])!
+                        play.fgDistance = Int(words[4])!
+                        play.fgMadeFlag = words[5].toBool()!
+                        play.fieldPos = Int(words[6])!
+                        play.ydLn = Int(words[7])!
+                        play.gnLs = Int(words[8])!
+                        play.incompleteFlag = words[9].toBool()!
+                        play.playCount = Int(words[10])!
+                        play.playerNumber = Int(words[11])!
+                        play.playType = words[12]
+                        play.qtr = Int(words[13])!
+                        play.recNumber = Int(words[14])!
+                        play.returnFlag = words[15].toBool()!
+                        play.touchdownFlag = words[16].toBool()!
+                        play.defNumber = Int(words[17])!
+                        play.fumbleFlag = words[18].toBool()!
+                        play.interceptionFlag = words[19].toBool()!
+                        play.touchbackFlag = words[20].toBool()!
+                        play.faircatchFlag = words[21].toBool()!
+                        play.returnYds = Int(words[22])!
+                        play.fumbleRecFlag = words[23].toBool()!
+                        play.tackleFlag = words[24].toBool()!
+                        play.sackFlag = words[25].toBool()!
+                        play.possFlag = words[26].toBool()!
+                        play.safetyFlag = words[27].toBool()!
+                        play.defensivePenalty = words[28].toBool()!
+                        play.returnedYdLn = Int(words[29])!
+                        play.prevYdLn = Int(words[30])!
+                        play.firstDn = Int(words[31])!
+                        play.playCall = words[32]
+                        play.formation = words[33]
+                        play.hash = words[34]
+                        play.playDir = words[35]
+                        play.offensiveTeam = words[36]
+                        
+                        for i in 37.stride(to: words.count, by: 1) {
+                            play.tacklers.append(Int(words[i])!)
+                        }
+                        
+                        game.qtr = play.qtr
+                        
+                        let poss = play.possFlag
+                        if play.interceptionFlag || play.fumbleRecFlag || play.playType == "Kickoff" || play.playType == "Punt" {
+                            play.possFlag = !play.possFlag
+                        }
+                        play = getResult(play)
+                        play.possFlag = poss
+                        
+                        updateGameData(play)
+                        gamePlays.append(play)
+                        updateStats(play)
+                        if play.possFlag {
+                            game.homeTeam.addRecent(play)
+                        }
+                        else {
+                            game.awayTeam.addRecent(play)
+                        }
+                        
+                        addButton(play)
+                        
+                        gameDataList.append(line + "\n")
+                        
+                        print(play.result)
+                        
+                        //playList crap if needed
+                    }
+                    cntr += 1
+                }
+            }
+            updateVisuals()
+            homeTeamStart = !gamePlays[0].possFlag
+            
+        }
+    }
+    
     func makeDirectory() -> Bool {
         if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
             let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("QwikStats").path!
@@ -468,9 +617,9 @@ class GameViewController: UIViewController {
                         }
                     }
                 }*/
-            let temp = gameDataList[0] + "\n"
+            let temp = gameDataList[0]
             do {
-                try temp.writeToURL(path, atomically: true, encoding: NSUTF8StringEncoding)
+                try temp.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
                 self.showMessage("Game Saved")
                 print("Game Saved")
             }
@@ -484,9 +633,28 @@ class GameViewController: UIViewController {
                 }
             
                 for i in 1.stride(to: gameDataList.count, by: 1) {
-                    let text = gameDataList[i] + "\n"
+                    let text = gameDataList[i]
         
                     let data = text.dataUsingEncoding(NSUTF8StringEncoding)
+                    fileHandle.seekToEndOfFile()
+                    fileHandle.writeData(data!)
+                }
+                
+                if qtrText == "End of Game" {
+                    let text = "END"
+                    let data = text.dataUsingEncoding(NSUTF8StringEncoding)
+                    fileHandle.seekToEndOfFile()
+                    fileHandle.writeData(data!)
+                }
+                else if qtrText == "Halftime" {
+                    let text = "HALF"
+                    let data = text.dataUsingEncoding(NSUTF8StringEncoding)
+                    fileHandle.seekToEndOfFile()
+                    fileHandle.writeData(data!)
+                }
+                else {
+                    let text = qtrLabel.text
+                    let data = text!.dataUsingEncoding(NSUTF8StringEncoding)
                     fileHandle.seekToEndOfFile()
                     fileHandle.writeData(data!)
                 }
@@ -498,6 +666,123 @@ class GameViewController: UIViewController {
         }
         print(gameFolder)
         //export()
+    }
+    
+    func exportLocally() {
+        if (gamePlays.count == 0) {
+            showMessage("Minimum of one play must occur before exporting")
+            return
+        }
+        
+        let fileManager = NSFileManager.defaultManager()
+        let offLabelList = ["Number", "Pass Attempts", "Pass Completions", "Pass Yards", "Pass Touchdowns", "Interceptions", "Rush Attempts", "Rush Yards", "Rush Touchdowns", "Receptions", "Receiving Yards", "Receiving Touchdowns"]
+        let defLabelList = ["Number", "Tackles", "TFL", "Sacks", "Forced Fumbles", "Fumble Recoveries", "Interceptions", "Defensive TDs"]
+        let playLabelList = ["Play Number", "Offensive Team", "Down", "Distance", "Hash", "Yard Line", "Play Type", "Play Result", "Gain/Loss", "OFF STR", "Play Direction", "Gap", "Pass Zone", "Defensive Front", "Coverage", "Qtr", "Penalty", "Passer", "Receiver", "Rusher"]
+        
+        var cntr = 0
+        var labels = ""
+        for i in 0.stride(to: 3, by: 1) {
+            var labelList = [String]()
+            var playerList = [Player]()
+            var fileName = ""
+            switch i {
+            case 0:
+                labelList = offLabelList
+            case 1:
+                labelList = defLabelList
+            case 2:
+                labelList = playLabelList
+            default:
+                break
+            }
+            
+            for j in 0.stride(to: labelList.count, by: 1) {
+                cntr += 1
+                labels += labelList[j]
+                if cntr < labelList.count {
+                    labels += ", "
+                }
+                else {
+                    labels += "\n"
+                }
+            }
+            
+            for k in 0.stride(to: 5, by: 1) {
+                switch k {
+                case 0:
+                    fileName = csvOffHomeStats
+                    playerList = game.homeTeam.players
+                case 1:
+                    fileName = csvOffAwayStats
+                    playerList = game.awayTeam.players
+                case 2:
+                    fileName = csvDefHomeStats
+                    playerList = game.homeTeam.players
+                case 3:
+                    fileName = csvDefAwayStats
+                    playerList = game.awayTeam.players
+                case 4:
+                    fileName = csvPlayList
+                default:
+                    break
+                }
+                
+                let path = NSURL(fileURLWithPath: gameFolder).URLByAppendingPathComponent(fileName)
+                
+                if k < 4 {
+                    var temp = ""
+                    for m in 0.stride(to: playerList.count, by: 1) {
+                        let player = playerList[m]
+                        
+                        if k < 2 {
+                            if player.offensive {
+                                temp = "\(player.number), \(player.passatmpts), \(player.passcomps), \(player.passyds), \(player.passtds), \(player.ints), \(player.runatmpts), \(player.runyds), \(player.runtds), \(player.catches), \(player.recyds), \(player.rectds)"
+                            }
+                            else {
+                                continue
+                            }
+                        }
+                        else {
+                            if !player.offensive {
+                                temp = "\(player.number), \(player.tackles), \(player.tfls), \(player.sacks), \(player.forcedfums), \(player.fumblerecs), \(player.ints), \(player.deftds)"
+                            }
+                            else {
+                                continue
+                            }
+                        }
+                        
+                        if m == 0 {
+                            do {
+                                try temp.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+                            }
+                            catch {
+                                showMessage("There was a problem writing data to your device")
+                            }
+                        }
+                        else if let fileHandle  = try? NSFileHandle(forWritingToURL: path) {
+                            
+                            defer {
+                                fileHandle.closeFile()
+                            }
+                                    
+                            let data = temp.dataUsingEncoding(NSUTF8StringEncoding)
+                            fileHandle.seekToEndOfFile()
+                            fileHandle.writeData(data!)
+                        }
+                        else {
+                            print("fileHandle not working")
+                        }
+                    }
+                    
+                }
+                else {
+                    //let up printing of plays
+                }
+                
+            }
+            
+        }
+        
     }
     
     func addButton(play: Play) {
@@ -512,7 +797,7 @@ class GameViewController: UIViewController {
         let button = UIButton.init(type: UIButtonType.System) as UIButton
             button.frame = CGRectMake(10, 5, buttonWidth, buttonHeight)
             button.backgroundColor = UIColor.clearColor()
-            button.setTitle("Play \(prevNum+1) - \(globalPlay.result)", forState: UIControlState.Normal)
+            button.setTitle("Play \(prevNum+1) - \(play.result)", forState: UIControlState.Normal)
             button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             button.addTarget(self, action: #selector(playBtnPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
@@ -1185,4 +1470,17 @@ class GameViewController: UIViewController {
         
     }
     
+}
+
+extension String {
+    func toBool() -> Bool? {
+        switch self {
+        case "True", "true", "yes", "1":
+            return true
+        case "False", "false", "no", "0":
+            return false
+        default:
+            return nil
+        }
+    }
 }

@@ -20,6 +20,7 @@
 		214D8FE81D2224D7009C3A83 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 214D8FE61D2224D7009C3A83 /* LaunchScreen.storyboard */; };
 		214D8FF31D2224D7009C3A83 /* QwikStatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FF21D2224D7009C3A83 /* QwikStatsTests.swift */; };
 		214D8FFE1D2224D7009C3A83 /* QwikStatsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214D8FFD1D2224D7009C3A83 /* QwikStatsUITests.swift */; };
+		2166E1421D654ACD00B887A2 /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2166E1411D654ACD00B887A2 /* StreamReader.swift */; };
 		2187BD421D4C5AAF005FA398 /* Pods_QwikStats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 213CB19F1D39C3D4007595F6 /* Pods_QwikStats.framework */; };
 		2189E0A81D56DA320016CF86 /* PasserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0A71D56DA320016CF86 /* PasserViewController.swift */; };
 		2189E0B11D56DA4B0016CF86 /* ReturnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0B01D56DA4B0016CF86 /* ReturnerViewController.swift */; };
@@ -124,6 +125,7 @@
 		214D8FF91D2224D7009C3A83 /* QwikStatsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QwikStatsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		214D8FFD1D2224D7009C3A83 /* QwikStatsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QwikStatsUITests.swift; sourceTree = "<group>"; };
 		214D8FFF1D2224D7009C3A83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2166E1411D654ACD00B887A2 /* StreamReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
 		2189E0A71D56DA320016CF86 /* PasserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasserViewController.swift; sourceTree = "<group>"; };
 		2189E0B01D56DA4B0016CF86 /* ReturnerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnerViewController.swift; sourceTree = "<group>"; };
 		2189E0B21D56DA5F0016CF86 /* PenaltyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenaltyViewController.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				2189E0BC1D56DAB30016CF86 /* HashDirViewController.swift */,
 				213B87DD1D5CD054000D3DB9 /* NewGameViewController.swift */,
 				21FF6BE21D613C030089514C /* OpenGameViewController.swift */,
+				2166E1411D654ACD00B887A2 /* StreamReader.swift */,
 			);
 			path = QwikStats;
 			sourceTree = "<group>";
@@ -611,6 +614,7 @@
 				2116578C1D4551500035D6B4 /* PlayTypeController.swift in Sources */,
 				211657881D454F370035D6B4 /* PresentedTableViewController.swift in Sources */,
 				2116578E1D47063B0035D6B4 /* GameViewController.swift in Sources */,
+				2166E1421D654ACD00B887A2 /* StreamReader.swift in Sources */,
 				2189E0BB1D56DAA80016CF86 /* TackleViewController.swift in Sources */,
 				213A04C71D4AD4640050FF8F /* RunViewController.swift in Sources */,
 				214D8FDE1D2224D7009C3A83 /* AppDelegate.swift in Sources */,

@@ -106,6 +106,7 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             destinationVC.year = Int(dateArray[0])!
             destinationVC.month = Int(dateArray[1])!
             destinationVC.day = Int(dateArray[2])!
+            destinationVC.openingPastGame = false
         }
     }
     

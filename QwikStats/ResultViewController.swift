@@ -152,6 +152,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
                 gnLsPicker.selectItem(gnLsData.count - 1, animated: true)
             }
             else {
+                print("TOUCHDOWN, TRYING TO MOVE SWITCH")
                 gnLsPicker.selectItem(ogGnLs, animated: true)
             }
         }

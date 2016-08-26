@@ -16,6 +16,8 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
     var games = [Game]()
     var gameInfo = [String]()
     var checked = [Bool]()
+    var qwikPath : String!
+    var gamePaths = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,10 +63,46 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
             destinationVC.year = thisGame.year
             destinationVC.month = thisGame.month
             destinationVC.day = thisGame.day
+            destinationVC.openingPastGame = true
         }
     }
     
     @IBAction func deleteGameBtn(sender: UIButton) {
+        deleteDialog()
+    }
+    
+    func deleteDialog() {
+        let alertController = UIAlertController(title: "Delete Game", message: "Are you sure you want to selete the selected game?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alertController.addAction(cancelAction)
+        
+        let okAction = UIAlertAction(title: "Delete", style: .Default) { (action) in
+            let fileManager = NSFileManager.defaultManager()
+            
+            for i in 0.stride(to: self.checked.count, by: 1) {
+                if self.checked[i] {
+                    do {
+                        try fileManager.removeItemAtPath(self.gamePaths[i])
+                        self.checked.removeAtIndex(i)
+                        self.gamePaths.removeAtIndex(i)
+                        self.games.removeAtIndex(i)
+                        self.gameInfo.removeAtIndex(i)
+                        self.tableView.reloadData()
+                    }
+                    catch let error as NSError {
+                        print(error)
+                    }
+                    break
+                }
+            }
+            
+        }
+        alertController.addAction(okAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     @IBAction func openGameBtn(sender: UIButton) {
@@ -76,7 +114,7 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         if canStart {
-            self.performSegueWithIdentifier("StartNewGameSegue", sender: self)
+            self.performSegueWithIdentifier("LoadGameSegue", sender: self)
         }
         else {
             showMessage("Please select a game")
@@ -84,11 +122,11 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return gameInfo.count
+        return 1
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return gameInfo.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -96,6 +134,8 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
         
         //configure cell
         cell.textLabel?.text = gameInfo[indexPath.row]
+        cell.textLabel?.numberOfLines = 3
+        cell.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         if !checked[indexPath.row] {
             cell.accessoryType = .None
         }
@@ -121,8 +161,8 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func resetChecks() {
-        for i in 0.stride(to: tableView.numberOfSections, by: 1) {
-            if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: i)) {
+        for i in 0.stride(to: tableView.numberOfRowsInSection(0), by: 1) {
+            if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) {
                 cell.accessoryType = .None
                 checked[i] = false
             }
@@ -131,13 +171,13 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func loadGames() {
         var words = [String]()
-        var current: Game
         
         let fileManager = NSFileManager.defaultManager()
         if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
             let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("QwikStats").path!
             if fileManager.fileExistsAtPath(folder) {
                 do {
+                    qwikPath = folder
                     var dirContents = try fileManager.contentsOfDirectoryAtPath(folder)
                     if dirContents.contains(".DS_Store") {
                         dirContents.removeAtIndex(dirContents.indexOf(".DS_Store")!)
@@ -148,15 +188,18 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
                         showMessage("No saved games on this device")
                         return
                     }
+            
                     //tableView.beginUpdates()
                     
                     for i in 0.stride(to: dirContents.count, by: 1) {
                         words = [String]()
                         words = dirContents[i].componentsSeparatedByString("_")
-                        current = Game(awayName: words[7], homeName: words[5], division: words[3], day: Int(words[1])!, month: Int(words[0])!, year: Int(words[2])!, fieldSize: Int(words[4])!)
+                        let current = Game(awayName: words[7], homeName: words[5], division: words[3], day: Int(words[1])!, month: Int(words[0])!, year: Int(words[2])!, fieldSize: Int(words[4])!)
                         games.append(current)
                         gameInfo.append("\(current.homeTeam.teamName) vs. \(current.awayTeam.teamName) \n\t\t \(current.division) \n\t\t \(intToMonth(current.month)) \(current.day) \(current.year)")
                         checked.append(false)
+                        gamePaths.append(NSURL(fileURLWithPath: qwikPath).URLByAppendingPathComponent(dirContents[i]).absoluteString)
+                        print(gameInfo[i])
                     }
                     
                     tableView.reloadData()
