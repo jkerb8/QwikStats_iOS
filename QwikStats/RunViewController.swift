@@ -16,9 +16,12 @@ class RunViewController: UIViewController {
     @IBOutlet var recent1Btn: UIButton!
     @IBOutlet var recent2Btn: UIButton!
     @IBOutlet var recent3Btn: UIButton!
+    @IBOutlet var fumbleSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fumbleSwitch.setOn(globalPlay.fumbleFlag, animated: true)
         
         var recentPlayers = [Int]()
         if (game.possFlag) {
@@ -74,6 +77,10 @@ class RunViewController: UIViewController {
         
     }
     
+    @IBAction func switchChanged(sender: UISwitch) {
+        
+    }
+    
     @IBAction func recent1Btn(sender: UIButton) {
         if let text = sender.titleLabel?.text {
             numberTextField.text = text
@@ -110,7 +117,7 @@ class RunViewController: UIViewController {
     
     @IBAction func rightBtn(sender: UIButton) {
         save()
-        if globalPlay.playType == "Pass" && globalPlay.interceptionFlag {
+        if (globalPlay.playType == "Pass" && globalPlay.interceptionFlag) {
             turnoverDialog()
         }
         else {
@@ -130,6 +137,7 @@ class RunViewController: UIViewController {
     
     func save() {
         if let num = Int(numberTextField.text!) {
+            globalPlay.fumbleFlag = fumbleSwitch.on
             if globalPlay.playType == "Pass" {
                 globalPlay.recNumber = num
             }

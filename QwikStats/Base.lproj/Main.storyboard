@@ -1205,14 +1205,14 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f9P-zo-Lk4">
-                                <rect key="frame" x="61" y="229" width="89" height="30"/>
+                                <rect key="frame" x="61" y="253" width="89" height="30"/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="cancelBtn:" destination="lmp-Ad-SQ1" eventType="touchUpInside" id="VXZ-3V-8Md"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gO2-kI-c1B">
-                                <rect key="frame" x="198" y="229" width="89" height="30"/>
+                                <rect key="frame" x="198" y="253" width="89" height="30"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
                                     <action selector="saveBtn:" destination="lmp-Ad-SQ1" eventType="touchUpInside" id="leU-Sk-Jzj"/>
@@ -1227,21 +1227,14 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jSq-k6-Rim">
-                                <rect key="frame" x="61" y="170" width="46" height="30"/>
+                                <rect key="frame" x="61" y="215" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="recent1Btn:" destination="lmp-Ad-SQ1" eventType="touchUpInside" id="Ugz-YN-c17"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xcd-sU-KOA">
-                                <rect key="frame" x="151" y="170" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="recent2Btn:" destination="lmp-Ad-SQ1" eventType="touchUpInside" id="l5U-19-8rZ"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CAw-n6-Sa5">
-                                <rect key="frame" x="241" y="170" width="46" height="30"/>
+                                <rect key="frame" x="241" y="215" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="recent3Btn:" destination="lmp-Ad-SQ1" eventType="touchUpInside" id="VkY-5B-rhp"/>
@@ -1253,12 +1246,32 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UAq-oW-ZPC">
+                                <rect key="frame" x="150" y="169" width="51" height="31"/>
+                                <connections>
+                                    <action selector="switchChanged:" destination="lmp-Ad-SQ1" eventType="valueChanged" id="eu3-qA-M0g"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fumble" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rfY-GY-gkK">
+                                <rect key="frame" x="145" y="140" width="59" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xcd-sU-KOA">
+                                <rect key="frame" x="151" y="215" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="recent2Btn:" destination="lmp-Ad-SQ1" eventType="touchUpInside" id="l5U-19-8rZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
+                        <outlet property="fumbleSwitch" destination="UAq-oW-ZPC" id="zIj-m9-79G"/>
                         <outlet property="numberTextField" destination="fJU-Bu-odr" id="Xsa-jt-HYj"/>
                         <outlet property="recent1Btn" destination="jSq-k6-Rim" id="DIq-jb-FEc"/>
                         <outlet property="recent2Btn" destination="Xcd-sU-KOA" id="Tve-L1-5Qm"/>

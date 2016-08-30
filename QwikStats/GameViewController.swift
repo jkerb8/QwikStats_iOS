@@ -9,6 +9,7 @@
 import UIKit
 import Toast_Swift
 import MZFormSheetPresentationController
+import MessageUI
 
 var game: Game!
 var globalPlay: Play!
@@ -19,7 +20,7 @@ var ydLnData = [Int]()
 var ydLnStrings = [String]()
 var gamePlays = [Play]()
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, MFMailComposeViewControllerDelegate{
 
     @IBOutlet var awayTeamNameView: UILabel!
     @IBOutlet var homeTeamNameView: UILabel!
@@ -135,6 +136,7 @@ class GameViewController: UIViewController {
     
     @IBAction func newPlayBtn(sender: UIButton) {
         saved = false
+        globalPlay = nil
         globalPlay = Play(currentGame: game)
         playTypeDialog()
         
@@ -268,7 +270,7 @@ class GameViewController: UIViewController {
         alertController.addAction(nextQtrAction)
         
         let exportAction = UIAlertAction(title: "Export", style: .Default) { (action) in
-            //export()
+            self.export()
         }
         alertController.addAction(exportAction)
         
@@ -369,7 +371,7 @@ class GameViewController: UIViewController {
             }
         }
         
-        globalPlay.playCount = buttonList.count + 1
+        globalPlay.playCount = gamePlays.count + 1
         globalPlay.offensiveTeam = getOffensiveTeam()
         globalPlay = getResult(globalPlay)
         updateFlag = false
@@ -390,7 +392,7 @@ class GameViewController: UIViewController {
         
         if globalPlay.tacklers.count > 0 {
             for i in 0.stride(to: globalPlay.tacklers.count, by: 1){
-                output += "," + String(i)
+                output += "," + String(globalPlay.tacklers[i])
             }
         }
         
@@ -598,6 +600,7 @@ class GameViewController: UIViewController {
         }
         
         if makeDirectory() {
+            var failed = false
             let file = csvGameData
             let fileManager = NSFileManager.defaultManager()
             let path = NSURL(fileURLWithPath: gameFolder).URLByAppendingPathComponent(file)
@@ -624,7 +627,10 @@ class GameViewController: UIViewController {
                 print("Game Saved")
             }
             catch {
-                showMessage("There was a problem writing data to your device")
+                if !failed {
+                    showMessage("There was a problem writing data to your device")
+                    failed = true
+                }
             }
             
             if let fileHandle  = try? NSFileHandle(forWritingToURL: path) {
@@ -660,12 +666,12 @@ class GameViewController: UIViewController {
                 }
             }
             else {
-                print("fileHandle not working")
+                print("fileHandle not working - game file")
             }
             //}
         }
         print(gameFolder)
-        //export()
+        exportLocally()
     }
     
     func exportLocally() {
@@ -681,20 +687,38 @@ class GameViewController: UIViewController {
         
         var cntr = 0
         var labels = ""
-        for i in 0.stride(to: 3, by: 1) {
-            var labelList = [String]()
-            var playerList = [Player]()
-            var fileName = ""
-            switch i {
+        var labelList = [String]()
+        var playerList = [Player]()
+        var fileName = ""
+        
+        
+        for k in 0.stride(to: 5, by: 1) {
+            switch k {
             case 0:
+                fileName = csvOffHomeStats
                 labelList = offLabelList
+                playerList = game.homeTeam.players
             case 1:
-                labelList = defLabelList
+                fileName = csvOffAwayStats
+                labelList = offLabelList
+                playerList = game.awayTeam.players
             case 2:
+                fileName = csvDefHomeStats
+                labelList = defLabelList
+                playerList = game.homeTeam.players
+            case 3:
+                fileName = csvDefAwayStats
+                labelList = defLabelList
+                playerList = game.awayTeam.players
+            case 4:
+                fileName = csvPlayList
                 labelList = playLabelList
             default:
                 break
             }
+            
+            cntr = 0
+            labels = ""
             
             for j in 0.stride(to: labelList.count, by: 1) {
                 cntr += 1
@@ -707,82 +731,100 @@ class GameViewController: UIViewController {
                 }
             }
             
-            for k in 0.stride(to: 5, by: 1) {
-                switch k {
-                case 0:
-                    fileName = csvOffHomeStats
-                    playerList = game.homeTeam.players
-                case 1:
-                    fileName = csvOffAwayStats
-                    playerList = game.awayTeam.players
-                case 2:
-                    fileName = csvDefHomeStats
-                    playerList = game.homeTeam.players
-                case 3:
-                    fileName = csvDefAwayStats
-                    playerList = game.awayTeam.players
-                case 4:
-                    fileName = csvPlayList
-                default:
-                    break
-                }
-                
-                let path = NSURL(fileURLWithPath: gameFolder).URLByAppendingPathComponent(fileName)
-                
-                if k < 4 {
-                    var temp = ""
-                    for m in 0.stride(to: playerList.count, by: 1) {
-                        let player = playerList[m]
-                        
-                        if k < 2 {
-                            if player.offensive {
-                                temp = "\(player.number), \(player.passatmpts), \(player.passcomps), \(player.passyds), \(player.passtds), \(player.ints), \(player.runatmpts), \(player.runyds), \(player.runtds), \(player.catches), \(player.recyds), \(player.rectds)"
-                            }
-                            else {
-                                continue
-                            }
+            let path = NSURL(fileURLWithPath: gameFolder).URLByAppendingPathComponent(fileName)
+            
+            do {
+                try labels.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+            }
+            catch {
+                print("There was a problem writing data to your device")
+            }
+            
+            if k < 4 {
+                var temp = " "
+                for m in 0.stride(to: playerList.count, by: 1) {
+                    let player = playerList[m]
+                    
+                    if k < 2 {
+                        if player.offensive {
+                            temp = "\(player.number), \(player.passatmpts), \(player.passcomps), \(player.passyds), \(player.passtds), \(player.ints), \(player.runatmpts), \(player.runyds), \(player.runtds), \(player.catches), \(player.recyds), \(player.rectds)\n"
                         }
                         else {
-                            if !player.offensive {
-                                temp = "\(player.number), \(player.tackles), \(player.tfls), \(player.sacks), \(player.forcedfums), \(player.fumblerecs), \(player.ints), \(player.deftds)"
-                            }
-                            else {
-                                continue
-                            }
+                            continue
                         }
-                        
-                        if m == 0 {
-                            do {
-                                try temp.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
-                            }
-                            catch {
-                                showMessage("There was a problem writing data to your device")
-                            }
-                        }
-                        else if let fileHandle  = try? NSFileHandle(forWritingToURL: path) {
-                            
-                            defer {
-                                fileHandle.closeFile()
-                            }
-                                    
-                            let data = temp.dataUsingEncoding(NSUTF8StringEncoding)
-                            fileHandle.seekToEndOfFile()
-                            fileHandle.writeData(data!)
+                    }
+                    else {
+                        if !player.offensive {
+                            temp = "\(player.number), \(player.tackles), \(player.tfls), \(player.sacks), \(player.forcedfums), \(player.fumblerecs), \(player.ints), \(player.deftds)\n"
                         }
                         else {
-                            print("fileHandle not working")
+                            continue
                         }
                     }
                     
-                }
-                else {
-                    //let up printing of plays
+                    if let fileHandle  = try? NSFileHandle(forWritingToURL: path) {
+                        
+                        defer {
+                            fileHandle.closeFile()
+                        }
+                                
+                        let data = temp.dataUsingEncoding(NSUTF8StringEncoding)
+                        fileHandle.seekToEndOfFile()
+                        fileHandle.writeData(data!)
+                    }
+                    else {
+                        print("fileHandle not working - \(fileName)")
+                    }
                 }
                 
             }
-            
+            else {
+                var temp = " "
+                
+                for n in 0.stride(to: gamePlays.count, by: 1) {
+                    let play = gamePlays[n]
+                    temp = "\(play.playCount), \(play.offensiveTeam), \(play.downNum), \(play.dist), \(play.hash), \(play.ydLn), \(play.playType), \(play.result), \(play.gnLs), , \(play.playDir), , , , , \(play.qtr), \(isPenalty(play)), "
+                    if play.playType == "Pass" {
+                        temp += "\(play.playerNumber), "
+                        if play.recNumber != -1 {
+                            temp += "\(play.recNumber), "
+                        }
+                        else {
+                            temp += ", "
+                        }
+                    }
+                    else if play.playType == "Run" || play.playType == "Kickoff" || play.playType == "Punt" {
+                        if play.playerNumber != -1 {
+                            temp += "\(play.playerNumber)"
+                        }
+                    }
+                    temp += "\n"
+                    
+                    if let fileHandle  = try? NSFileHandle(forWritingToURL: path) {
+                        
+                        defer {
+                            fileHandle.closeFile()
+                        }
+                        
+                        let data = temp.dataUsingEncoding(NSUTF8StringEncoding)
+                        fileHandle.seekToEndOfFile()
+                        fileHandle.writeData(data!)
+                    }
+                    else {
+                        print("fileHandle not working - \(fileName)")
+                    }
+                }
+            }
+        }        
+    }
+    
+    func isPenalty(play: Play) -> String {
+        if play.playType == "Penalty" {
+            return "Yes"
         }
-        
+        else {
+            return "No"
+        }
     }
     
     func addButton(play: Play) {
@@ -1468,6 +1510,48 @@ class GameViewController: UIViewController {
             }
         }
         
+    }
+    
+    func export() {
+        saveGame()
+        
+        let email = configuredMailComposeViewController()
+        if MFMailComposeViewController.canSendMail() {
+            self.presentViewController(email, animated: true, completion: nil)
+        }
+    }
+    
+    func configuredMailComposeViewController() -> MFMailComposeViewController {
+        let emailController = MFMailComposeViewController()
+        emailController.mailComposeDelegate = self
+        emailController.setSubject(gameName)
+        emailController.setMessageBody("", isHTML: false)
+        
+        var fileName = ""
+        for k in 0.stride(to: 5, by: 1) {
+            switch k {
+            case 0:
+                fileName = csvOffHomeStats
+            case 1:
+                fileName = csvOffAwayStats
+            case 2:
+                fileName = csvDefHomeStats
+            case 3:
+                fileName = csvDefAwayStats
+            case 4:
+                fileName = csvPlayList
+            default:
+                break
+            }
+            
+            let path = NSURL(fileURLWithPath: gameFolder).URLByAppendingPathComponent(fileName)
+            
+            print("Exporting \(fileName)")
+            
+            emailController.addAttachmentData(NSData(contentsOfURL: path)!, mimeType: "text/csv", fileName: fileName)
+        }
+        
+        return emailController
     }
     
 }

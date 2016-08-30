@@ -51,12 +51,12 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         divisionData.append("TINY-MITE")
         divisionData.append("MITEY-MITE")
-        divisionData.append("JR. PEE WEE")
+        divisionData.append("JR PEE WEE")
         divisionData.append("PEE WEE")
-        divisionData.append("JR. MIDGET")
+        divisionData.append("JR MIDGET")
         divisionData.append("MIDGET")
         divisionData.append("FRESHMAN")
-        divisionData.append("JR. VARSITY")
+        divisionData.append("JR VARSITY")
         divisionData.append("VARSITY")
     }
     
@@ -97,7 +97,21 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             else  {
                 destinationVC.fldSize = 80
             }
-            destinationVC.division = divisionData[divisionPicker.selectedRowInComponent(0)]
+            var div = divisionData[divisionPicker.selectedRowInComponent(0)]
+            if div == "JR PEE WEE" {
+                div = "JR-PEE-WEE"
+            }
+            else if div == "PEE WEE" {
+                div = "PEE-WEE"
+            }
+            else if div == "JR MIDGET" {
+                div = "JR-MIDGET"
+            }
+            else if div == "JR VARSITY" {
+                div = "JR-VARSITY"
+            }
+            
+            destinationVC.division = div
             
             let formatter = NSDateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"

@@ -17,7 +17,9 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
     var gameInfo = [String]()
     var checked = [Bool]()
     var qwikPath : String!
+    var qwikURL : NSURL!
     var gamePaths = [String]()
+    var gameURLs = [NSURL]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +87,8 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
             for i in 0.stride(to: self.checked.count, by: 1) {
                 if self.checked[i] {
                     do {
-                        try fileManager.removeItemAtPath(self.gamePaths[i])
+                        print("deleting... \(self.gameURLs[i])")
+                        try fileManager.removeItemAtURL(self.gameURLs[i])
                         self.checked.removeAtIndex(i)
                         self.gamePaths.removeAtIndex(i)
                         self.games.removeAtIndex(i)
@@ -177,6 +180,7 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
             let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("QwikStats").path!
             if fileManager.fileExistsAtPath(folder) {
                 do {
+                    qwikURL = NSURL(fileURLWithPath: folder)
                     qwikPath = folder
                     var dirContents = try fileManager.contentsOfDirectoryAtPath(folder)
                     if dirContents.contains(".DS_Store") {
@@ -199,6 +203,7 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
                         gameInfo.append("\(current.homeTeam.teamName) vs. \(current.awayTeam.teamName) \n\t\t \(current.division) \n\t\t \(intToMonth(current.month)) \(current.day) \(current.year)")
                         checked.append(false)
                         gamePaths.append(NSURL(fileURLWithPath: qwikPath).URLByAppendingPathComponent(dirContents[i]).absoluteString)
+                        gameURLs.append(qwikURL.URLByAppendingPathComponent(dirContents[i]))
                         print(gameInfo[i])
                     }
                     

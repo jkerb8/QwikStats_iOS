@@ -161,7 +161,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
     
     @IBAction func rightBtnClicked(sender: UIButton) {
         save()
-        if globalPlay.interceptionFlag{
+        if globalPlay.interceptionFlag || globalPlay.fumbleFlag {
             turnoverDialog()
         }
         else {
@@ -218,7 +218,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 275)
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
         formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromLeft
         
         //let presentedViewController = navigationController as! RunViewController

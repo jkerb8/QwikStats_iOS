@@ -164,6 +164,9 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
     func save() {
         if let num = Int(numberTextField.text!) {
             globalPlay.defNumber = num
+            if globalPlay.fumbleFlag {
+                globalPlay.fumbleRecFlag = true
+            }
         }
         
         globalPlay.returnedYdLn = ydLnData[ydLnPicker.selectedItem]

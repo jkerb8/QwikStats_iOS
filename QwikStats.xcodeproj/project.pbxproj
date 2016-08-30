@@ -30,6 +30,10 @@
 		2189E0B91D56DA9F0016CF86 /* FumRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0B81D56DA9F0016CF86 /* FumRecoveryViewController.swift */; };
 		2189E0BB1D56DAA80016CF86 /* TackleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0BA1D56DAA80016CF86 /* TackleViewController.swift */; };
 		2189E0BD1D56DAB30016CF86 /* HashDirViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0BC1D56DAB30016CF86 /* HashDirViewController.swift */; };
+		219654451D74FB54009BBB13 /* SlideInFromRightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219654441D74FB54009BBB13 /* SlideInFromRightController.swift */; };
+		2196544E1D74FB74009BBB13 /* SlideInFromLeftController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2196544D1D74FB74009BBB13 /* SlideInFromLeftController.swift */; };
+		219654501D74FB87009BBB13 /* SlideOutToRightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2196544F1D74FB87009BBB13 /* SlideOutToRightController.swift */; };
+		219654521D74FB97009BBB13 /* SlideOutToLeftController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219654511D74FB97009BBB13 /* SlideOutToLeftController.swift */; };
 		21F8457D1D371373006E3A7F /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8457C1D371373006E3A7F /* Game.swift */; };
 		21F8457F1D371537006E3A7F /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8457E1D371537006E3A7F /* Team.swift */; };
 		21F845811D371545006E3A7F /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F845801D371545006E3A7F /* Play.swift */; };
@@ -134,6 +138,10 @@
 		2189E0B81D56DA9F0016CF86 /* FumRecoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FumRecoveryViewController.swift; sourceTree = "<group>"; };
 		2189E0BA1D56DAA80016CF86 /* TackleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TackleViewController.swift; sourceTree = "<group>"; };
 		2189E0BC1D56DAB30016CF86 /* HashDirViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashDirViewController.swift; sourceTree = "<group>"; };
+		219654441D74FB54009BBB13 /* SlideInFromRightController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideInFromRightController.swift; sourceTree = "<group>"; };
+		2196544D1D74FB74009BBB13 /* SlideInFromLeftController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideInFromLeftController.swift; sourceTree = "<group>"; };
+		2196544F1D74FB87009BBB13 /* SlideOutToRightController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideOutToRightController.swift; sourceTree = "<group>"; };
+		219654511D74FB97009BBB13 /* SlideOutToLeftController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideOutToLeftController.swift; sourceTree = "<group>"; };
 		21F8457C1D371373006E3A7F /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		21F8457E1D371537006E3A7F /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		21F845801D371545006E3A7F /* Play.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Play.swift; sourceTree = "<group>"; };
@@ -244,6 +252,10 @@
 				213B87DD1D5CD054000D3DB9 /* NewGameViewController.swift */,
 				21FF6BE21D613C030089514C /* OpenGameViewController.swift */,
 				2166E1411D654ACD00B887A2 /* StreamReader.swift */,
+				219654441D74FB54009BBB13 /* SlideInFromRightController.swift */,
+				2196544D1D74FB74009BBB13 /* SlideInFromLeftController.swift */,
+				2196544F1D74FB87009BBB13 /* SlideOutToRightController.swift */,
+				219654511D74FB97009BBB13 /* SlideOutToLeftController.swift */,
 			);
 			path = QwikStats;
 			sourceTree = "<group>";
@@ -613,6 +625,8 @@
 				214D8FE01D2224D7009C3A83 /* ViewController.swift in Sources */,
 				2116578C1D4551500035D6B4 /* PlayTypeController.swift in Sources */,
 				211657881D454F370035D6B4 /* PresentedTableViewController.swift in Sources */,
+				219654501D74FB87009BBB13 /* SlideOutToRightController.swift in Sources */,
+				219654521D74FB97009BBB13 /* SlideOutToLeftController.swift in Sources */,
 				2116578E1D47063B0035D6B4 /* GameViewController.swift in Sources */,
 				2166E1421D654ACD00B887A2 /* StreamReader.swift in Sources */,
 				2189E0BB1D56DAA80016CF86 /* TackleViewController.swift in Sources */,
@@ -623,7 +637,9 @@
 				2189E0B11D56DA4B0016CF86 /* ReturnerViewController.swift in Sources */,
 				21F845831D371551006E3A7F /* Player.swift in Sources */,
 				21FF6BE31D613C030089514C /* OpenGameViewController.swift in Sources */,
+				2196544E1D74FB74009BBB13 /* SlideInFromLeftController.swift in Sources */,
 				21F8457D1D371373006E3A7F /* Game.swift in Sources */,
+				219654451D74FB54009BBB13 /* SlideInFromRightController.swift in Sources */,
 				21F845811D371545006E3A7F /* Play.swift in Sources */,
 				2189E0A81D56DA320016CF86 /* PasserViewController.swift in Sources */,
 				2189E0B31D56DA5F0016CF86 /* PenaltyViewController.swift in Sources */,
