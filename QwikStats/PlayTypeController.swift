@@ -72,28 +72,61 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 
 
     @IBAction func leftBtn(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        
         save()
+        
+        if globalPlay.playType == "Run" || globalPlay.playType == "Pass" {
+            if globalPlay.fumbleFlag {
+                turnoverDialog(false)
+            }
+            else {
+                tackleDialog(false)
+            }
+        }
+        else if globalPlay.playType == "Kickoff" || globalPlay.playType == "Punt" {
+            if globalPlay.returnFlag && !globalPlay.touchdownFlag{
+                tackleDialog(false)
+            }
+            else {
+                returnerDialog(false)
+            }
+        }
+        else if globalPlay.playType == "Penalty" {
+            penaltyDialog(false)
+        }
+        else if globalPlay.playType == "PAT" || globalPlay.playType == "2 Pt. Conversion" {
+            conversionDialog(false)
+        }
+        else if globalPlay.playType == "Field Goal" {
+            fieldGoalDialog(false)
+        }
     }
 
     @IBAction func rightBtn(sender: UIButton) {
+        
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        
         save()
         if globalPlay.playType == "Run" {
-            runDialog()
+            runDialog(true)
         }
         else if globalPlay.playType == "Pass" {
-            passerDialog()
+            passerDialog(true)
         }
         else if globalPlay.playType == "Kickoff" || globalPlay.playType == "Punt" {
-            returnerDialog()
+            returnerDialog(true)
         }
         else if globalPlay.playType == "Penalty" {
-            penaltyDialog()
+            penaltyDialog(true)
         }
         else if globalPlay.playType == "PAT" || globalPlay.playType == "2 Pt. Conversion" {
-            conversionDialog()
+            conversionDialog(true)
         }
         else if globalPlay.playType == "Field Goal" {
-            fieldGoalDialog()
+            fieldGoalDialog(true)
         }
     }
 
@@ -104,10 +137,16 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
 
     @IBAction func cancelBtn(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func dismiss() {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        
         self.dismissViewControllerAnimated(true, completion: nil)
         
         if let temp = saved {
@@ -122,14 +161,19 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         globalPlay.playType = pickerData[playTypePicker.selectedRowInComponent(0)]
     }
     
-    func runDialog() {
+    func runDialog(slidingRight: Bool) {
         let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("RunViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        if slidingRight {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        }
+        else {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        }
         
         
         //let presentedViewController = navigationController as! RunViewController
@@ -150,14 +194,19 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
     }
     
-    func passerDialog() {
+    func passerDialog(slidingRight: Bool) {
         let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PasserViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 400)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        if slidingRight {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        }
+        else {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        }
         
         
         //let presentedViewController = navigationController as! RunViewController
@@ -176,14 +225,19 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         })
     }
     
-    func returnerDialog() {
+    func returnerDialog(slidingRight: Bool) {
         let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("ReturnerViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 520)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        if slidingRight {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        }
+        else {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        }
         
         
         //let presentedViewController = navigationController as! RunViewController
@@ -202,14 +256,19 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         })
     }
     
-    func penaltyDialog() {
+    func penaltyDialog(slidingRight: Bool) {
         let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PenaltyViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 475)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        if slidingRight {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        }
+        else {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        }
         
         
         //let presentedViewController = navigationController as! RunViewController
@@ -228,14 +287,19 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         })
     }
     
-    func conversionDialog() {
+    func conversionDialog(slidingRight: Bool) {
         let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("ExtraPointViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 200)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        if slidingRight {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        }
+        else {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        }
         
         formSheetController.willPresentContentViewControllerHandler = { vc in
             let navigationController = vc
@@ -250,18 +314,83 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         })
     }
     
-    func fieldGoalDialog() {
+    func fieldGoalDialog(slidingRight: Bool) {
         let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("FieldGoalViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 320)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        if slidingRight {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        }
+        else {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        }
         
         formSheetController.willPresentContentViewControllerHandler = { vc in
             let navigationController = vc
             let presentedViewController = navigationController as! FieldGoalViewController
+            presentedViewController.view?.layoutIfNeeded()
+        }
+        
+        let parent: UIViewController! = self.presentingViewController
+        
+        self.dismissViewControllerAnimated(true, completion: {
+            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        })
+    }
+    
+    func turnoverDialog(slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("FumRecoveryViewController")// as! UIViewController
+        let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
+        formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
+        //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
+        //width is first, height is second
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 450)
+        if slidingRight {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        }
+        else {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        }
+        
+        //let presentedViewController = navigationController as! RunViewController
+        //presentedViewController.play = self.play
+        
+        formSheetController.willPresentContentViewControllerHandler = { vc in
+            let navigationController = vc
+            let presentedViewController = navigationController as! FumRecoveryViewController
+            presentedViewController.view?.layoutIfNeeded()
+        }
+        
+        let parent: UIViewController! = self.presentingViewController
+        
+        self.dismissViewControllerAnimated(true, completion: {
+            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        })
+    }
+    
+    func tackleDialog(slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("TackleViewController")// as! UIViewController
+        let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
+        formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
+        //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
+        //width is first, height is second
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 200)
+        if slidingRight {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        }
+        else {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        }
+        
+        //let presentedViewController = navigationController as! RunViewController
+        //presentedViewController.play = self.play
+        
+        formSheetController.willPresentContentViewControllerHandler = { vc in
+            let navigationController = vc
+            let presentedViewController = navigationController as! TackleViewController
             presentedViewController.view?.layoutIfNeeded()
         }
         

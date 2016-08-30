@@ -142,13 +142,19 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
     }
     
     @IBAction func leftBtn(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        
         save()
         resultDialog()
     }
     
     @IBAction func rightBtn(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        
         save()
-        //tackleDialog()
+        playTypeDialog(true)
     }
     
     @IBAction func saveBtn(sender: UIButton) {
@@ -177,6 +183,9 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
     }
     
     func dismiss() {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        
         self.dismissViewControllerAnimated(true, completion: nil)
         
         if let temp = saved {
@@ -194,7 +203,7 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 350)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromLeft
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
         
         //let presentedViewController = navigationController as! PlayTypeController
         //presentedViewController.play = self.play
@@ -202,6 +211,36 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
         formSheetController.willPresentContentViewControllerHandler = { vc in
             let navigationController = vc
             let presentedViewController = navigationController as! ResultViewController
+            presentedViewController.view?.layoutIfNeeded()
+        }
+        
+        let parent: UIViewController! = self.presentingViewController
+        
+        self.dismissViewControllerAnimated(true, completion: {
+            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        })
+    }
+    
+    func playTypeDialog(slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PlayTypeController")// as! UIViewController
+        let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
+        formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
+        //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
+        //width is first, height is second
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
+        if slidingRight {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        }
+        else {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        }
+        
+        //let presentedViewController = navigationController as! PlayTypeController
+        //presentedViewController.play = self.play
+        
+        formSheetController.willPresentContentViewControllerHandler = { vc in
+            let navigationController = vc
+            let presentedViewController = navigationController as! PlayTypeController
             presentedViewController.view?.layoutIfNeeded()
         }
         

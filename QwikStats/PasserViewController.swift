@@ -114,11 +114,17 @@ class PasserViewController: UIViewController {
     }
     
     @IBAction func leftBtn(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        
         save()
         playTypeDialog()
     }
     
     @IBAction func rightBtn(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        
         save()
         if globalPlay.sackFlag {
             resultDialog()
@@ -135,6 +141,9 @@ class PasserViewController: UIViewController {
     }
     
     @IBAction func cancelBtn(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -148,6 +157,9 @@ class PasserViewController: UIViewController {
     }
     
     func dismiss() {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        
         self.dismissViewControllerAnimated(true, completion: nil)
         
         if let temp = saved {
@@ -164,8 +176,8 @@ class PasserViewController: UIViewController {
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 275)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromLeft
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
         
         //let presentedViewController = navigationController as! PlayTypeController
         //presentedViewController.play = self.play
@@ -190,7 +202,7 @@ class PasserViewController: UIViewController {
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromLeft
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
         
         //let presentedViewController = navigationController as! PlayTypeController
         //presentedViewController.play = self.play
@@ -216,7 +228,7 @@ class PasserViewController: UIViewController {
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 350)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
         
         //let presentedViewController = navigationController as! ResultViewController
         //presentedViewController.play = self.play

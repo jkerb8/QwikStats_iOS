@@ -20,7 +20,7 @@ var ydLnData = [Int]()
 var ydLnStrings = [String]()
 var gamePlays = [Play]()
 
-class GameViewController: UIViewController, MFMailComposeViewControllerDelegate{
+class GameViewController: UIViewController, MFMailComposeViewControllerDelegate {
 
     @IBOutlet var awayTeamNameView: UILabel!
     @IBOutlet var homeTeamNameView: UILabel!
@@ -340,8 +340,8 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate{
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 275)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromTop
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromBottom
         
         //let presentedViewController = navigationController as! PlayTypeController
         //presentedViewController.play = globalPlay
@@ -415,12 +415,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate{
             var cntr = 0
             
             print(path.absoluteString)
-            /*if let aStreamReader = StreamReader(path: path) {
-                print("Starting StreamReader...")
-                defer {
-                    print("Closing StreamReader...")
-                    aStreamReader.close()
-                }*/
+            
             do {
                 try text = NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding) as String
                 print("File Length: \(text.characters.count)")

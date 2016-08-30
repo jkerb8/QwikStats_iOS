@@ -8,10 +8,10 @@
 
 import UIKit
 
-class SlideInFromRightController: NSObject, UIViewControllerAnimatedTransitioning {
+class SlideInFromRightController: NSObject{
     
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    /*func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 2.0
     }
     
@@ -33,6 +33,6 @@ class SlideInFromRightController: NSObject, UIViewControllerAnimatedTransitionin
                 transitionContext.completeTransition(true)
                 fromViewController.view.alpha = 1.0
         })
-    }
+    }*/
 
 }

@@ -60,13 +60,19 @@ class FieldGoalViewController: UIViewController {
     }
     
     @IBAction func leftBtn(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        
         save()
-        playTypeDialog()
+        playTypeDialog(false)
     }
     
     @IBAction func rightBtn(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        
         save()
-        playTypeDialog()
+        playTypeDialog(true)
     }
     
     @IBAction func saveBtn(sender: UIButton) {
@@ -76,6 +82,9 @@ class FieldGoalViewController: UIViewController {
     }
     
     @IBAction func cancelBtn(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -92,6 +101,9 @@ class FieldGoalViewController: UIViewController {
     }
     
     func dismiss() {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        
         self.dismissViewControllerAnimated(true, completion: nil)
         
         if let temp = saved {
@@ -102,14 +114,19 @@ class FieldGoalViewController: UIViewController {
         }
     }
     
-    func playTypeDialog() {
+    func playTypeDialog(slidingRight: Bool) {
         let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PlayTypeController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 275)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromLeft
+        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
+        if slidingRight {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        }
+        else {
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        }
         
         //let presentedViewController = navigationController as! PlayTypeController
         //presentedViewController.play = self.play

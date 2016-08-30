@@ -160,6 +160,9 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
 
     
     @IBAction func rightBtnClicked(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        
         save()
         if globalPlay.interceptionFlag || globalPlay.fumbleFlag {
             turnoverDialog()
@@ -170,6 +173,9 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
     }
     
     @IBAction func leftBtnClicked(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        
         save()
         if globalPlay.playType == "Pass" {
             if globalPlay.sackFlag || globalPlay.interceptionFlag {
@@ -191,6 +197,9 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
     }
     
     @IBAction func cancelBtnClicked(sender: UIButton) {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -202,6 +211,9 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
     }
     
     func dismiss() {
+        let formSheetController = mz_formSheetPresentingPresentationController()
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        
         self.dismissViewControllerAnimated(true, completion: nil)
         
         if let temp = saved {
@@ -219,7 +231,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromLeft
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
         
         //let presentedViewController = navigationController as! RunViewController
         //presentedViewController.play = self.play
@@ -249,7 +261,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 400)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
         
         
         //let presentedViewController = navigationController as! RunViewController
@@ -275,7 +287,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 450)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
         
         
         //let presentedViewController = navigationController as! RunViewController
@@ -301,7 +313,7 @@ class ResultViewController: UIViewController, AKPickerViewDataSource, AKPickerVi
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
         formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 200)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromRight
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
         
         
         //let presentedViewController = navigationController as! RunViewController
