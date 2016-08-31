@@ -8,13 +8,26 @@
 
 import UIKit
 import Toast_Swift
+import QuartzCore
 
 class ViewController: UIViewController {
+    @IBOutlet var settingsBtn: UIButton!
+    @IBOutlet var newGameBtn: UIButton!
+    @IBOutlet var openGameBtn: UIButton!
+    
+    let radius: CGFloat = 10
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.navigationController?.navigationBarHidden = true
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        settingsBtn.layer.cornerRadius = radius
+        newGameBtn.layer.cornerRadius = radius
+        openGameBtn.layer.cornerRadius = radius
+        settingsBtn.clipsToBounds = true
+        newGameBtn.clipsToBounds = true
+        openGameBtn.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,7 +79,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func settingsBtn(sender: UIButton) {
-        
+        showMessage("Settings coming soon...")
     }
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {

@@ -69,12 +69,23 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
     var fldSize = 0
     var openingPastGame = false
     
+    var scrollWidth: CGFloat = 414
+    var scrollHeight: CGFloat = 10
+    let radius: CGFloat = 10
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        newPlayBtn.layer.cornerRadius = radius
+        undoPlayBtn.layer.cornerRadius = radius
+        newPlayBtn.clipsToBounds = true
+        undoPlayBtn.clipsToBounds = true
+        
         updateFlag = false
         
-        playScrollView.contentSize = CGSizeMake(414, 524)
+        playScrollView.contentSize = CGSizeMake(414, scrollHeight)
+        //playScrollView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        
         self.navigationController?.navigationBarHidden = true
         
         for i in 0.stride(to: -50, by: -1){
@@ -87,9 +98,6 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
             ydLnStrings.append(" \(String(i)) ")
         }
         
-        //placeholder until that is sorted out
-        //awayTeamName = "AwayTeam"
-        //homeTeamName = "HomeTeam"
         fieldSize = self.fldSize
         if fldSize == 0 {
             fieldSize = 100
@@ -826,6 +834,8 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         let prevNum = buttonList.count
         
         var margin: CGFloat = 55
+        scrollHeight += margin
+        playScrollView.contentSize = CGSizeMake(414, scrollHeight)
         for i in (buttonList.count-1).stride(to: -1, by: -1) {
             buttonList[i].frame = CGRectMake(10, margin, buttonWidth, buttonHeight)
             margin += 55
@@ -849,6 +859,9 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         buttonList[buttonList.count - 1].hidden = true
         buttonList.removeAtIndex(buttonList.count - 1)
         
+        scrollHeight -= 55
+        playScrollView.contentSize = CGSizeMake(414, scrollHeight)
+        
         var margin: CGFloat = 5
         for i in (buttonList.count - 1).stride(to: -1, by: -1) {
             buttonList[i].frame = CGRectMake(10, margin, buttonWidth, buttonHeight)
@@ -859,10 +872,10 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
     
     func playBtnPressed(sender: UIButton) {
         if sender.tag == (buttonList.count-1) {
-            showMessage("Most Recent button was pressed")
+            showMessage("Editing feature coming soon...")
         }
         else {
-            showMessage("Play number \(sender.tag + 1) was pressed")
+            showMessage("Only the most recent play can be edited")
         }
     }
     

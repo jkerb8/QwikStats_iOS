@@ -158,7 +158,15 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
     
     func save() {
-        globalPlay.playType = pickerData[playTypePicker.selectedRowInComponent(0)]
+        let type = pickerData[playTypePicker.selectedRowInComponent(0)]
+        if globalPlay.playType == "" {
+            globalPlay.playType = type
+        }
+        else if globalPlay.playType != type {
+            globalPlay = nil
+            globalPlay = Play(currentGame: game)
+            globalPlay.playType = type
+        }
     }
     
     func runDialog(slidingRight: Bool) {

@@ -17,14 +17,18 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet var fieldSizePicker: UIPickerView!
     @IBOutlet var datePicker: UIDatePicker!
     @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var startGameBtn: UIButton!
     
     
     var divisionData = [String]()
     var fieldSizeData = [String]()
+    let radius: CGFloat = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBarHidden = false
+        startGameBtn.layer.cornerRadius = radius
+        startGameBtn.clipsToBounds = true
         self.title = "New Game"
         
         scrollView.contentSize = CGSizeMake(414, 672)

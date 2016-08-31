@@ -12,6 +12,8 @@ import Toast_Swift
 class OpenGameViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var deleteGameBtn: UIButton!
+    @IBOutlet var openGameBtn: UIButton!
     
     var games = [Game]()
     var gameInfo = [String]()
@@ -20,10 +22,16 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
     var qwikURL : NSURL!
     var gamePaths = [String]()
     var gameURLs = [NSURL]()
+    let radius: CGFloat = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBarHidden = false
+        openGameBtn.layer.cornerRadius = radius
+        deleteGameBtn.layer.cornerRadius = radius
+        openGameBtn.clipsToBounds = true
+        deleteGameBtn.clipsToBounds = true
+        
         self.title = "Past Games"
         
         games = [Game]()
