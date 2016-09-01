@@ -26,15 +26,11 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
     @IBOutlet var homeTeamNameView: UILabel!
     @IBOutlet var awayScoreLabel: UILabel!
     @IBOutlet var homeScoreLabel: UILabel!
-    @IBOutlet var downNoEditLabel: UILabel!
-    @IBOutlet var distNoEditLabel: UILabel!
-    @IBOutlet var ydLnNoEditLabel: UILabel!
-    @IBOutlet var qtrNoEditLabel: UILabel!
     @IBOutlet var downLabel: UILabel!
     @IBOutlet var distLabel: UILabel!
     @IBOutlet var ydLnLabel: UILabel!
     @IBOutlet var qtrLabel: UILabel!
-    var qtrText: String = ""
+    @IBOutlet var statusLabel: UILabel!
 
     @IBOutlet var awayPossImageView: UIImageView!
     @IBOutlet var homePossImageView: UIImageView!
@@ -83,7 +79,8 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         
         updateFlag = false
         
-        playScrollView.contentSize = CGSizeMake(414, scrollHeight)
+        scrollWidth = playScrollView.contentSize.width
+        playScrollView.contentSize = CGSizeMake(scrollWidth, scrollHeight)
         //playScrollView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
         
         self.navigationController?.navigationBarHidden = true
@@ -126,11 +123,14 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
             print("Opening Game..")
             openGame()
         }
-        else {
-            openingKickoffDialog()
-        }
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if !openingPastGame {
+            openingKickoffDialog()
+        }
     }
     
     func showMessage(message: String) {
@@ -146,15 +146,18 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         saved = false
         globalPlay = nil
         globalPlay = Play(currentGame: game)
+        if statusLabel.text == "Halftime" {
+            globalPlay.playType = "Kickoff"
+        }
         playTypeDialog()
         
     }
     
     @IBAction func undoBtn(sender: UIButton) {
-        if qtrText == "End of Game" {
+        if statusLabel.text == "End of Game" {
             returnToFourthDialog()
         }
-        else if qtrText == "Halftime" {
+        else if statusLabel.text == "Halftime" {
             returnToSecondDialog()
         }
         else if buttonList.count > 0 {
@@ -209,7 +212,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         
         let okAction = UIAlertAction(title: "Yes", style: .Default) { (action) in
             self.newPlayBtn.enabled = true
-            self.qtrText = ""
+            self.statusLabel.text = ""
             self.updateGameData(gamePlays[gamePlays.count - 1])
             self.updateVisuals()
         }
@@ -227,7 +230,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         alertController.addAction(cancelAction)
         
         let okAction = UIAlertAction(title: "Yes", style: .Default) { (action) in
-            self.qtrText = ""
+            self.statusLabel.text = ""
             game.qtr = 2
             self.updateGameData(gamePlays[gamePlays.count - 1])
             self.updateVisuals()
@@ -260,14 +263,24 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
             qtr += 1
             if qtr > 4 {
                 self.qtrLabel.text = ""
-                self.qtrText = "End of Game"
+                self.statusLabel.text = "End of Game"
                 self.newPlayBtn.enabled = false
             }
             else if qtr == 3 {
-                //startSecondHalf()
+                if self.homeTeamStart {
+                    if game.possFlag {
+                        self.changePossession()
+                    }
+                }
+                else {
+                    if !game.possFlag {
+                        self.changePossession()
+                    }
+                }
+                
                 self.updateVisuals()
                 self.qtrLabel.text = ""
-                self.qtrText = "Halftime"
+                self.statusLabel.text = "Halftime"
                 game.qtr = qtr
             }
             else {
@@ -320,23 +333,23 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
     func openingKickoffDialog() {
         let alertController = UIAlertController(title: "Opening Kickoff", message: "Which team is kicking off to begin the game?", preferredStyle: UIAlertControllerStyle.Alert)
         
-        let cancelAction = UIAlertAction(title: game.homeTeam.teamName, style: .Default) { (action) in
+        let homTeamAction = UIAlertAction(title: game.homeTeam.teamName, style: .Default) { (action) in
             if !game.possFlag {
                 self.changePossession()
             }
             self.homeTeamStart = true
             self.showMessage("\(game.homeTeam.teamName) will kick to \(game.awayTeam.teamName) to begin the game")
         }
-        alertController.addAction(cancelAction)
+        alertController.addAction(homTeamAction)
         
-        let okAction = UIAlertAction(title: game.awayTeam.teamName, style: .Default) { (action) in
+        let awayTeamAction = UIAlertAction(title: game.awayTeam.teamName, style: .Default) { (action) in
             if game.possFlag {
                 self.changePossession()
             }
             self.homeTeamStart = false
             self.showMessage("\(game.awayTeam.teamName) will kick to \(game.homeTeam.teamName) to begin the game")
         }
-        alertController.addAction(okAction)
+        alertController.addAction(awayTeamAction)
         
         self.presentViewController(alertController, animated: true, completion: nil)
     }
@@ -372,9 +385,9 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
             gameDataList.removeAtIndex(gameDataList.count - 1)
         }
         
-        if (qtrLabel.text) != nil{
-            if qtrLabel.text == "Halftime" {
-                qtrLabel.text = ""
+        if (statusLabel.text) != ""{
+            if statusLabel.text == "Halftime" {
+                statusLabel.text = ""
                 game.qtr = 3
             }
         }
@@ -450,7 +463,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                 if line != "" {
                     if line == "END" {
                         updateVisuals()
-                        qtrText = "End of Game"
+                        statusLabel.text = "End of Game"
                         qtrLabel.text = ""
                         newPlayBtn.enabled = false
                         game.qtr = 4
@@ -458,13 +471,13 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                     }
                     else if line == "HALF" {
                         updateVisuals()
-                        qtrText = "Halftime"
+                        statusLabel.text = "Halftime"
                         qtrLabel.text = ""
                         game.qtr = 3
                         homeTeamStart = !gamePlays[0].possFlag
                     }
                     else if line.characters.count == 1 {
-                        qtrText = ""
+                        statusLabel.text = ""
                         game.qtr = Int(line)!
                         updateVisuals()
                         homeTeamStart = !gamePlays[0].possFlag
@@ -649,13 +662,13 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                     fileHandle.writeData(data!)
                 }
                 
-                if qtrText == "End of Game" {
+                if statusLabel.text == "End of Game" {
                     let text = "END"
                     let data = text.dataUsingEncoding(NSUTF8StringEncoding)
                     fileHandle.seekToEndOfFile()
                     fileHandle.writeData(data!)
                 }
-                else if qtrText == "Halftime" {
+                else if statusLabel.text == "Halftime" {
                     let text = "HALF"
                     let data = text.dataUsingEncoding(NSUTF8StringEncoding)
                     fileHandle.seekToEndOfFile()
@@ -835,7 +848,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         
         var margin: CGFloat = 55
         scrollHeight += margin
-        playScrollView.contentSize = CGSizeMake(414, scrollHeight)
+        playScrollView.contentSize = CGSizeMake(scrollWidth, scrollHeight)
         for i in (buttonList.count-1).stride(to: -1, by: -1) {
             buttonList[i].frame = CGRectMake(10, margin, buttonWidth, buttonHeight)
             margin += 55
@@ -860,7 +873,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         buttonList.removeAtIndex(buttonList.count - 1)
         
         scrollHeight -= 55
-        playScrollView.contentSize = CGSizeMake(414, scrollHeight)
+        playScrollView.contentSize = CGSizeMake(scrollWidth, scrollHeight)
         
         var margin: CGFloat = 5
         for i in (buttonList.count - 1).stride(to: -1, by: -1) {

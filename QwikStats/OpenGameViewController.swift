@@ -145,7 +145,7 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
         
         //configure cell
         cell.textLabel?.text = gameInfo[indexPath.row]
-        cell.textLabel?.numberOfLines = 3
+        cell.textLabel?.numberOfLines = 0
         cell.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         if !checked[indexPath.row] {
             cell.accessoryType = .None

@@ -31,7 +31,8 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         startGameBtn.clipsToBounds = true
         self.title = "New Game"
         
-        scrollView.contentSize = CGSizeMake(414, 672)
+        let contentWidth = scrollView.contentSize.width
+        scrollView.contentSize = CGSizeMake(contentWidth, 700)
         divisionPicker.dataSource = self
         divisionPicker.delegate = self
         fieldSizePicker.dataSource = self
