@@ -22,7 +22,7 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         self.playTypePicker.delegate = self
         
         if globalPlay.playType != "" {
-            self.playTypePicker.selectRow(pickerData.indexOf(globalPlay.playType)!, inComponent: 0, animated: true)
+            self.playTypePicker.selectRow(pickerData.index(of: globalPlay.playType)!, inComponent: 0, animated: true)
         }
         else  {
             decideType()
@@ -52,28 +52,28 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
     }
     
-    func numberOfComponentsInPickerView (pickerView: UIPickerView) -> Int {
+    func numberOfComponents (in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerData.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         globalPlay.playType = pickerData[row]
         return pickerData[row]
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
 
 
-    @IBAction func leftBtn(sender: UIButton) {
+    @IBAction func leftBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         
         save()
         
@@ -104,10 +104,10 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
     }
 
-    @IBAction func rightBtn(sender: UIButton) {
+    @IBAction func rightBtn(_ sender: UIButton) {
         
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         
         save()
         if globalPlay.playType == "Run" {
@@ -130,24 +130,24 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
     }
 
-    @IBAction func saveBtn(sender: UIButton) {
+    @IBAction func saveBtn(_ sender: UIButton) {
         saved = true
         save()
         dismiss()
     }
 
-    @IBAction func cancelBtn(sender: UIButton) {
+    @IBAction func cancelBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.dropDown
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func dismiss() {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.dropDown
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
         if let temp = saved {
             if temp {
@@ -158,7 +158,7 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
     
     func save() {
-        let type = pickerData[playTypePicker.selectedRowInComponent(0)]
+        let type = pickerData[playTypePicker.selectedRow(inComponent: 0)]
         if globalPlay.playType == "" {
             globalPlay.playType = type
         }
@@ -169,18 +169,18 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
     }
     
-    func runDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("RunViewController")// as! UIViewController
+    func runDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "RunViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 300)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         
@@ -196,24 +196,24 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
         
     }
     
-    func passerDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PasserViewController")// as! UIViewController
+    func passerDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "PasserViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 400)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 400)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         
@@ -228,23 +228,23 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     
-    func returnerDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("ReturnerViewController")// as! UIViewController
+    func returnerDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "ReturnerViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 520)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 520)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         
@@ -259,23 +259,23 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     
-    func penaltyDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PenaltyViewController")// as! UIViewController
+    func penaltyDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "PenaltyViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 475)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 475)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         
@@ -290,23 +290,23 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     
-    func conversionDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("ExtraPointViewController")// as! UIViewController
+    func conversionDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "ExtraPointViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 200)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 200)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         formSheetController.willPresentContentViewControllerHandler = { vc in
@@ -317,23 +317,23 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     
-    func fieldGoalDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("FieldGoalViewController")// as! UIViewController
+    func fieldGoalDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "FieldGoalViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 320)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 320)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         formSheetController.willPresentContentViewControllerHandler = { vc in
@@ -344,23 +344,23 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     
-    func turnoverDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("FumRecoveryViewController")// as! UIViewController
+    func turnoverDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "FumRecoveryViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 450)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 450)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         //let presentedViewController = navigationController as! RunViewController
@@ -374,23 +374,23 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     
-    func tackleDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("TackleViewController")// as! UIViewController
+    func tackleDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "TackleViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 200)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 200)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         //let presentedViewController = navigationController as! RunViewController
@@ -404,8 +404,8 @@ class PlayTypeController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
 }

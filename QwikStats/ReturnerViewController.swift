@@ -9,6 +9,30 @@
 import UIKit
 import MZFormSheetPresentationController
 import AKPickerView_Swift
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPickerViewDelegate {
     
@@ -27,7 +51,7 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        numberTextField.keyboardType = UIKeyboardType.NumberPad
+        numberTextField.keyboardType = UIKeyboardType.numberPad
         
         noReturnSwitch.setOn(globalPlay.returnFlag, animated: true)
         touchdownSwitch.setOn(globalPlay.touchdownFlag, animated: true)
@@ -51,27 +75,27 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
         returnYdsPicker.dataSource = self
         returnYdsPicker.delegate = self
         
-        returnYdsPicker.selectItem(gnLsData.indexOf(globalPlay.returnYds)!)
+        returnYdsPicker.selectItem(gnLsData.index(of: globalPlay.returnYds)!)
         
         if globalPlay.returnedYdLn != -51 {
-            ydLnPicker.selectItem(ydLnData.indexOf(globalPlay.returnedYdLn)!)
+            ydLnPicker.selectItem(ydLnData.index(of: globalPlay.returnedYdLn)!)
         }
         else {
             if (gamePlays.count > 0) {
                 if gamePlays[gamePlays.count - 1].playType == "Field Goal" {
-                    ydLnPicker.selectItem(ydLnData.indexOf(0)!, animated: true)
+                    ydLnPicker.selectItem(ydLnData.index(of: 0)!, animated: true)
                 }
                 else {
-                    ydLnPicker.selectItem(ydLnData.indexOf(globalPlay.prevYdLn)!)
+                    ydLnPicker.selectItem(ydLnData.index(of: globalPlay.prevYdLn)!)
                 }
             }
             else {
-                ydLnPicker.selectItem(ydLnData.indexOf(globalPlay.prevYdLn)!)
+                ydLnPicker.selectItem(ydLnData.index(of: globalPlay.prevYdLn)!)
             }
         }
     }
     
-    func makeData(prevYdLn: Int) {
+    func makeData(_ prevYdLn: Int) {
         //make the gnls data
         var minIndex = 0, maxIndex = 0
         if prevYdLn < 0 {
@@ -87,14 +111,14 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
             maxIndex = prevYdLn
         }
         
-        for i in minIndex.stride(to: maxIndex+1, by: 1) {
+        for i in stride(from: minIndex, to: maxIndex+1, by: 1) {
             gnLsData.append(i)
             gnLsStrings.append(" \(String(i)) ")
         }
         
     }
     
-    func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
+    func numberOfItemsInPickerView(_ pickerView: AKPickerView) -> Int {
         if pickerView == returnYdsPicker {
             return self.gnLsData.count
         }
@@ -103,7 +127,7 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
         }
     }
     
-    func pickerView(pickerView: AKPickerView, titleForItem item: Int) -> String {
+    func pickerView(_ pickerView: AKPickerView, titleForItem item: Int) -> String {
         if pickerView == returnYdsPicker {
             return self.gnLsStrings[item]
         }
@@ -112,7 +136,7 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
         }
     }
     
-    func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
+    func pickerView(_ pickerView: AKPickerView, didSelectItem item: Int) {
         //this is the code for when they select an item
         if pickerView == returnYdsPicker {
             if gnLsData[pickerView.selectedItem] != 0 {
@@ -138,19 +162,19 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
         }
     }
     
-    @IBAction func checkMaxLength(sender: AnyObject) {
+    @IBAction func checkMaxLength(_ sender: AnyObject) {
         if sender.text?.characters.count > 3 {
             sender.deleteBackward()
         }
     }
     
-    @IBAction func switchChanged(sender: UISwitch) {
+    @IBAction func switchChanged(_ sender: UISwitch) {
         switch(sender) {
         case noReturnSwitch:
-            if sender.on {
+            if sender.isOn {
                 touchdownSwitch.setOn(false, animated: true)
                 safetySwitch.setOn(false, animated: true)
-                returnYdsPicker.selectItem(gnLsData.indexOf(0)!, animated: true)
+                returnYdsPicker.selectItem(gnLsData.index(of: 0)!, animated: true)
             }
             else {
                 touchbackSwitch.setOn(false, animated: true)
@@ -158,7 +182,7 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
             }
             
         case touchdownSwitch:
-            if sender.on {
+            if sender.isOn {
                 noReturnSwitch.setOn(false, animated: true)
                 fairCatchSwitch.setOn(false, animated: true)
                 touchbackSwitch.setOn(false, animated: true)
@@ -168,33 +192,33 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
             }
             
         case fairCatchSwitch:
-            if sender.on {
+            if sender.isOn {
                 noReturnSwitch.setOn(true, animated: true)
                 touchdownSwitch.setOn(false, animated: true)
                 touchbackSwitch.setOn(false, animated: true)
                 safetySwitch.setOn(false, animated: true)
-                returnYdsPicker.selectItem(gnLsData.indexOf(0)!, animated: true)
+                returnYdsPicker.selectItem(gnLsData.index(of: 0)!, animated: true)
             }
             
         case touchbackSwitch:
-            if sender.on {
+            if sender.isOn {
                 noReturnSwitch.setOn(true, animated: true)
                 touchdownSwitch.setOn(false, animated: true)
                 fairCatchSwitch.setOn(false, animated: true)
                 safetySwitch.setOn(false, animated: true)
-                returnYdsPicker.selectItem(gnLsData.indexOf(0)!, animated: true)
+                returnYdsPicker.selectItem(gnLsData.index(of: 0)!, animated: true)
                 
                 if fieldSize == 80 {
-                    ydLnPicker.selectItem(ydLnData.indexOf(-15)!, animated: true)
+                    ydLnPicker.selectItem(ydLnData.index(of: -15)!, animated: true)
                 }
                 else {
-                    ydLnPicker.selectItem(ydLnData.indexOf(-25)!, animated: true)
+                    ydLnPicker.selectItem(ydLnData.index(of: -25)!, animated: true)
                 }
                 numberTextField.text = ""
             }
             
         case safetySwitch:
-            if sender.on {
+            if sender.isOn {
                 noReturnSwitch.setOn(false, animated: true)
                 fairCatchSwitch.setOn(false, animated: true)
                 touchbackSwitch.setOn(false, animated: true)
@@ -206,17 +230,17 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
         }
     }
     
-    @IBAction func leftBtn(sender: UIButton) {
+    @IBAction func leftBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         
         save()
         playTypeDialog(false)
     }
     
-    @IBAction func rightBtn(sender: UIButton) {
+    @IBAction func rightBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         
         save()
         if globalPlay.returnFlag && !globalPlay.touchdownFlag{
@@ -227,13 +251,13 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
         }
     }
     
-    @IBAction func saveBtn(sender: UIButton) {
+    @IBAction func saveBtn(_ sender: UIButton) {
         saved = true
         save()
         dismiss()
     }
     
-    @IBAction func cancelBtn(sender: UIButton) {
+    @IBAction func cancelBtn(_ sender: UIButton) {
         dismiss()
     }
     
@@ -244,18 +268,18 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
         
         globalPlay.returnedYdLn = ydLnData[ydLnPicker.selectedItem]
         globalPlay.returnYds = gnLsData[returnYdsPicker.selectedItem]
-        globalPlay.safetyFlag = safetySwitch.on
-        globalPlay.touchdownFlag = touchdownSwitch.on
-        globalPlay.faircatchFlag = fairCatchSwitch.on
-        globalPlay.returnFlag = !noReturnSwitch.on
-        globalPlay.touchbackFlag = touchbackSwitch.on
+        globalPlay.safetyFlag = safetySwitch.isOn
+        globalPlay.touchdownFlag = touchdownSwitch.isOn
+        globalPlay.faircatchFlag = fairCatchSwitch.isOn
+        globalPlay.returnFlag = !noReturnSwitch.isOn
+        globalPlay.touchbackFlag = touchbackSwitch.isOn
     }
     
     func dismiss() {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.dropDown
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
         if let temp = saved {
             if temp {
@@ -265,18 +289,18 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
         }
     }
     
-    func playTypeDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PlayTypeController")// as! UIViewController
+    func playTypeDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "PlayTypeController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 300)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         //let presentedViewController = navigationController as! PlayTypeController
@@ -290,19 +314,19 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     
     func tackleDialog() {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("TackleViewController")// as! UIViewController
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "TackleViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 200)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 200)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         
         
         //let presentedViewController = navigationController as! RunViewController
@@ -316,8 +340,8 @@ class ReturnerViewController: UIViewController, AKPickerViewDataSource, AKPicker
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
 }

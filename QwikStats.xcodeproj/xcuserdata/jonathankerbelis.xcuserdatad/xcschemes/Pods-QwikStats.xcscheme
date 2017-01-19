@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0820"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A8ACD8AC8DD0DB23F5B5BB5328A16848"
+               BlueprintIdentifier = "0EB28F1288C7D8BCC8F790BC4E0E7B82"
                BuildableName = "Pods_QwikStats.framework"
                BlueprintName = "Pods-QwikStats"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A8ACD8AC8DD0DB23F5B5BB5328A16848"
+            BlueprintIdentifier = "0EB28F1288C7D8BCC8F790BC4E0E7B82"
             BuildableName = "Pods_QwikStats.framework"
             BlueprintName = "Pods-QwikStats"
             ReferencedContainer = "container:Pods/Pods.xcodeproj">

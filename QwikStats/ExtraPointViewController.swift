@@ -26,8 +26,8 @@ class ExtraPointViewController: UIViewController {
         resultSwitch.setOn(globalPlay.fgMadeFlag, animated: true)
     }
     
-    @IBAction func switchChanged(sender: UISwitch) {
-        if sender.on {
+    @IBAction func switchChanged(_ sender: UISwitch) {
+        if sender.isOn {
             resultLabel.text = "Good"
         }
         else {
@@ -35,44 +35,44 @@ class ExtraPointViewController: UIViewController {
         }
     }
     
-    @IBAction func leftBtn(sender: UIButton) {
+    @IBAction func leftBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         
         save()
         playTypeDialog(false)
     }
     
-    @IBAction func rightBtn(sender: UIButton) {
+    @IBAction func rightBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         
         save()
         playTypeDialog(true)
     }
     
-    @IBAction func saveBtn(sender: UIButton) {
+    @IBAction func saveBtn(_ sender: UIButton) {
         saved = true
         save()
         dismiss()
     }
     
-    @IBAction func cancelBtn(sender: UIButton) {
+    @IBAction func cancelBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.dropDown
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func save() {
-        globalPlay.fgMadeFlag = resultSwitch.on
+        globalPlay.fgMadeFlag = resultSwitch.isOn
     }
     
     func dismiss() {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.dropDown
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
         if let temp = saved {
             if temp {
@@ -82,18 +82,18 @@ class ExtraPointViewController: UIViewController {
         }
     }
     
-    func playTypeDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PlayTypeController")// as! UIViewController
+    func playTypeDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "PlayTypeController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 300)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         //let presentedViewController = navigationController as! PlayTypeController
@@ -107,8 +107,8 @@ class ExtraPointViewController: UIViewController {
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     

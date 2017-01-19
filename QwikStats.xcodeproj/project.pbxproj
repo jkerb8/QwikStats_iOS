@@ -29,12 +29,20 @@
 		2189E0B91D56DA9F0016CF86 /* FumRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0B81D56DA9F0016CF86 /* FumRecoveryViewController.swift */; };
 		2189E0BB1D56DAA80016CF86 /* TackleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0BA1D56DAA80016CF86 /* TackleViewController.swift */; };
 		2189E0BD1D56DAB30016CF86 /* HashDirViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189E0BC1D56DAB30016CF86 /* HashDirViewController.swift */; };
+		21D986591E2EA4E300762C04 /* NewLaxGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D986581E2EA4E300762C04 /* NewLaxGameViewController.swift */; };
+		21D986621E2EBC6E00762C04 /* LaxGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D986611E2EBC6E00762C04 /* LaxGameViewController.swift */; };
+		21D986641E2EC21600762C04 /* LaxDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D986631E2EC21600762C04 /* LaxDialogViewController.swift */; };
+		21D986671E3049C100762C04 /* LaxPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D986661E3049C100762C04 /* LaxPlayer.swift */; };
+		21D986691E3049D000762C04 /* LaxTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D986681E3049D000762C04 /* LaxTeam.swift */; };
+		21D9866B1E3049DE00762C04 /* LaxGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D9866A1E3049DE00762C04 /* LaxGame.swift */; };
+		21D9866D1E316BD200762C04 /* LaxTurnoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D9866C1E316BD200762C04 /* LaxTurnoverViewController.swift */; };
 		21F8457D1D371373006E3A7F /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8457C1D371373006E3A7F /* Game.swift */; };
 		21F8457F1D371537006E3A7F /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8457E1D371537006E3A7F /* Team.swift */; };
 		21F845811D371545006E3A7F /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F845801D371545006E3A7F /* Play.swift */; };
 		21F845831D371551006E3A7F /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F845821D371551006E3A7F /* Player.swift */; };
 		21FF6BE31D613C030089514C /* OpenGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FF6BE21D613C030089514C /* OpenGameViewController.swift */; };
 		21FF6BE61D613D920089514C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21FF6BE41D613D920089514C /* Main.storyboard */; };
+		74FC387512E0E53803E2B108 /* Pods_QwikStats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A60028DB0ED3E88CAB6C60A /* Pods_QwikStats.framework */; };
 		FD00FD8A008727CEAC05698A /* Pods_QwikStatsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 867C3FFD70132B047B2F9D0B /* Pods_QwikStatsTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -132,6 +140,13 @@
 		2189E0B81D56DA9F0016CF86 /* FumRecoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FumRecoveryViewController.swift; sourceTree = "<group>"; };
 		2189E0BA1D56DAA80016CF86 /* TackleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TackleViewController.swift; sourceTree = "<group>"; };
 		2189E0BC1D56DAB30016CF86 /* HashDirViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashDirViewController.swift; sourceTree = "<group>"; };
+		21D986581E2EA4E300762C04 /* NewLaxGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewLaxGameViewController.swift; sourceTree = "<group>"; };
+		21D986611E2EBC6E00762C04 /* LaxGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaxGameViewController.swift; sourceTree = "<group>"; };
+		21D986631E2EC21600762C04 /* LaxDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaxDialogViewController.swift; sourceTree = "<group>"; };
+		21D986661E3049C100762C04 /* LaxPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaxPlayer.swift; sourceTree = "<group>"; };
+		21D986681E3049D000762C04 /* LaxTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaxTeam.swift; sourceTree = "<group>"; };
+		21D9866A1E3049DE00762C04 /* LaxGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaxGame.swift; sourceTree = "<group>"; };
+		21D9866C1E316BD200762C04 /* LaxTurnoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaxTurnoverViewController.swift; sourceTree = "<group>"; };
 		21F8457C1D371373006E3A7F /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		21F8457E1D371537006E3A7F /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		21F845801D371545006E3A7F /* Play.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Play.swift; sourceTree = "<group>"; };
@@ -155,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2187BD421D4C5AAF005FA398 /* Pods_QwikStats.framework in Frameworks */,
+				74FC387512E0E53803E2B108 /* Pods_QwikStats.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +232,7 @@
 		214D8FDC1D2224D7009C3A83 /* QwikStats */ = {
 			isa = PBXGroup;
 			children = (
+				21D986651E3049A500762C04 /* LaxPackage */,
 				214D8FDD1D2224D7009C3A83 /* AppDelegate.swift */,
 				214D8FDF1D2224D7009C3A83 /* ViewController.swift */,
 				21FF6BE41D613D920089514C /* Main.storyboard */,
@@ -241,6 +258,10 @@
 				2189E0BC1D56DAB30016CF86 /* HashDirViewController.swift */,
 				213B87DD1D5CD054000D3DB9 /* NewGameViewController.swift */,
 				21FF6BE21D613C030089514C /* OpenGameViewController.swift */,
+				21D986581E2EA4E300762C04 /* NewLaxGameViewController.swift */,
+				21D986611E2EBC6E00762C04 /* LaxGameViewController.swift */,
+				21D986631E2EC21600762C04 /* LaxDialogViewController.swift */,
+				21D9866C1E316BD200762C04 /* LaxTurnoverViewController.swift */,
 			);
 			path = QwikStats;
 			sourceTree = "<group>";
@@ -261,6 +282,16 @@
 				214D8FFF1D2224D7009C3A83 /* Info.plist */,
 			);
 			path = QwikStatsUITests;
+			sourceTree = "<group>";
+		};
+		21D986651E3049A500762C04 /* LaxPackage */ = {
+			isa = PBXGroup;
+			children = (
+				21D986661E3049C100762C04 /* LaxPlayer.swift */,
+				21D986681E3049D000762C04 /* LaxTeam.swift */,
+				21D9866A1E3049DE00762C04 /* LaxGame.swift */,
+			);
+			name = LaxPackage;
 			sourceTree = "<group>";
 		};
 		3479204A87E6ECD015BE2747 /* Pods */ = {
@@ -358,18 +389,22 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Jonathan Kerbelis";
 				TargetAttributes = {
 					214D8FD91D2224D7009C3A83 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 8SV9Q68SW9;
+						LastSwiftMigration = 0810;
 					};
 					214D8FED1D2224D7009C3A83 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0810;
 						TestTargetID = 214D8FD91D2224D7009C3A83;
 					};
 					214D8FF81D2224D7009C3A83 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0810;
 						TestTargetID = 214D8FD91D2224D7009C3A83;
 					};
 				};
@@ -609,10 +644,15 @@
 			files = (
 				214D8FE01D2224D7009C3A83 /* ViewController.swift in Sources */,
 				2116578C1D4551500035D6B4 /* PlayTypeController.swift in Sources */,
+				21D986691E3049D000762C04 /* LaxTeam.swift in Sources */,
+				21D986621E2EBC6E00762C04 /* LaxGameViewController.swift in Sources */,
 				211657881D454F370035D6B4 /* PresentedTableViewController.swift in Sources */,
 				2116578E1D47063B0035D6B4 /* GameViewController.swift in Sources */,
+				21D9866B1E3049DE00762C04 /* LaxGame.swift in Sources */,
 				2189E0BB1D56DAA80016CF86 /* TackleViewController.swift in Sources */,
+				21D986591E2EA4E300762C04 /* NewLaxGameViewController.swift in Sources */,
 				213A04C71D4AD4640050FF8F /* RunViewController.swift in Sources */,
+				21D986671E3049C100762C04 /* LaxPlayer.swift in Sources */,
 				214D8FDE1D2224D7009C3A83 /* AppDelegate.swift in Sources */,
 				2189E0BD1D56DAB30016CF86 /* HashDirViewController.swift in Sources */,
 				21F8457F1D371537006E3A7F /* Team.swift in Sources */,
@@ -625,6 +665,8 @@
 				2189E0B31D56DA5F0016CF86 /* PenaltyViewController.swift in Sources */,
 				2189E0B91D56DA9F0016CF86 /* FumRecoveryViewController.swift in Sources */,
 				2189E0B51D56DA6D0016CF86 /* ExtraPointViewController.swift in Sources */,
+				21D9866D1E316BD200762C04 /* LaxTurnoverViewController.swift in Sources */,
+				21D986641E2EC21600762C04 /* LaxDialogViewController.swift in Sources */,
 				213B87DE1D5CD054000D3DB9 /* NewGameViewController.swift in Sources */,
 				2189E0B71D56DA790016CF86 /* FieldGoalViewController.swift in Sources */,
 				213A04C91D4AD8960050FF8F /* ResultViewController.swift in Sources */,
@@ -696,8 +738,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -742,8 +786,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -762,6 +808,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -771,12 +818,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A2631E3DE66739273B69898A /* Pods-QwikStats.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan Kerbelis (8SV9Q68SW9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jonathan Kerbelis (8SV9Q68SW9)";
 				INFOPLIST_FILE = QwikStats/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = QwikCut.KerbySoft.QwikStats;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kerbysoft.qwikstats;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6bd5adcc-3825-4e28-be6c-5995e2877b88";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -784,12 +836,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AA597CC0046F50B887C5672F /* Pods-QwikStats.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan Kerbelis (8SV9Q68SW9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jonathan Kerbelis (8SV9Q68SW9)";
 				INFOPLIST_FILE = QwikStats/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = QwikCut.KerbySoft.QwikStats;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kerbysoft.qwikstats;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6bd5adcc-3825-4e28-be6c-5995e2877b88";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -802,6 +859,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = QwikCut.KerbySoft.QwikStatsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QwikStats.app/QwikStats";
 			};
 			name = Debug;
@@ -815,6 +873,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = QwikCut.KerbySoft.QwikStatsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QwikStats.app/QwikStats";
 			};
 			name = Release;
@@ -823,10 +882,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6F6F69D4F5D8EA1E125E875E /* Pods-QwikStatsUITests.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan Kerbelis (8SV9Q68SW9)";
 				INFOPLIST_FILE = QwikStatsUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = QwikCut.KerbySoft.QwikStatsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6bd5adcc-3825-4e28-be6c-5995e2877b88";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = QwikStats;
 			};
 			name = Debug;
@@ -835,10 +897,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B550B0A29D1055F1FE8D27DC /* Pods-QwikStatsUITests.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan Kerbelis (8SV9Q68SW9)";
 				INFOPLIST_FILE = QwikStatsUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = QwikCut.KerbySoft.QwikStatsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6bd5adcc-3825-4e28-be6c-5995e2877b88";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = QwikStats;
 			};
 			name = Release;

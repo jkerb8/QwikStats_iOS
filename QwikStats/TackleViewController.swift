@@ -9,6 +9,30 @@
 import UIKit
 import MZFormSheetPresentationController
 import Toast_Swift
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class TackleViewController: UIViewController {
     @IBOutlet var numberTextField: UITextField!
@@ -38,22 +62,22 @@ class TackleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        numberTextField.keyboardType = UIKeyboardType.NumberPad
+        numberTextField.keyboardType = UIKeyboardType.numberPad
         self.view.superview?.translatesAutoresizingMaskIntoConstraints = true
         
         if globalPlay.tacklers.count > 0 {
             numberTextField.text = String(globalPlay.tacklers[0])
-            for i in 1.stride(to: globalPlay.tacklers.count, by: 1) {
+            for i in stride(from: 1, to: globalPlay.tacklers.count, by: 1) {
                 addTackler(i)
             }
         }
     }
     
-    @IBAction func addTacklerBtn(sender: UIButton) {
+    @IBAction func addTacklerBtn(_ sender: UIButton) {
         addTackler(additionalTacklers.count + 1)
     }
     
-    func addTackler(id: Int) {
+    func addTackler(_ id: Int) {
         if additionalTacklers.count >= 4 {
             showMessage("Max number of tacklers is 5")
         }
@@ -66,15 +90,15 @@ class TackleViewController: UIViewController {
             windowY += plusY
             saveY += plusY
             
-            self.view.superview?.bounds = CGRectMake(0, 0, windowX, windowY)
-            self.preferredContentSize = CGSizeMake(windowX, windowY   )
+            self.view.superview?.bounds = CGRect(x: 0, y: 0, width: windowX, height: windowY)
+            self.preferredContentSize = CGSize(width: windowX, height: windowY   )
             
-            let textField = UITextField.init(frame: CGRectMake(textXPos, textYPos, textWidth, textHeight))
-            textField.addTarget(self, action: #selector(checkMaxLength(_:)), forControlEvents: UIControlEvents.EditingChanged)
-            textField.addTarget(self, action: #selector(textFieldTouched(_:)), forControlEvents: UIControlEvents.AllEvents)
-            textField.textAlignment = .Center
+            let textField = UITextField.init(frame: CGRect(x: textXPos, y: textYPos, width: textWidth, height: textHeight))
+            textField.addTarget(self, action: #selector(checkMaxLength(_:)), for: UIControlEvents.editingChanged)
+            textField.addTarget(self, action: #selector(textFieldTouched(_:)), for: UIControlEvents.allEvents)
+            textField.textAlignment = .center
             textField.tag = id
-            textField.keyboardType = UIKeyboardType.NumberPad
+            textField.keyboardType = UIKeyboardType.numberPad
             
             if globalPlay.tacklers.count > id {
                 textField.text = String(globalPlay.tacklers[id])
@@ -84,28 +108,28 @@ class TackleViewController: UIViewController {
             addTacklerBtn.translatesAutoresizingMaskIntoConstraints = true
             saveBtn.translatesAutoresizingMaskIntoConstraints = true
             cancelBtn.translatesAutoresizingMaskIntoConstraints = true
-            addTacklerBtn.frame = CGRectMake(btnXPos, btnYPos, btnWidth, btnHeight)
-            saveBtn.frame = CGRectMake(saveX, saveY, saveWidth, saveHeight)
-            cancelBtn.frame = CGRectMake(cancelX, saveY, saveWidth, saveHeight)
+            addTacklerBtn.frame = CGRect(x: btnXPos, y: btnYPos, width: btnWidth, height: btnHeight)
+            saveBtn.frame = CGRect(x: saveX, y: saveY, width: saveWidth, height: saveHeight)
+            cancelBtn.frame = CGRect(x: cancelX, y: saveY, width: saveWidth, height: saveHeight)
             
             self.view.addSubview(textField)
             self.view.translatesAutoresizingMaskIntoConstraints = true
         }
     }
     
-    @IBAction func checkMaxLength(sender: UITextField) {
+    @IBAction func checkMaxLength(_ sender: UITextField) {
         if sender.text?.characters.count > 2 {
             sender.deleteBackward()
         }
     }
     
-    @IBAction func textFieldTouched(sender: UITextField) {
-        self.view.superview?.bounds = CGRectMake(0, 0, windowX, windowY)
+    @IBAction func textFieldTouched(_ sender: UITextField) {
+        self.view.superview?.bounds = CGRect(x: 0, y: 0, width: windowX, height: windowY)
     }
     
-    @IBAction func leftBtn(sender: UIButton) {
+    @IBAction func leftBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         
         save()
         if globalPlay.playType == "Kickoff" || globalPlay.playType == "Punt" {
@@ -116,26 +140,26 @@ class TackleViewController: UIViewController {
         }
     }
     
-    @IBAction func rightBtn(sender: UIButton) {
+    @IBAction func rightBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         
         save()
         playTypeDialog(true)
         //hashDirDialog() once it's available
     }
     
-    @IBAction func saveBtn(sender: UIButton) {
+    @IBAction func saveBtn(_ sender: UIButton) {
         saved = true
         save()
         dismiss()
     }
     
-    @IBAction func cancelBtn(sender: UIButton) {
+    @IBAction func cancelBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.dropDown
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func save() {
@@ -144,7 +168,7 @@ class TackleViewController: UIViewController {
             globalPlay.tacklers.append(num)
             globalPlay.tackleFlag = true
             
-            for i in 0.stride(to: additionalTacklers.count, by: 1) {
+            for i in stride(from: 0, to: additionalTacklers.count, by: 1) {
                 if let num = Int(additionalTacklers[i].text!) {
                     if !globalPlay.tacklers.contains(num) {
                         globalPlay.tacklers.append(num)
@@ -156,9 +180,9 @@ class TackleViewController: UIViewController {
     
     func dismiss() {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.dropDown
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
         if let temp = saved {
             if temp {
@@ -168,18 +192,18 @@ class TackleViewController: UIViewController {
         }
     }
     
-    func showMessage(message: String) {
-        self.view.makeToast(message, duration: 3.0, position: .Bottom)
+    func showMessage(_ message: String) {
+        self.view.makeToast(message, duration: 3.0, position: .bottom)
     }
     
     func resultDialog() {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("ResultViewController")// as! UIViewController
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "ResultViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 350)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 350)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         
         //let presentedViewController = navigationController as! ResultViewController
         //presentedViewController.play = self.play
@@ -192,20 +216,20 @@ class TackleViewController: UIViewController {
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
         
     }
     
     func hashDirDialog() {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("HashDirViewController")// as! UIViewController
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "HashDirViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 450)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 450)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         
         
         //let presentedViewController = navigationController as! RunViewController
@@ -219,19 +243,19 @@ class TackleViewController: UIViewController {
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     
     func returnerDialog() {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("ReturnerViewController")// as! UIViewController
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "ReturnerViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 520)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 520)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         
         
         //let presentedViewController = navigationController as! RunViewController
@@ -245,23 +269,23 @@ class TackleViewController: UIViewController {
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     
-    func playTypeDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PlayTypeController")// as! UIViewController
+    func playTypeDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "PlayTypeController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 300)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         //let presentedViewController = navigationController as! PlayTypeController
@@ -275,8 +299,8 @@ class TackleViewController: UIViewController {
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
 

@@ -42,7 +42,7 @@ class Player {
         self.number = number
     }
     
-    func updatePassStats(yds: Int, pic: Bool, incompletion: Bool, td: Bool, fum: Bool) {
+    func updatePassStats(_ yds: Int, pic: Bool, incompletion: Bool, td: Bool, fum: Bool) {
         self.passyds += yds
         if pic {
             self.ints += 1
@@ -56,7 +56,7 @@ class Player {
         self.passatmpts += 1
      }
     
-    func undoPassStats(yds: Int, pic: Bool, incompletion: Bool, td: Bool, fum: Bool) {
+    func undoPassStats(_ yds: Int, pic: Bool, incompletion: Bool, td: Bool, fum: Bool) {
         self.passyds -= yds
         if pic {
             self.ints -= 1
@@ -70,7 +70,7 @@ class Player {
         self.passatmpts -= 1
     }
     
-    func updateRunStats (yds: Int, fumb: Bool, td: Bool) {
+    func updateRunStats (_ yds: Int, fumb: Bool, td: Bool) {
         runyds += yds
         if fumb {
             fumbles += 1
@@ -81,7 +81,7 @@ class Player {
         runatmpts += 1
     }
     
-    func undoRunStats (yds: Int, fumb: Bool, td: Bool) {
+    func undoRunStats (_ yds: Int, fumb: Bool, td: Bool) {
         runyds -= yds
         if fumb {
             fumbles -= 1
@@ -92,7 +92,7 @@ class Player {
         runatmpts -= 1
     }
     
-    func updateRecStats(yds: Int, fumb: Bool, td: Bool) {
+    func updateRecStats(_ yds: Int, fumb: Bool, td: Bool) {
         recyds += yds
         if fumb {
             fumbles += 1
@@ -103,7 +103,7 @@ class Player {
         catches += 1
     }
     
-    func undoRecStats(yds: Int, fumb: Bool, td: Bool) {
+    func undoRecStats(_ yds: Int, fumb: Bool, td: Bool) {
         recyds -= yds
         if fumb {
             fumbles -= 1
@@ -114,7 +114,7 @@ class Player {
         catches -= 1
     }
     
-    func updatePuntRetStats(yds: Int, fumb: Bool, td: Bool) {
+    func updatePuntRetStats(_ yds: Int, fumb: Bool, td: Bool) {
         puntretyds += yds
         if fumb {
             fumbles += 1
@@ -125,7 +125,7 @@ class Player {
         puntreturns += 1
     }
     
-    func undoPuntRetStats(yds: Int, fumb: Bool, td: Bool) {
+    func undoPuntRetStats(_ yds: Int, fumb: Bool, td: Bool) {
         puntretyds -= yds
         if fumb {
             fumbles -= 1
@@ -136,7 +136,7 @@ class Player {
         puntreturns -= 1
     }
     
-    func updateKickRetStats (yds: Int, fumb: Bool, td: Bool) {
+    func updateKickRetStats (_ yds: Int, fumb: Bool, td: Bool) {
         kickretyds += yds
         if fumb {
             fumbles += 1
@@ -147,7 +147,7 @@ class Player {
         kickreturns += 1
     }
     
-    func undoKickRetStats (yds: Int, fumb: Bool, td: Bool) {
+    func undoKickRetStats (_ yds: Int, fumb: Bool, td: Bool) {
         kickretyds -= yds
         if fumb {
             fumbles -= 1
@@ -158,7 +158,7 @@ class Player {
         kickreturns -= 1
     }
     
-    func updateDefStats(pic: Bool, tackle: Bool, loss: Bool, fumblerec: Bool, forcedfum: Bool, sack: Bool, td: Bool, group: Bool) {
+    func updateDefStats(_ pic: Bool, tackle: Bool, loss: Bool, fumblerec: Bool, forcedfum: Bool, sack: Bool, td: Bool, group: Bool) {
         if pic {
             pics += 1
         }
@@ -197,7 +197,7 @@ class Player {
         }
     }
     
-    func undoDefStats(pic: Bool, tackle: Bool, loss: Bool, fumblerec: Bool, forcedfum: Bool, sack: Bool, td: Bool, group: Bool) {
+    func undoDefStats(_ pic: Bool, tackle: Bool, loss: Bool, fumblerec: Bool, forcedfum: Bool, sack: Bool, td: Bool, group: Bool) {
         if pic {
             pics -= 1
         }

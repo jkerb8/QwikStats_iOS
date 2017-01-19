@@ -80,17 +80,17 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         updateFlag = false
         
         scrollWidth = playScrollView.contentSize.width
-        playScrollView.contentSize = CGSizeMake(scrollWidth, scrollHeight)
+        playScrollView.contentSize = CGSize(width: scrollWidth, height: scrollHeight)
         //playScrollView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
         
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         
-        for i in 0.stride(to: -50, by: -1){
+        for i in stride(from: 0, to: -50, by: -1){
             ydLnData.append(i)
             ydLnStrings.append(" \(String(i)) ")
         }
         
-        for i in 50.stride(to: -1, by: -1) {
+        for i in stride(from: 50, to: -1, by: -1) {
             ydLnData.append(i)
             ydLnStrings.append(" \(String(i)) ")
         }
@@ -112,9 +112,9 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         
         updateVisuals()
         
-        let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first
-        let folder = NSURL(fileURLWithPath: dir!).URLByAppendingPathComponent("QwikStats").absoluteString
-        gameFolder = NSURL(fileURLWithPath: folder).URLByAppendingPathComponent(gameName).absoluteString
+        let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first
+        let folder = URL(fileURLWithPath: dir!).appendingPathComponent("QwikStats").absoluteString
+        gameFolder = URL(fileURLWithPath: folder).appendingPathComponent(gameName).absoluteString
     
 
         //set scoreboard font stuff
@@ -127,14 +127,14 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         if !openingPastGame {
             openingKickoffDialog()
         }
     }
     
-    func showMessage(message: String) {
-        self.view.makeToast(message, duration: 3.0, position: .Bottom)
+    func showMessage(_ message: String) {
+        self.view.makeToast(message, duration: 3.0, position: .bottom)
     }
     
     override func didReceiveMemoryWarning() {
@@ -142,7 +142,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func newPlayBtn(sender: UIButton) {
+    @IBAction func newPlayBtn(_ sender: UIButton) {
         saved = false
         globalPlay = nil
         globalPlay = Play(currentGame: game)
@@ -153,7 +153,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         
     }
     
-    @IBAction func undoBtn(sender: UIButton) {
+    @IBAction func undoBtn(_ sender: UIButton) {
         if statusLabel.text == "End of Game" {
             returnToFourthDialog()
         }
@@ -171,14 +171,14 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
     }
     
     func undoPlayDialog() {
-        let alertController = UIAlertController(title: "Undo Play", message: "Are you sure you want to undo the last play?", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Undo Play", message: "Are you sure you want to undo the last play?", preferredStyle: UIAlertControllerStyle.alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            alertController.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(cancelAction)
         
-        let okAction = UIAlertAction(title: "Yes", style: .Default) { (action) in
+        let okAction = UIAlertAction(title: "Yes", style: .default) { (action) in
             if !self.updateFlag {
                 self.showMessage("Play Deleted")
             }
@@ -192,44 +192,44 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
             }
             
             self.removeButton(gamePlays[gamePlays.count - 1])
-            gamePlays.removeAtIndex(gamePlays.count - 1)
-            self.gameDataList.removeAtIndex(self.gameDataList.count - 1)
+            gamePlays.remove(at: gamePlays.count - 1)
+            self.gameDataList.remove(at: self.gameDataList.count - 1)
             self.updateVisuals()
             
         }
         alertController.addAction(okAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func returnToFourthDialog() {
-        let alertController = UIAlertController(title: "Undo Play", message: "Return to the 4th Quarter?", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Undo Play", message: "Return to the 4th Quarter?", preferredStyle: UIAlertControllerStyle.alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            alertController.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(cancelAction)
         
-        let okAction = UIAlertAction(title: "Yes", style: .Default) { (action) in
-            self.newPlayBtn.enabled = true
+        let okAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            self.newPlayBtn.isEnabled = true
             self.statusLabel.text = ""
             self.updateGameData(gamePlays[gamePlays.count - 1])
             self.updateVisuals()
         }
         alertController.addAction(okAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func returnToSecondDialog() {
-        let alertController = UIAlertController(title: "Undo Play", message: "Return to the 2nd Quarter?", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Undo Play", message: "Return to the 2nd Quarter?", preferredStyle: UIAlertControllerStyle.alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            alertController.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(cancelAction)
         
-        let okAction = UIAlertAction(title: "Yes", style: .Default) { (action) in
+        let okAction = UIAlertAction(title: "Yes", style: .default) { (action) in
             self.statusLabel.text = ""
             game.qtr = 2
             self.updateGameData(gamePlays[gamePlays.count - 1])
@@ -237,34 +237,34 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         }
         alertController.addAction(okAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
-    @IBAction func menuBtn(sender: UIButton) {
-        let alertController = UIAlertController(title: "Game Menu", message: "Choose an option", preferredStyle: UIAlertControllerStyle.Alert)
+    @IBAction func menuBtn(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Game Menu", message: "Choose an option", preferredStyle: UIAlertControllerStyle.alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            alertController.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(cancelAction)
         
-        let saveGameAction = UIAlertAction(title: "Save Game", style: .Default) { (action) in
+        let saveGameAction = UIAlertAction(title: "Save Game", style: .default) { (action) in
             self.saveGame()
         }
         alertController.addAction(saveGameAction)
         
-        let exitAction = UIAlertAction(title: "Exit Game", style: .Default) { (action) in
+        let exitAction = UIAlertAction(title: "Exit Game", style: .default) { (action) in
             self.exitGameDialog()
         }
         alertController.addAction(exitAction)
         
-        let nextQtrAction = UIAlertAction(title: "Next Qtr", style: .Default) { (action) in
+        let nextQtrAction = UIAlertAction(title: "Next Qtr", style: .default) { (action) in
             var qtr = game.qtr
             qtr += 1
             if qtr > 4 {
                 self.qtrLabel.text = ""
                 self.statusLabel.text = "End of Game"
-                self.newPlayBtn.enabled = false
+                self.newPlayBtn.isEnabled = false
             }
             else if qtr == 3 {
                 if self.homeTeamStart {
@@ -290,50 +290,50 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         }
         alertController.addAction(nextQtrAction)
         
-        let exportAction = UIAlertAction(title: "Export", style: .Default) { (action) in
+        let exportAction = UIAlertAction(title: "Export", style: .default) { (action) in
             self.export()
         }
         alertController.addAction(exportAction)
         
-        let manualUpdateAction = UIAlertAction(title: "Manual Update", style: .Default) { (action) in
+        let manualUpdateAction = UIAlertAction(title: "Manual Update", style: .default) { (action) in
             //manualUpdate()
         }
         alertController.addAction(manualUpdateAction)
         
-        let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (action) in
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (action) in
             //settings()
         }
         alertController.addAction(settingsAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func exitGameDialog() {
-        let alertController = UIAlertController(title: "Exiting Game", message: "Would you like to save?", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Exiting Game", message: "Would you like to save?", preferredStyle: UIAlertControllerStyle.alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            alertController.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(cancelAction)
         
-        let exitAction = UIAlertAction(title: "Save and Exit", style: .Default) { (action) in
+        let exitAction = UIAlertAction(title: "Save and Exit", style: .default) { (action) in
             self.saveGame()
-            self.performSegueWithIdentifier("unwindToViewController", sender: self)
+            self.performSegue(withIdentifier: "unwindToViewController", sender: self)
         }
         alertController.addAction(exitAction)
         
-        let nextQtrAction = UIAlertAction(title: "Exit Without Saving", style: .Default) { (action) in
-            self.performSegueWithIdentifier("unwindToViewController", sender: self)
+        let nextQtrAction = UIAlertAction(title: "Exit Without Saving", style: .default) { (action) in
+            self.performSegue(withIdentifier: "unwindToViewController", sender: self)
         }
         alertController.addAction(nextQtrAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func openingKickoffDialog() {
-        let alertController = UIAlertController(title: "Opening Kickoff", message: "Which team is kicking off to begin the game?", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Opening Kickoff", message: "Which team is kicking off to begin the game?", preferredStyle: UIAlertControllerStyle.alert)
         
-        let homTeamAction = UIAlertAction(title: game.homeTeam.teamName, style: .Default) { (action) in
+        let homTeamAction = UIAlertAction(title: game.homeTeam.teamName, style: .default) { (action) in
             if !game.possFlag {
                 self.changePossession()
             }
@@ -342,7 +342,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         }
         alertController.addAction(homTeamAction)
         
-        let awayTeamAction = UIAlertAction(title: game.awayTeam.teamName, style: .Default) { (action) in
+        let awayTeamAction = UIAlertAction(title: game.awayTeam.teamName, style: .default) { (action) in
             if game.possFlag {
                 self.changePossession()
             }
@@ -351,18 +351,18 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         }
         alertController.addAction(awayTeamAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func playTypeDialog() {
         
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PlayTypeController")// as! UIViewController
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "PlayTypeController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideAndBounceFromBottom
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 300)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideAndBounceFromBottom
         
         //let presentedViewController = navigationController as! PlayTypeController
         //presentedViewController.play = globalPlay
@@ -374,15 +374,15 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
             //presentedViewController.playTypeLabel?.text = "Play Type"
         }
         
-        self.presentViewController(formSheetController, animated: true, completion: nil)
+        self.present(formSheetController, animated: true, completion: nil)
 
     }
     
     func savePlay() {
         if updateFlag {
             //removeButton(gamePlays[gamePlays.count - 1])
-            gamePlays.removeAtIndex(gamePlays.count - 1)
-            gameDataList.removeAtIndex(gameDataList.count - 1)
+            gamePlays.remove(at: gamePlays.count - 1)
+            gameDataList.remove(at: gameDataList.count - 1)
         }
         
         if (statusLabel.text) != ""{
@@ -412,7 +412,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         var output: String = "\(globalPlay.prevDist),\(globalPlay.prevDown),\(globalPlay.downNum),\(globalPlay.dist),\(globalPlay.fgDistance),\(globalPlay.fgMadeFlag),\(globalPlay.fieldPos),\(globalPlay.ydLn),\(globalPlay.gnLs),\(globalPlay.incompleteFlag),\(globalPlay.playCount),\(globalPlay.playerNumber),\(globalPlay.playType),\(globalPlay.qtr),\(globalPlay.recNumber),\(globalPlay.returnFlag),\(globalPlay.touchdownFlag),\(globalPlay.defNumber),\(globalPlay.fumbleFlag),\(globalPlay.interceptionFlag),\(globalPlay.touchbackFlag),\(globalPlay.faircatchFlag),\(globalPlay.returnYds),\(globalPlay.fumbleRecFlag),\(globalPlay.tackleFlag),\(globalPlay.sackFlag),\(globalPlay.possFlag),\(globalPlay.safetyFlag),\(globalPlay.defensivePenalty),\(globalPlay.returnedYdLn),\(globalPlay.prevYdLn),\(globalPlay.firstDn),\(globalPlay.playCall),\(globalPlay.formation),\(globalPlay.hash),\(globalPlay.playDir),\(globalPlay.offensiveTeam)"
         
         if globalPlay.tacklers.count > 0 {
-            for i in 0.stride(to: globalPlay.tacklers.count, by: 1){
+            for i in stride(from: 0, to: globalPlay.tacklers.count, by: 1){
                 output += "," + String(globalPlay.tacklers[i])
             }
         }
@@ -429,7 +429,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         if makeDirectory() {
             let file = csvGameData
             //let fileManager = NSFileManager.defaultManager()
-            let path = NSURL(fileURLWithPath: gameFolder).URLByAppendingPathComponent(file)
+            let path = URL(fileURLWithPath: gameFolder).appendingPathComponent(file)
             var text = ""
             var lines = [String]()
             var line = ""
@@ -438,15 +438,15 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
             print(path.absoluteString)
             
             do {
-                try text = NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding) as String
+                try text = NSString(contentsOf: path, encoding: String.Encoding.utf8.rawValue) as String
                 print("File Length: \(text.characters.count)")
-                lines = text.componentsSeparatedByString("\n")
+                lines = text.components(separatedBy: "\n")
                 
                 var max = lines.count
-                for i in 0.stride(to: max, by: 1) {
+                for i in stride(from: 0, to: max, by: 1) {
                     if i < lines.count {
                         if lines[i] == "" {
-                            lines.removeAtIndex(i)
+                            lines.remove(at: i)
                             max -= 1
                         }
                     }
@@ -465,7 +465,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                         updateVisuals()
                         statusLabel.text = "End of Game"
                         qtrLabel.text = ""
-                        newPlayBtn.enabled = false
+                        newPlayBtn.isEnabled = false
                         game.qtr = 4
                         homeTeamStart = !gamePlays[0].possFlag
                     }
@@ -483,7 +483,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                         homeTeamStart = !gamePlays[0].possFlag
                     }
                     else {
-                        let words = line.componentsSeparatedByString(",")
+                        let words = line.components(separatedBy: ",")
                         
                         var play = Play(currentGame: game)
                         
@@ -525,7 +525,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                         play.playDir = words[35]
                         play.offensiveTeam = words[36]
                         
-                        for i in 37.stride(to: words.count, by: 1) {
+                        for i in stride(from: 37, to: words.count, by: 1) {
                             play.tacklers.append(Int(words[i])!)
                         }
                         
@@ -566,17 +566,17 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
     }
     
     func makeDirectory() -> Bool {
-        if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
-            let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("QwikStats").path!
-            let fileManager = NSFileManager.defaultManager()
-            if fileManager.fileExistsAtPath(folder) {
+        if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
+            let folder = URL(fileURLWithPath: dir).appendingPathComponent("QwikStats").path
+            let fileManager = FileManager.default
+            if fileManager.fileExists(atPath: folder) {
                 print("QwikStats folder exists...")
                 return createGameFolder(folder)
             }
             else {
                 do {
                     print("Creating QwikStats folder...")
-                    try fileManager.createDirectoryAtPath(folder, withIntermediateDirectories: false, attributes: nil)
+                    try fileManager.createDirectory(atPath: folder, withIntermediateDirectories: false, attributes: nil)
                     return createGameFolder(folder)
                 }
                 catch let error as NSError{
@@ -588,17 +588,17 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         return false
     }
     
-    func createGameFolder(dir: String) -> Bool {
-        let fileManager = NSFileManager.defaultManager()
-        let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent(gameName).path!
-        if fileManager.fileExistsAtPath(folder) {
+    func createGameFolder(_ dir: String) -> Bool {
+        let fileManager = FileManager.default
+        let folder = URL(fileURLWithPath: dir).appendingPathComponent(gameName).path
+        if fileManager.fileExists(atPath: folder) {
             print("Game Directory exists")
             return true
         }
         else {
             do {
                 print("creating game folder...")
-                try fileManager.createDirectoryAtPath(folder, withIntermediateDirectories: false, attributes: nil)
+                try fileManager.createDirectory(atPath: folder, withIntermediateDirectories: false, attributes: nil)
                 return true
             }
             catch let error as NSError{
@@ -618,8 +618,8 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         if makeDirectory() {
             var failed = false
             let file = csvGameData
-            let fileManager = NSFileManager.defaultManager()
-            let path = NSURL(fileURLWithPath: gameFolder).URLByAppendingPathComponent(file)
+            let fileManager = FileManager.default
+            let path = URL(fileURLWithPath: gameFolder).appendingPathComponent(file)
             //var isDir: ObjCBool = false
             
             //if fileManager.fileExistsAtPath(path){
@@ -638,7 +638,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                 }*/
             let temp = gameDataList[0]
             do {
-                try temp.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+                try temp.write(to: path, atomically: false, encoding: String.Encoding.utf8)
                 self.showMessage("Game Saved")
                 print("Game Saved")
             }
@@ -649,36 +649,36 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                 }
             }
             
-            if let fileHandle  = try? NSFileHandle(forWritingToURL: path) {
+            if let fileHandle  = try? FileHandle(forWritingTo: path) {
                 defer {
                     fileHandle.closeFile()
                 }
             
-                for i in 1.stride(to: gameDataList.count, by: 1) {
+                for i in stride(from: 1, to: gameDataList.count, by: 1) {
                     let text = gameDataList[i]
         
-                    let data = text.dataUsingEncoding(NSUTF8StringEncoding)
+                    let data = text.data(using: String.Encoding.utf8)
                     fileHandle.seekToEndOfFile()
-                    fileHandle.writeData(data!)
+                    fileHandle.write(data!)
                 }
                 
                 if statusLabel.text == "End of Game" {
                     let text = "END"
-                    let data = text.dataUsingEncoding(NSUTF8StringEncoding)
+                    let data = text.data(using: String.Encoding.utf8)
                     fileHandle.seekToEndOfFile()
-                    fileHandle.writeData(data!)
+                    fileHandle.write(data!)
                 }
                 else if statusLabel.text == "Halftime" {
                     let text = "HALF"
-                    let data = text.dataUsingEncoding(NSUTF8StringEncoding)
+                    let data = text.data(using: String.Encoding.utf8)
                     fileHandle.seekToEndOfFile()
-                    fileHandle.writeData(data!)
+                    fileHandle.write(data!)
                 }
                 else {
                     let text = qtrLabel.text
-                    let data = text!.dataUsingEncoding(NSUTF8StringEncoding)
+                    let data = text!.data(using: String.Encoding.utf8)
                     fileHandle.seekToEndOfFile()
-                    fileHandle.writeData(data!)
+                    fileHandle.write(data!)
                 }
             }
             else {
@@ -696,7 +696,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
             return
         }
         
-        let fileManager = NSFileManager.defaultManager()
+        let fileManager = FileManager.default
         let offLabelList = ["Number", "Pass Attempts", "Pass Completions", "Pass Yards", "Pass Touchdowns", "Interceptions", "Rush Attempts", "Rush Yards", "Rush Touchdowns", "Receptions", "Receiving Yards", "Receiving Touchdowns"]
         let defLabelList = ["Number", "Tackles", "TFL", "Sacks", "Forced Fumbles", "Fumble Recoveries", "Interceptions", "Defensive TDs"]
         let playLabelList = ["Play Number", "Offensive Team", "Down", "Distance", "Hash", "Yard Line", "Play Type", "Play Result", "Gain/Loss", "OFF STR", "Play Direction", "Gap", "Pass Zone", "Defensive Front", "Coverage", "Qtr", "Penalty", "Passer", "Receiver", "Rusher"]
@@ -708,7 +708,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         var fileName = ""
         
         
-        for k in 0.stride(to: 5, by: 1) {
+        for k in stride(from: 0, to: 5, by: 1) {
             switch k {
             case 0:
                 fileName = csvOffHomeStats
@@ -736,7 +736,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
             cntr = 0
             labels = ""
             
-            for j in 0.stride(to: labelList.count, by: 1) {
+            for j in stride(from: 0, to: labelList.count, by: 1) {
                 cntr += 1
                 labels += labelList[j]
                 if cntr < labelList.count {
@@ -747,10 +747,10 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                 }
             }
             
-            let path = NSURL(fileURLWithPath: gameFolder).URLByAppendingPathComponent(fileName)
+            let path = URL(fileURLWithPath: gameFolder).appendingPathComponent(fileName)
             
             do {
-                try labels.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+                try labels.write(to: path, atomically: false, encoding: String.Encoding.utf8)
             }
             catch {
                 print("There was a problem writing data to your device")
@@ -758,7 +758,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
             
             if k < 4 {
                 var temp = " "
-                for m in 0.stride(to: playerList.count, by: 1) {
+                for m in stride(from: 0, to: playerList.count, by: 1) {
                     let player = playerList[m]
                     
                     if k < 2 {
@@ -778,15 +778,15 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                         }
                     }
                     
-                    if let fileHandle  = try? NSFileHandle(forWritingToURL: path) {
+                    if let fileHandle  = try? FileHandle(forWritingTo: path) {
                         
                         defer {
                             fileHandle.closeFile()
                         }
                                 
-                        let data = temp.dataUsingEncoding(NSUTF8StringEncoding)
+                        let data = temp.data(using: String.Encoding.utf8)
                         fileHandle.seekToEndOfFile()
-                        fileHandle.writeData(data!)
+                        fileHandle.write(data!)
                     }
                     else {
                         print("fileHandle not working - \(fileName)")
@@ -797,7 +797,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
             else {
                 var temp = " "
                 
-                for n in 0.stride(to: gamePlays.count, by: 1) {
+                for n in stride(from: 0, to: gamePlays.count, by: 1) {
                     let play = gamePlays[n]
                     temp = "\(play.playCount), \(play.offensiveTeam), \(play.downNum), \(play.dist), \(play.hash), \(play.ydLn), \(play.playType), \(play.result), \(play.gnLs), , \(play.playDir), , , , , \(play.qtr), \(isPenalty(play)), "
                     if play.playType == "Pass" {
@@ -816,15 +816,15 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                     }
                     temp += "\n"
                     
-                    if let fileHandle  = try? NSFileHandle(forWritingToURL: path) {
+                    if let fileHandle  = try? FileHandle(forWritingTo: path) {
                         
                         defer {
                             fileHandle.closeFile()
                         }
                         
-                        let data = temp.dataUsingEncoding(NSUTF8StringEncoding)
+                        let data = temp.data(using: String.Encoding.utf8)
                         fileHandle.seekToEndOfFile()
-                        fileHandle.writeData(data!)
+                        fileHandle.write(data!)
                     }
                     else {
                         print("fileHandle not working - \(fileName)")
@@ -834,7 +834,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         }        
     }
     
-    func isPenalty(play: Play) -> String {
+    func isPenalty(_ play: Play) -> String {
         if play.playType == "Penalty" {
             return "Yes"
         }
@@ -843,47 +843,47 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         }
     }
     
-    func addButton(play: Play) {
+    func addButton(_ play: Play) {
         let prevNum = buttonList.count
         
         var margin: CGFloat = 55
         scrollHeight += margin
-        playScrollView.contentSize = CGSizeMake(scrollWidth, scrollHeight)
-        for i in (buttonList.count-1).stride(to: -1, by: -1) {
-            buttonList[i].frame = CGRectMake(10, margin, buttonWidth, buttonHeight)
+        playScrollView.contentSize = CGSize(width: scrollWidth, height: scrollHeight)
+        for i in stride(from: (buttonList.count-1), to: -1, by: -1) {
+            buttonList[i].frame = CGRect(x: 10, y: margin, width: buttonWidth, height: buttonHeight)
             margin += 55
         }
         
-        let button = UIButton.init(type: UIButtonType.System) as UIButton
-            button.frame = CGRectMake(10, 5, buttonWidth, buttonHeight)
-            button.backgroundColor = UIColor.clearColor()
-            button.setTitle("Play \(prevNum+1) - \(play.result)", forState: UIControlState.Normal)
-            button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            button.addTarget(self, action: #selector(playBtnPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        let button = UIButton.init(type: UIButtonType.system) as UIButton
+            button.frame = CGRect(x: 10, y: 5, width: buttonWidth, height: buttonHeight)
+            button.backgroundColor = UIColor.clear
+            button.setTitle("Play \(prevNum+1) - \(play.result)", for: UIControlState())
+            button.setTitleColor(UIColor.white, for: UIControlState())
+            button.addTarget(self, action: #selector(playBtnPressed(_:)), for: UIControlEvents.touchUpInside)
+            button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
             button.tag = prevNum
-            button.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            button.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
             self.playScrollView.addSubview(button)
         
         buttonList.append(button)
     }
     
-    func removeButton(play: Play) {
-        buttonList[buttonList.count - 1].hidden = true
-        buttonList.removeAtIndex(buttonList.count - 1)
+    func removeButton(_ play: Play) {
+        buttonList[buttonList.count - 1].isHidden = true
+        buttonList.remove(at: buttonList.count - 1)
         
         scrollHeight -= 55
-        playScrollView.contentSize = CGSizeMake(scrollWidth, scrollHeight)
+        playScrollView.contentSize = CGSize(width: scrollWidth, height: scrollHeight)
         
         var margin: CGFloat = 5
-        for i in (buttonList.count - 1).stride(to: -1, by: -1) {
-            buttonList[i].frame = CGRectMake(10, margin, buttonWidth, buttonHeight)
+        for i in stride(from: (buttonList.count - 1), to: -1, by: -1) {
+            buttonList[i].frame = CGRect(x: 10, y: margin, width: buttonWidth, height: buttonHeight)
             margin += 55
         }
         
     }
     
-    func playBtnPressed(sender: UIButton) {
+    func playBtnPressed(_ sender: UIButton) {
         if sender.tag == (buttonList.count-1) {
             showMessage("Editing feature coming soon...")
         }
@@ -892,7 +892,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         }
     }
     
-    func updateGameData(play: Play) {
+    func updateGameData(_ play: Play) {
         game.qtr = play.qtr
         game.dist = play.dist
         game.down = play.downNum
@@ -927,12 +927,12 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         qtrLabel.text = String(game.qtr)
         
         if game.possFlag {
-            homePossImageView.hidden = false
-            awayPossImageView.hidden = true
+            homePossImageView.isHidden = false
+            awayPossImageView.isHidden = true
         }
         else {
-            homePossImageView.hidden = true
-            awayPossImageView.hidden = false
+            homePossImageView.isHidden = true
+            awayPossImageView.isHidden = false
         }
     }
     
@@ -945,7 +945,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         }
     }
     
-    func getResult(currentPlay: Play) -> Play {
+    func getResult(_ currentPlay: Play) -> Play {
         var playResult: String = ""
         var play: Play = currentPlay
         
@@ -1151,7 +1151,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                 case 2:
                     playResult += " and \(play.tacklers[1])"
                 default:
-                    for i in 1.stride(to: play.tacklers.count, by: 1) {
+                    for i in stride(from: 1, to: play.tacklers.count, by: 1) {
                         if i == (play.tacklers.count - 1) {
                             playResult += " and \(play.tacklers[i])"
                         }
@@ -1170,7 +1170,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
             case 2:
                 playResult += " and \(play.tacklers[1])"
             default:
-                for i in 1.stride(to: play.tacklers.count, by: 1) {
+                for i in stride(from: 1, to: play.tacklers.count, by: 1) {
                     if i == (play.tacklers.count - 1) {
                         playResult += " and \(play.tacklers[i])"
                     }
@@ -1238,22 +1238,22 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
     
     func changePossession() {
         if game.possFlag {
-            awayPossImageView.hidden = false
-            homePossImageView.hidden = true
+            awayPossImageView.isHidden = false
+            homePossImageView.isHidden = true
             game.homeTeam.onOffense = false
             game.awayTeam.onOffense = true
             game.possFlag = false
         }
         else {
-            awayPossImageView.hidden = true
-            homePossImageView.hidden = false
+            awayPossImageView.isHidden = true
+            homePossImageView.isHidden = false
             game.homeTeam.onOffense = true
             game.awayTeam.onOffense = false
             game.possFlag = true
         }
     }
     
-    func addScore (play: Play, score: Int) -> Play {
+    func addScore (_ play: Play, score: Int) -> Play {
         //var current: Play = play
         if play.possFlag {
             play.homeScore += score
@@ -1264,7 +1264,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         return play
     }
     
-    func updateStats(play: Play) {
+    func updateStats(_ play: Play) {
         var currentPlayer: Player, recPlayer: Player, defPlayer: Player, tacklerPlayer: Player
         var tempOffTeam: Team, tempDefTeam: Team
         
@@ -1316,7 +1316,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                     group = true
                 }
                 
-                for i in 0.stride(to: play.tacklers.count, by: 1) {
+                for i in stride(from: 0, to: play.tacklers.count, by: 1) {
                     if let player = tempDefTeam.getPlayer(play.tacklers[i], offensive: false) {
                         tacklerPlayer = player
                     }
@@ -1342,7 +1342,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                     group = true
                 }
                 
-                for i in 0.stride(to: play.tacklers.count, by: 1) {
+                for i in stride(from: 0, to: play.tacklers.count, by: 1) {
                     if let player = tempDefTeam.getPlayer(play.tacklers[i], offensive: false) {
                         tacklerPlayer = player
                     }
@@ -1368,7 +1368,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                     group = true
                 }
                 
-                for i in 0.stride(to: play.tacklers.count, by: 1) {
+                for i in stride(from: 0, to: play.tacklers.count, by: 1) {
                     if let player = tempDefTeam.getPlayer(play.tacklers[i], offensive: false) {
                         tacklerPlayer = player
                     }
@@ -1391,7 +1391,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                     group = true
                 }
                 
-                for i in 0.stride(to: play.tacklers.count, by: 1) {
+                for i in stride(from: 0, to: play.tacklers.count, by: 1) {
                     if let player = tempDefTeam.getPlayer(play.tacklers[i], offensive: false) {
                         tacklerPlayer = player
                     }
@@ -1427,7 +1427,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         
     }
     
-    func undoStats(play: Play) {
+    func undoStats(_ play: Play) {
         var tempOffTeam: Team, tempDefTeam: Team
         
         if play.possFlag {
@@ -1449,7 +1449,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                         group = true
                     }
                     
-                    for i in 0.stride(to: play.tacklers.count, by: 1) {
+                    for i in stride(from: 0, to: play.tacklers.count, by: 1) {
                         tempDefTeam.getPlayer(play.tacklers[i], offensive: false)?.undoDefStats(false, tackle: play.tackleFlag, loss: play.lossFlag, fumblerec: false, forcedfum: play.fumbleFlag, sack: play.sackFlag, td: false, group: group)
                     }
                 }
@@ -1468,7 +1468,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                         group = true
                     }
                     
-                    for i in 0.stride(to: play.tacklers.count, by: 1) {
+                    for i in stride(from: 0, to: play.tacklers.count, by: 1) {
                         tempDefTeam.getPlayer(play.tacklers[i], offensive: false)?.undoDefStats(false, tackle: play.tackleFlag, loss: play.lossFlag, fumblerec: false, forcedfum: play.fumbleFlag, sack: play.sackFlag, td: false, group: group)
                     }
                 }
@@ -1487,7 +1487,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                         group = true
                     }
                     
-                    for i in 0.stride(to: play.tacklers.count, by: 1) {
+                    for i in stride(from: 0, to: play.tacklers.count, by: 1) {
                         tempDefTeam.getPlayer(play.tacklers[i], offensive: false)?.undoDefStats(false, tackle: play.tackleFlag, loss: play.lossFlag, fumblerec: false, forcedfum: play.fumbleFlag, sack: play.sackFlag, td: false, group: group)
                     }
                 }
@@ -1503,7 +1503,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                         group = true
                     }
                     
-                    for i in 0.stride(to: play.tacklers.count, by: 1) {
+                    for i in stride(from: 0, to: play.tacklers.count, by: 1) {
                         tempDefTeam.getPlayer(play.tacklers[i], offensive: false)?.undoDefStats(false, tackle: play.tackleFlag, loss: play.lossFlag, fumblerec: false, forcedfum: play.fumbleFlag, sack: play.sackFlag, td: false, group: group)
                     }
                 }
@@ -1538,7 +1538,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         
         let email = configuredMailComposeViewController()
         if MFMailComposeViewController.canSendMail() {
-            self.presentViewController(email, animated: true, completion: nil)
+            self.present(email, animated: true, completion: nil)
         }
     }
     
@@ -1549,7 +1549,7 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
         emailController.setMessageBody("", isHTML: false)
         
         var fileName = ""
-        for k in 0.stride(to: 5, by: 1) {
+        for k in stride(from: 0, to: 5, by: 1) {
             switch k {
             case 0:
                 fileName = csvOffHomeStats
@@ -1565,11 +1565,11 @@ class GameViewController: UIViewController, MFMailComposeViewControllerDelegate 
                 break
             }
             
-            let path = NSURL(fileURLWithPath: gameFolder).URLByAppendingPathComponent(fileName)
+            let path = URL(fileURLWithPath: gameFolder).appendingPathComponent(fileName)
             
             print("Exporting \(fileName)")
             
-            emailController.addAttachmentData(NSData(contentsOfURL: path)!, mimeType: "text/csv", fileName: fileName)
+            emailController.addAttachmentData(try! Data(contentsOf: path), mimeType: "text/csv", fileName: fileName)
         }
         
         return emailController

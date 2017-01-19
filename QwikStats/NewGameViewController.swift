@@ -23,16 +23,17 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     var divisionData = [String]()
     var fieldSizeData = [String]()
     let radius: CGFloat = 10
+    var sport: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false
         startGameBtn.layer.cornerRadius = radius
         startGameBtn.clipsToBounds = true
         self.title = "New Game"
         
         let contentWidth = scrollView.contentSize.width
-        scrollView.contentSize = CGSizeMake(contentWidth, 700)
+        scrollView.contentSize = CGSize(width: contentWidth, height: 700)
         divisionPicker.dataSource = self
         divisionPicker.delegate = self
         fieldSizePicker.dataSource = self
@@ -41,13 +42,13 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         makeData()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
     }
     
-    func showMessage(message: String) {
-        self.view.makeToast(message, duration: 3.0, position: .Bottom)
+    func showMessage(_ message: String) {
+        self.view.makeToast(message, duration: 3.0, position: .bottom)
     }
 
     func makeData () {
@@ -65,11 +66,11 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         divisionData.append("VARSITY")
     }
     
-    func numberOfComponentsInPickerView (pickerView: UIPickerView) -> Int {
+    func numberOfComponents (in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView == divisionPicker {
             return divisionData.count
         }
@@ -78,7 +79,7 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         if pickerView == divisionPicker {
             return divisionData[row]
@@ -88,21 +89,21 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if (segue.identifier == "StartNewGameSegue") {
             //get a reference to the destination view controller
-            let destinationVC:GameViewController = segue.destinationViewController as! GameViewController
+            let destinationVC:GameViewController = segue.destination as! GameViewController
             
             //set properties on the destination view controller
             destinationVC.homeTeamName = homeTeamTextField.text!
             destinationVC.awayTeamName = awayTeamTextField.text!
-            if fieldSizePicker.selectedRowInComponent(0) == 0 {
+            if fieldSizePicker.selectedRow(inComponent: 0) == 0 {
                 destinationVC.fldSize = 100
             }
             else  {
                 destinationVC.fldSize = 80
             }
-            var div = divisionData[divisionPicker.selectedRowInComponent(0)]
+            var div = divisionData[divisionPicker.selectedRow(inComponent: 0)]
             if div == "JR PEE WEE" {
                 div = "JR-PEE-WEE"
             }
@@ -118,9 +119,9 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             
             destinationVC.division = div
             
-            let formatter = NSDateFormatter()
+            let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
-            let date: String = formatter.stringFromDate(datePicker.date)
+            let date: String = formatter.string(from: datePicker.date)
             let dateArray = date.characters.split{$0 == "-"}.map(String.init)
             destinationVC.year = Int(dateArray[0])!
             destinationVC.month = Int(dateArray[1])!
@@ -129,18 +130,18 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
-    @IBAction func startGame(sender: UIButton) {
-        if homeTeamTextField == "" && awayTeamTextField == "" {
+    @IBAction func startGame(_ sender: UIButton) {
+        if homeTeamTextField.text == "" && awayTeamTextField.text == "" {
             showMessage("Please input team names")
         }
-        else if homeTeamTextField == "" {
+        else if homeTeamTextField.text == "" {
             showMessage("Please input home team name")
         }
-        else if awayTeamTextField == "" {
+        else if awayTeamTextField.text == "" {
             showMessage("Please input away team name")
         }
         else {
-            self.performSegueWithIdentifier("StartNewGameSegue", sender: self)
+            self.performSegue(withIdentifier: "StartNewGameSegue", sender: self)
         }
     }
     

@@ -57,12 +57,12 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
         
         pickerNum = 0
         
-        ogGnLs = gnLsData.indexOf(0)!
-        ogYdLn = ydLnData.indexOf(globalPlay.prevYdLn)!
-        penYdsPicker.selectItem(gnLsData.indexOf(abs(globalPlay.gnLs))!)
+        ogGnLs = gnLsData.index(of: 0)!
+        ogYdLn = ydLnData.index(of: globalPlay.prevYdLn)!
+        penYdsPicker.selectItem(gnLsData.index(of: abs(globalPlay.gnLs))!)
     }
     
-    func makeData(prevYdLn: Int) {
+    func makeData(_ prevYdLn: Int) {
         //make the gnls data
         var minIndex = 0, maxIndex = 0
         if prevYdLn < 0 {
@@ -75,14 +75,14 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
             maxIndex = prevYdLn
         }
         
-        for i in minIndex.stride(to: maxIndex+1, by: 1) {
+        for i in stride(from: minIndex, to: maxIndex+1, by: 1) {
             gnLsData.append(i)
             gnLsStrings.append(" \(String(i)) ")
         }
         
     }
     
-    func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
+    func numberOfItemsInPickerView(_ pickerView: AKPickerView) -> Int {
         if pickerView == penYdsPicker {
             return self.gnLsData.count
         }
@@ -91,7 +91,7 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
         }
     }
     
-    func pickerView(pickerView: AKPickerView, titleForItem item: Int) -> String {
+    func pickerView(_ pickerView: AKPickerView, titleForItem item: Int) -> String {
         if pickerView == penYdsPicker {
             return self.gnLsStrings[item]
         }
@@ -100,16 +100,16 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
         }
     }
     
-    func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
+    func pickerView(_ pickerView: AKPickerView, didSelectItem item: Int) {
         //this is the code for when they select an item
         pickerNum += 1
         var i = 0
         if pickerView == penYdsPicker {
             if pickerNum == 1 {
-                if offenseSwitch.on {
+                if offenseSwitch.isOn {
                     i = ogYdLn - penYdsPicker.selectedItem
                 }
-                else if defenseSwitch.on {
+                else if defenseSwitch.isOn {
                     i = ogYdLn + penYdsPicker.selectedItem
                 }
                 if i<0 {
@@ -134,7 +134,7 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
         }
     }
     
-    @IBAction func ydBtnClicked(sender: UIButton) {
+    @IBAction func ydBtnClicked(_ sender: UIButton) {
         //let prev = ydLnData.indexOf(globalPlay.prevYdLn)
         //var newYdLn: Int
         //var diff: Int = 0
@@ -153,54 +153,54 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
         }
     }
     
-    @IBAction func leftBtn(sender: UIButton) {
+    @IBAction func leftBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         
         save()
         playTypeDialog(false)
     }
     
-    @IBAction func rightBtn(sender: UIButton) {
+    @IBAction func rightBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         
         save()
         playTypeDialog(true)
     }
     
-    @IBAction func saveBtn(sender: UIButton) {
+    @IBAction func saveBtn(_ sender: UIButton) {
         saved = true
         save()
         dismiss()
     }
     
-    @IBAction func cancelBtn(sender: UIButton) {
+    @IBAction func cancelBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.dropDown
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func switchChanged(sender: UISwitch) {
+    @IBAction func switchChanged(_ sender: UISwitch) {
         if sender == offenseSwitch {
-            if sender.on{
+            if sender.isOn{
                 defenseSwitch.setOn(false, animated: true)
                 penYdsPicker.selectItem(penYdsPicker.selectedItem, animated: true)
             }
             else {
-                if defenseSwitch.on == false {
+                if defenseSwitch.isOn == false {
                     defenseSwitch.setOn(true, animated: true)
                 }
             }
         }
         else {
-            if sender.on{
+            if sender.isOn{
                 offenseSwitch.setOn(false, animated: true)
                 penYdsPicker.selectItem(penYdsPicker.selectedItem, animated: true)
             }
             else {
-                if offenseSwitch.on == false {
+                if offenseSwitch.isOn == false {
                     offenseSwitch.setOn(true, animated: true)
                 }
             }
@@ -208,7 +208,7 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
     }
     
     func save() {
-        globalPlay.defensivePenalty = defenseSwitch.on
+        globalPlay.defensivePenalty = defenseSwitch.isOn
         globalPlay.ydLn = ydLnData[ydLnPicker.selectedItem]
         if globalPlay.defensivePenalty {
             globalPlay.gnLs = gnLsData[penYdsPicker.selectedItem]
@@ -220,9 +220,9 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
     
     func dismiss() {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.dropDown
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
         if let temp = saved {
             if temp {
@@ -232,18 +232,18 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
         }
     }
     
-    func playTypeDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PlayTypeController")// as! UIViewController
+    func playTypeDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "PlayTypeController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 300)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         //let presentedViewController = navigationController as! PlayTypeController
@@ -257,7 +257,7 @@ class PenaltyViewController: UIViewController, AKPickerViewDataSource, AKPickerV
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }}

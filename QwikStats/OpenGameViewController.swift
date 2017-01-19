@@ -19,14 +19,15 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
     var gameInfo = [String]()
     var checked = [Bool]()
     var qwikPath : String!
-    var qwikURL : NSURL!
+    var qwikURL : URL!
     var gamePaths = [String]()
-    var gameURLs = [NSURL]()
+    var gameURLs = [URL]()
     let radius: CGFloat = 10
+    var sport: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false
         openGameBtn.layer.cornerRadius = radius
         deleteGameBtn.layer.cornerRadius = radius
         openGameBtn.clipsToBounds = true
@@ -38,7 +39,7 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
         gameInfo = [String]()
         checked = [Bool]()
         
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -48,21 +49,21 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
     }
     
-    func showMessage(message: String) {
-        self.view.makeToast(message, duration: 3.0, position: .Bottom)
+    func showMessage(_ message: String) {
+        self.view.makeToast(message, duration: 3.0, position: .bottom)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if (segue.identifier == "LoadGameSegue") {
             //get a reference to the destination view controller
-            let destinationVC:GameViewController = segue.destinationViewController as! GameViewController
+            let destinationVC:GameViewController = segue.destination as! GameViewController
             
-            let index = checked.indexOf(true)
+            let index = checked.index(of: true)
             let thisGame = games[index!]
             
             //set properties on the destination view controller
@@ -77,30 +78,30 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    @IBAction func deleteGameBtn(sender: UIButton) {
+    @IBAction func deleteGameBtn(_ sender: UIButton) {
         deleteDialog()
     }
     
     func deleteDialog() {
-        let alertController = UIAlertController(title: "Delete Game", message: "Are you sure you want to selete the selected game?", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Delete Game", message: "Are you sure you want to selete the selected game?", preferredStyle: UIAlertControllerStyle.alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            alertController.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(cancelAction)
         
-        let okAction = UIAlertAction(title: "Delete", style: .Default) { (action) in
-            let fileManager = NSFileManager.defaultManager()
+        let okAction = UIAlertAction(title: "Delete", style: .default) { (action) in
+            let fileManager = FileManager.default
             
-            for i in 0.stride(to: self.checked.count, by: 1) {
+            for i in stride(from: 0, to: self.checked.count, by: 1) {
                 if self.checked[i] {
                     do {
                         print("deleting... \(self.gameURLs[i])")
-                        try fileManager.removeItemAtURL(self.gameURLs[i])
-                        self.checked.removeAtIndex(i)
-                        self.gamePaths.removeAtIndex(i)
-                        self.games.removeAtIndex(i)
-                        self.gameInfo.removeAtIndex(i)
+                        try fileManager.removeItem(at: self.gameURLs[i])
+                        self.checked.remove(at: i)
+                        self.gamePaths.remove(at: i)
+                        self.games.remove(at: i)
+                        self.gameInfo.remove(at: i)
                         self.tableView.reloadData()
                     }
                     catch let error as NSError {
@@ -113,58 +114,58 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         alertController.addAction(okAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
-    @IBAction func openGameBtn(sender: UIButton) {
+    @IBAction func openGameBtn(_ sender: UIButton) {
         var canStart: Bool = false
-        for i in 0.stride(to: checked.count, by: 1) {
+        for i in stride(from: 0, to: checked.count, by: 1) {
             if checked[i] {
                 canStart = true
             }
         }
         
         if canStart {
-            self.performSegueWithIdentifier("LoadGameSegue", sender: self)
+            self.performSegue(withIdentifier: "LoadGameSegue", sender: self)
         }
         else {
             showMessage("Please select a game")
         }
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return gameInfo.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell!
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") as UITableViewCell!
         
         //configure cell
-        cell.textLabel?.text = gameInfo[indexPath.row]
-        cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        cell?.textLabel?.text = gameInfo[indexPath.row]
+        cell?.textLabel?.numberOfLines = 3
+        cell?.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         if !checked[indexPath.row] {
-            cell.accessoryType = .None
+            cell?.accessoryType = .none
         }
         else if checked[indexPath.row] {
-            cell.accessoryType = .Checkmark
+            cell?.accessoryType = .checkmark
         }
-        return cell
+        return cell!
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
-            if cell.accessoryType == .Checkmark {
-                cell.accessoryType = .None
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+            if cell.accessoryType == .checkmark {
+                cell.accessoryType = .none
                 checked[indexPath.row] = false
             }
             else {
                 resetChecks()
-                cell.accessoryType = .Checkmark
+                cell.accessoryType = .checkmark
                 checked[indexPath.row] = true
             }
         }
@@ -172,9 +173,9 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func resetChecks() {
-        for i in 0.stride(to: tableView.numberOfRowsInSection(0), by: 1) {
-            if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) {
-                cell.accessoryType = .None
+        for i in stride(from: 0, to: tableView.numberOfRows(inSection: 0), by: 1) {
+            if let cell = tableView.cellForRow(at: IndexPath(row: i, section: 0)) {
+                cell.accessoryType = .none
                 checked[i] = false
             }
         }
@@ -183,16 +184,16 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
     func loadGames() {
         var words = [String]()
         
-        let fileManager = NSFileManager.defaultManager()
-        if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
-            let folder = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("QwikStats").path!
-            if fileManager.fileExistsAtPath(folder) {
+        let fileManager = FileManager.default
+        if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
+            let folder = URL(fileURLWithPath: dir).appendingPathComponent("QwikStats").path
+            if fileManager.fileExists(atPath: folder) {
                 do {
-                    qwikURL = NSURL(fileURLWithPath: folder)
+                    qwikURL = URL(fileURLWithPath: folder)
                     qwikPath = folder
-                    var dirContents = try fileManager.contentsOfDirectoryAtPath(folder)
+                    var dirContents = try fileManager.contentsOfDirectory(atPath: folder)
                     if dirContents.contains(".DS_Store") {
-                        dirContents.removeAtIndex(dirContents.indexOf(".DS_Store")!)
+                        dirContents.remove(at: dirContents.index(of: ".DS_Store")!)
                     }
                     print(dirContents)
                     
@@ -203,15 +204,15 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
             
                     //tableView.beginUpdates()
                     
-                    for i in 0.stride(to: dirContents.count, by: 1) {
+                    for i in stride(from: 0, to: dirContents.count, by: 1) {
                         words = [String]()
-                        words = dirContents[i].componentsSeparatedByString("_")
+                        words = dirContents[i].components(separatedBy: "_")
                         let current = Game(awayName: words[7], homeName: words[5], division: words[3], day: Int(words[1])!, month: Int(words[0])!, year: Int(words[2])!, fieldSize: Int(words[4])!)
                         games.append(current)
                         gameInfo.append("\(current.homeTeam.teamName) vs. \(current.awayTeam.teamName) \n\t\t \(current.division) \n\t\t \(intToMonth(current.month)) \(current.day) \(current.year)")
                         checked.append(false)
-                        gamePaths.append(NSURL(fileURLWithPath: qwikPath).URLByAppendingPathComponent(dirContents[i]).absoluteString)
-                        gameURLs.append(qwikURL.URLByAppendingPathComponent(dirContents[i]))
+                        gamePaths.append(URL(fileURLWithPath: qwikPath).appendingPathComponent(dirContents[i]).absoluteString)
+                        gameURLs.append(qwikURL.appendingPathComponent(dirContents[i]))
                         print(gameInfo[i])
                     }
                     
@@ -231,7 +232,7 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
 
     }
     
-    func intToMonth(m: Int) -> String {
+    func intToMonth(_ m: Int) -> String {
         switch (m) {
         case 1:
             return "January"

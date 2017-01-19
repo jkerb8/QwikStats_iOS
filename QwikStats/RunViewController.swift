@@ -8,6 +8,30 @@
 
 import UIKit
 import MZFormSheetPresentationController
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class RunViewController: UIViewController {
     
@@ -43,24 +67,24 @@ class RunViewController: UIViewController {
         
         switch (recentPlayers.count) {
         case 1:
-            recent2Btn.setTitle(String(recentPlayers[0]), forState: .Normal)
-            recent1Btn.hidden = true
-            recent3Btn.hidden = true
+            recent2Btn.setTitle(String(recentPlayers[0]), for: UIControlState())
+            recent1Btn.isHidden = true
+            recent3Btn.isHidden = true
         case 2:
-            recent2Btn.setTitle(String(recentPlayers[0]), forState: .Normal)
-            recent3Btn.setTitle(String(recentPlayers[1]), forState: .Normal)
-            recent1Btn.hidden = true
+            recent2Btn.setTitle(String(recentPlayers[0]), for: UIControlState())
+            recent3Btn.setTitle(String(recentPlayers[1]), for: UIControlState())
+            recent1Btn.isHidden = true
         case 3:
-            recent1Btn.setTitle(String(recentPlayers[0]), forState: .Normal)
-            recent2Btn.setTitle(String(recentPlayers[1]), forState: .Normal)
-            recent3Btn.setTitle(String(recentPlayers[2]), forState: .Normal)
+            recent1Btn.setTitle(String(recentPlayers[0]), for: UIControlState())
+            recent2Btn.setTitle(String(recentPlayers[1]), for: UIControlState())
+            recent3Btn.setTitle(String(recentPlayers[2]), for: UIControlState())
         default:
-            recent1Btn.hidden = true
-            recent2Btn.hidden = true
-            recent3Btn.hidden = true
+            recent1Btn.isHidden = true
+            recent2Btn.isHidden = true
+            recent3Btn.isHidden = true
         }
         
-        numberTextField.keyboardType = UIKeyboardType.NumberPad
+        numberTextField.keyboardType = UIKeyboardType.numberPad
         
         if let play = globalPlay {
             if play.playType == "Pass" {
@@ -77,37 +101,37 @@ class RunViewController: UIViewController {
         
     }
     
-    @IBAction func switchChanged(sender: UISwitch) {
+    @IBAction func switchChanged(_ sender: UISwitch) {
         
     }
     
-    @IBAction func recent1Btn(sender: UIButton) {
+    @IBAction func recent1Btn(_ sender: UIButton) {
         if let text = sender.titleLabel?.text {
             numberTextField.text = text
         }
     }
     
-    @IBAction func recent2Btn(sender: UIButton) {
+    @IBAction func recent2Btn(_ sender: UIButton) {
         if let text = sender.titleLabel?.text {
             numberTextField.text = text
         }
     }
     
-    @IBAction func recent3Btn(sender: UIButton) {
+    @IBAction func recent3Btn(_ sender: UIButton) {
         if let text = sender.titleLabel?.text {
             numberTextField.text = text
         }
     }
     
-    @IBAction func checkMaxLength(sender: UITextField) {
+    @IBAction func checkMaxLength(_ sender: UITextField) {
         if sender.text?.characters.count > 2 {
             sender.deleteBackward()
         }
     }
     
-    @IBAction func leftBtn(sender: UIButton) {
+    @IBAction func leftBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         
         save()
         if globalPlay.playType == "Pass" {
@@ -118,9 +142,9 @@ class RunViewController: UIViewController {
         }
     }
     
-    @IBAction func rightBtn(sender: UIButton) {
+    @IBAction func rightBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         
         save()
         if (globalPlay.playType == "Pass" && globalPlay.interceptionFlag) {
@@ -131,22 +155,22 @@ class RunViewController: UIViewController {
         }
     }
     
-    @IBAction func saveBtn(sender: UIButton) {
+    @IBAction func saveBtn(_ sender: UIButton) {
         saved = true
         save()
         dismiss()
     }
     
-    @IBAction func cancelBtn(sender: UIButton) {
+    @IBAction func cancelBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.dropDown
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func save() {
         if let num = Int(numberTextField.text!) {
-            globalPlay.fumbleFlag = fumbleSwitch.on
+            globalPlay.fumbleFlag = fumbleSwitch.isOn
             if globalPlay.playType == "Pass" {
                 globalPlay.recNumber = num
             }
@@ -158,9 +182,9 @@ class RunViewController: UIViewController {
     
     func dismiss() {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.dropDown
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
         if let temp = saved {
             if temp {
@@ -171,13 +195,13 @@ class RunViewController: UIViewController {
     }
 
     func playTypeDialog() {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PlayTypeController")// as! UIViewController
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "PlayTypeController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 300)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         
         //let presentedViewController = navigationController as! PlayTypeController
         //presentedViewController.play = self.play
@@ -190,19 +214,19 @@ class RunViewController: UIViewController {
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     
     func resultDialog() {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("ResultViewController")// as! UIViewController
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "ResultViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 350)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 350)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         
         //let presentedViewController = navigationController as! ResultViewController
         //presentedViewController.play = self.play
@@ -215,20 +239,20 @@ class RunViewController: UIViewController {
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
         
     }
     
     func passerDialog() {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PasserViewController")// as! UIViewController
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "PasserViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 400)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 400)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         
         
         //let presentedViewController = navigationController as! RunViewController
@@ -242,19 +266,19 @@ class RunViewController: UIViewController {
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     
     func turnoverDialog() {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("FumRecoveryViewController")// as! UIViewController
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "FumRecoveryViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 450)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 450)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         
         
         //let presentedViewController = navigationController as! RunViewController
@@ -268,8 +292,8 @@ class RunViewController: UIViewController {
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
 }

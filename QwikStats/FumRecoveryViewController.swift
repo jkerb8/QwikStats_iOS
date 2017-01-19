@@ -9,6 +9,30 @@
 import UIKit
 import MZFormSheetPresentationController
 import AKPickerView_Swift
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPickerViewDelegate {
     @IBOutlet var numberTextField: UITextField!
@@ -23,7 +47,7 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        numberTextField.keyboardType = UIKeyboardType.NumberPad
+        numberTextField.keyboardType = UIKeyboardType.numberPad
         
         touchdownSwitch.setOn(globalPlay.touchdownFlag, animated: true)
         safetySwitch.setOn(globalPlay.safetyFlag, animated: true)
@@ -44,17 +68,17 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
         returnYdsPicker.dataSource = self
         returnYdsPicker.delegate = self
         
-        returnYdsPicker.selectItem(gnLsData.indexOf(globalPlay.returnYds)!)
+        returnYdsPicker.selectItem(gnLsData.index(of: globalPlay.returnYds)!)
         
         if globalPlay.returnedYdLn != -51 {
-            ydLnPicker.selectItem(ydLnData.indexOf(globalPlay.returnedYdLn)!)
+            ydLnPicker.selectItem(ydLnData.index(of: globalPlay.returnedYdLn)!)
         }
         else {
-            ydLnPicker.selectItem(fieldSize - ydLnData.indexOf(globalPlay.ydLn)!, animated: true)
+            ydLnPicker.selectItem(fieldSize - ydLnData.index(of: globalPlay.ydLn)!, animated: true)
         }
     }
     
-    func makeData(prevYdLn: Int) {
+    func makeData(_ prevYdLn: Int) {
         //make the gnls data
         var minIndex = 0, maxIndex = 0
         if prevYdLn < 0 {
@@ -70,14 +94,14 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
             maxIndex = prevYdLn
         }
         
-        for i in minIndex.stride(to: maxIndex+1, by: 1) {
+        for i in stride(from: minIndex, to: maxIndex+1, by: 1) {
             gnLsData.append(i)
             gnLsStrings.append(" \(String(i)) ")
         }
         
     }
     
-    func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
+    func numberOfItemsInPickerView(_ pickerView: AKPickerView) -> Int {
         if pickerView == returnYdsPicker {
             return self.gnLsData.count
         }
@@ -86,7 +110,7 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
         }
     }
     
-    func pickerView(pickerView: AKPickerView, titleForItem item: Int) -> String {
+    func pickerView(_ pickerView: AKPickerView, titleForItem item: Int) -> String {
         if pickerView == returnYdsPicker {
             return self.gnLsStrings[item]
         }
@@ -95,7 +119,7 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
         }
     }
     
-    func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
+    func pickerView(_ pickerView: AKPickerView, didSelectItem item: Int) {
         //this is the code for when they select an item
         if pickerView == returnYdsPicker {
             
@@ -117,22 +141,22 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
         }
     }
     
-    @IBAction func checkMaxLength(sender: AnyObject) {
+    @IBAction func checkMaxLength(_ sender: AnyObject) {
         if sender.text?.characters.count > 3 {
             sender.deleteBackward()
         }
     }
     
-    @IBAction func switchChanged(sender: UISwitch) {
+    @IBAction func switchChanged(_ sender: UISwitch) {
         switch(sender) {
         case touchdownSwitch:
-            if sender.on {
+            if sender.isOn {
                 safetySwitch.setOn(false, animated: true)
                 ydLnPicker.selectItem(ydLnData.count - 1, animated: true)
                 returnYdsPicker.selectItem(gnLsData.count-1, animated: true)
             }
         case safetySwitch:
-            if sender.on {
+            if sender.isOn {
                 touchdownSwitch.setOn(false, animated: true)
                 ydLnPicker.selectItem(0, animated: true)
             }
@@ -141,29 +165,29 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
         }
     }
     
-    @IBAction func leftBtn(sender: UIButton) {
+    @IBAction func leftBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         
         save()
         resultDialog()
     }
     
-    @IBAction func rightBtn(sender: UIButton) {
+    @IBAction func rightBtn(_ sender: UIButton) {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         
         save()
         playTypeDialog(true)
     }
     
-    @IBAction func saveBtn(sender: UIButton) {
+    @IBAction func saveBtn(_ sender: UIButton) {
         saved = true
         save()
         dismiss()
     }
     
-    @IBAction func cancelBtn(sender: UIButton) {
+    @IBAction func cancelBtn(_ sender: UIButton) {
         dismiss()
     }
     
@@ -177,16 +201,16 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
         
         globalPlay.returnedYdLn = ydLnData[ydLnPicker.selectedItem]
         globalPlay.returnYds = gnLsData[returnYdsPicker.selectedItem]
-        globalPlay.safetyFlag = safetySwitch.on
-        globalPlay.touchdownFlag = touchdownSwitch.on
+        globalPlay.safetyFlag = safetySwitch.isOn
+        globalPlay.touchdownFlag = touchdownSwitch.isOn
         globalPlay.returnFlag = true
     }
     
     func dismiss() {
         let formSheetController = mz_formSheetPresentingPresentationController()
-        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.DropDown
+        formSheetController!.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.dropDown
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
         if let temp = saved {
             if temp {
@@ -197,13 +221,13 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
     }
     
     func resultDialog() {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("ResultViewController")// as! UIViewController
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "ResultViewController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 350)
-        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 350)
+        formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         
         //let presentedViewController = navigationController as! PlayTypeController
         //presentedViewController.play = self.play
@@ -216,23 +240,23 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
     
-    func playTypeDialog(slidingRight: Bool) {
-        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PlayTypeController")// as! UIViewController
+    func playTypeDialog(_ slidingRight: Bool) {
+        let navigationController = self.storyboard!.instantiateViewController(withIdentifier: "PlayTypeController")// as! UIViewController
         let formSheetController = MZFormSheetPresentationViewController(contentViewController: navigationController)
         formSheetController.presentationController?.shouldDismissOnBackgroundViewTap = true
         //formSheetController.presentationController?.shouldApplyBackgroundBlurEffect = true
         //width is first, height is second
-        formSheetController.presentationController?.contentViewSize = CGSizeMake(350, 300)
+        formSheetController.presentationController?.contentViewSize = CGSize(width: 350, height: 300)
         if slidingRight {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromRight
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromRight
         }
         else {
-            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.SlideFromLeft
+            formSheetController.contentViewControllerTransitionStyle = MZFormSheetPresentationTransitionStyle.slideFromLeft
         }
         
         //let presentedViewController = navigationController as! PlayTypeController
@@ -246,8 +270,8 @@ class FumRecoveryViewController: UIViewController, AKPickerViewDataSource, AKPic
         
         let parent: UIViewController! = self.presentingViewController
         
-        self.dismissViewControllerAnimated(true, completion: {
-            parent.presentViewController(formSheetController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            parent.present(formSheetController, animated: true, completion: nil)
         })
     }
 }
