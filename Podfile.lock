@@ -1,5 +1,6 @@
 PODS:
   - AKPickerView-Swift (1.0.1)
+  - Alamofire (4.3.0)
   - MZAppearance (1.1.6)
   - MZFormSheetPresentationController (2.4.1):
     - MZAppearance
@@ -7,15 +8,17 @@ PODS:
 
 DEPENDENCIES:
   - AKPickerView-Swift
+  - Alamofire (~> 4.3)
   - MZFormSheetPresentationController
   - Toast-Swift (~> 1.3.0)
 
 SPEC CHECKSUMS:
   AKPickerView-Swift: 8509d472bb257649383c276506334a7373d3cb33
+  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
   MZAppearance: 0c06d3fa9cc55142f1da14bc8631fbe8fd6e19d5
   MZFormSheetPresentationController: 730bf8879cd637d84462ef5343fca65ad6bf1fc0
   Toast-Swift: 25c3d98db42dc70d9a77b5006ee000e0becb458e
 
-PODFILE CHECKSUM: 5e3a4cb7a21296b635945df70b35489a13d67e50
+PODFILE CHECKSUM: 3108256227bd8f79c7ddb5f0d29365fe3c92117d
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.2.0

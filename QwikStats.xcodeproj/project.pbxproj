@@ -36,6 +36,12 @@
 		21D986691E3049D000762C04 /* LaxTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D986681E3049D000762C04 /* LaxTeam.swift */; };
 		21D9866B1E3049DE00762C04 /* LaxGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D9866A1E3049DE00762C04 /* LaxGame.swift */; };
 		21D9866D1E316BD200762C04 /* LaxTurnoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D9866C1E316BD200762C04 /* LaxTurnoverViewController.swift */; };
+		21D9868F1E33CA4F00762C04 /* AcousticModelEnglish.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 21D9868C1E33CA4F00762C04 /* AcousticModelEnglish.bundle */; };
+		21D986901E33CA4F00762C04 /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D9868D1E33CA4F00762C04 /* OpenEars.framework */; };
+		21D986911E33CA4F00762C04 /* Slt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D9868E1E33CA4F00762C04 /* Slt.framework */; };
+		21D986941E33CD6C00762C04 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D986921E33CD6C00762C04 /* AudioToolbox.framework */; };
+		21D986951E33CD6C00762C04 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D986931E33CD6C00762C04 /* AVFoundation.framework */; };
+		21D986981E33D2B600762C04 /* SpeechInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D986971E33D2B600762C04 /* SpeechInputViewController.swift */; };
 		21F8457D1D371373006E3A7F /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8457C1D371373006E3A7F /* Game.swift */; };
 		21F8457F1D371537006E3A7F /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F8457E1D371537006E3A7F /* Team.swift */; };
 		21F845811D371545006E3A7F /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F845801D371545006E3A7F /* Play.swift */; };
@@ -47,6 +53,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2105389D1E4054C8008CFD30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 213CB1971D39C3D4007595F6 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 01B60E8B19242741C1516DF64919A93D;
+			remoteInfo = Alamofire;
+		};
 		213CB19E1D39C3D4007595F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 213CB1971D39C3D4007595F6 /* Pods.xcodeproj */;
@@ -147,6 +160,13 @@
 		21D986681E3049D000762C04 /* LaxTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaxTeam.swift; sourceTree = "<group>"; };
 		21D9866A1E3049DE00762C04 /* LaxGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaxGame.swift; sourceTree = "<group>"; };
 		21D9866C1E316BD200762C04 /* LaxTurnoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaxTurnoverViewController.swift; sourceTree = "<group>"; };
+		21D9868C1E33CA4F00762C04 /* AcousticModelEnglish.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AcousticModelEnglish.bundle; sourceTree = "<group>"; };
+		21D9868D1E33CA4F00762C04 /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenEars.framework; sourceTree = "<group>"; };
+		21D9868E1E33CA4F00762C04 /* Slt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Slt.framework; sourceTree = "<group>"; };
+		21D986921E33CD6C00762C04 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		21D986931E33CD6C00762C04 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		21D986961E33CDA600762C04 /* OpenEarsHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenEarsHeader.h; sourceTree = "<group>"; };
+		21D986971E33D2B600762C04 /* SpeechInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechInputViewController.swift; sourceTree = "<group>"; };
 		21F8457C1D371373006E3A7F /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		21F8457E1D371537006E3A7F /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		21F845801D371545006E3A7F /* Play.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Play.swift; sourceTree = "<group>"; };
@@ -169,8 +189,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21D986941E33CD6C00762C04 /* AudioToolbox.framework in Frameworks */,
+				21D986951E33CD6C00762C04 /* AVFoundation.framework in Frameworks */,
+				21D986911E33CA4F00762C04 /* Slt.framework in Frameworks */,
 				2187BD421D4C5AAF005FA398 /* Pods_QwikStats.framework in Frameworks */,
 				74FC387512E0E53803E2B108 /* Pods_QwikStats.framework in Frameworks */,
+				21D986901E33CA4F00762C04 /* OpenEars.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				21722EC41D4C5A8500210615 /* AKPickerView_Swift.framework */,
+				2105389E1E4054C8008CFD30 /* Alamofire.framework */,
 				21FC5ABA1D43E302001D3603 /* MZAppearance.framework */,
 				21FC5ABC1D43E302001D3603 /* MZFormSheetPresentationController.framework */,
 				213CB19F1D39C3D4007595F6 /* Pods_QwikStats.framework */,
@@ -210,6 +235,7 @@
 		214D8FD11D2224D6009C3A83 = {
 			isa = PBXGroup;
 			children = (
+				21D986961E33CDA600762C04 /* OpenEarsHeader.h */,
 				214D8FDC1D2224D7009C3A83 /* QwikStats */,
 				214D8FF11D2224D7009C3A83 /* QwikStatsTests */,
 				214D8FFC1D2224D7009C3A83 /* QwikStatsUITests */,
@@ -262,6 +288,7 @@
 				21D986611E2EBC6E00762C04 /* LaxGameViewController.swift */,
 				21D986631E2EC21600762C04 /* LaxDialogViewController.swift */,
 				21D9866C1E316BD200762C04 /* LaxTurnoverViewController.swift */,
+				21D986971E33D2B600762C04 /* SpeechInputViewController.swift */,
 			);
 			path = QwikStats;
 			sourceTree = "<group>";
@@ -294,6 +321,16 @@
 			name = LaxPackage;
 			sourceTree = "<group>";
 		};
+		21D9868B1E33CA4F00762C04 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				21D9868C1E33CA4F00762C04 /* AcousticModelEnglish.bundle */,
+				21D9868D1E33CA4F00762C04 /* OpenEars.framework */,
+				21D9868E1E33CA4F00762C04 /* Slt.framework */,
+			);
+			path = Framework;
+			sourceTree = "<group>";
+		};
 		3479204A87E6ECD015BE2747 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,6 +347,9 @@
 		49853535E910C3EF5B08253A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				21D986921E33CD6C00762C04 /* AudioToolbox.framework */,
+				21D986931E33CD6C00762C04 /* AVFoundation.framework */,
+				21D9868B1E33CA4F00762C04 /* Framework */,
 				213CB1971D39C3D4007595F6 /* Pods.xcodeproj */,
 				5A60028DB0ED3E88CAB6C60A /* Pods_QwikStats.framework */,
 				867C3FFD70132B047B2F9D0B /* Pods_QwikStatsTests.framework */,
@@ -371,6 +411,7 @@
 				214D8FF61D2224D7009C3A83 /* Frameworks */,
 				214D8FF71D2224D7009C3A83 /* Resources */,
 				0187DD8B903711400A50D675 /* [CP] Copy Pods Resources */,
+				7BC02D3A82F5DB8E3C228FE6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -396,6 +437,7 @@
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 8SV9Q68SW9;
 						LastSwiftMigration = 0810;
+						ProvisioningStyle = Automatic;
 					};
 					214D8FED1D2224D7009C3A83 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -436,6 +478,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		2105389E1E4054C8008CFD30 /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = 2105389D1E4054C8008CFD30 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		213CB19F1D39C3D4007595F6 /* Pods_QwikStats.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -493,6 +542,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21FF6BE61D613D920089514C /* Main.storyboard in Resources */,
+				21D9868F1E33CA4F00762C04 /* AcousticModelEnglish.bundle in Resources */,
 				214D8FE81D2224D7009C3A83 /* LaunchScreen.storyboard in Resources */,
 				214D8FE51D2224D7009C3A83 /* Assets.xcassets in Resources */,
 			);
@@ -557,7 +607,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		7A48CFC464A0DA835E90C1A0 /* [CP] Copy Pods Resources */ = {
@@ -573,6 +623,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QwikStats/Pods-QwikStats-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7BC02D3A82F5DB8E3C228FE6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QwikStatsUITests/Pods-QwikStatsUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7ED2B6FF32F42451049BE438 /* [CP] Embed Pods Frameworks */ = {
@@ -602,7 +667,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		8B408C6B2D3ED3DCB8E44115 /* [CP] Embed Pods Frameworks */ = {
@@ -632,7 +697,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -655,6 +720,7 @@
 				21D986671E3049C100762C04 /* LaxPlayer.swift in Sources */,
 				214D8FDE1D2224D7009C3A83 /* AppDelegate.swift in Sources */,
 				2189E0BD1D56DAB30016CF86 /* HashDirViewController.swift in Sources */,
+				21D986981E33D2B600762C04 /* SpeechInputViewController.swift in Sources */,
 				21F8457F1D371537006E3A7F /* Team.swift in Sources */,
 				2189E0B11D56DA4B0016CF86 /* ReturnerViewController.swift in Sources */,
 				21F845831D371551006E3A7F /* Player.swift in Sources */,
@@ -747,6 +813,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEPLOYMENT_POSTPROCESSING = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -795,6 +862,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -821,13 +889,22 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan Kerbelis (8SV9Q68SW9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jonathan Kerbelis (8SV9Q68SW9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/QwikStats/Framework",
+					"$(PROJECT_DIR)/Framework",
+				);
 				INFOPLIST_FILE = QwikStats/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kerbysoft.qwikstats;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6bd5adcc-3825-4e28-be6c-5995e2877b88";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = /Users/jonathankerbelis/Desktop/QwikStats/OpenEarsHeader.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -839,13 +916,22 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan Kerbelis (8SV9Q68SW9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jonathan Kerbelis (8SV9Q68SW9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/QwikStats/Framework",
+					"$(PROJECT_DIR)/Framework",
+				);
 				INFOPLIST_FILE = QwikStats/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kerbysoft.qwikstats;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6bd5adcc-3825-4e28-be6c-5995e2877b88";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = /Users/jonathankerbelis/Desktop/QwikStats/OpenEarsHeader.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

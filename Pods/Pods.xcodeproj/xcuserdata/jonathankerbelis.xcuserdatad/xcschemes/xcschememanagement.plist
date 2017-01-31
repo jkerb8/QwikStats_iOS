@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MZAppearance.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,37 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0EB28F1288C7D8BCC8F790BC4E0E7B82</key>
+		<key>2BFF938FF2BC0ADEC71734493E9F8867</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>347A018D4DBCC26CDED662A10F6A1334</key>
+		<key>3CB17C6B6D5F08F6B3350CCEC6B1E0F6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7EC1417298041145E9B1A4C7B395C179</key>
+		<key>70D462634F7BD6635A7C8AC01780C67F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9C21158A7B41D923AD9278EC173670D3</key>
+		<key>7482752342CD4A05CF3026EA7A45CFCE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A53555B781C98A37A0EED8EE8ADA6F92</key>
+		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D2EB66FD380E12E9660B9A5AE3DA873F</key>
+		<key>CBE2FC3D9C7576EFC5658710A956091D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FFABAFE9408FF95CFC8B3C3770D56837</key>
+		<key>D2AC6E82EBE0630772EF0E485A292E82</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D847066E59FC3E6B321F3595BC739AB1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet var settingsBtn: UIButton!
     @IBOutlet var newGameBtn: UIButton!
     @IBOutlet var openGameBtn: UIButton!
+    @IBOutlet var logoutBtn: UIButton!
     
     let radius: CGFloat = 10
     var sport: String = ""
@@ -26,9 +27,11 @@ class ViewController: UIViewController {
         settingsBtn.layer.cornerRadius = radius
         newGameBtn.layer.cornerRadius = radius
         openGameBtn.layer.cornerRadius = radius
+        logoutBtn.layer.cornerRadius = radius
         settingsBtn.clipsToBounds = true
         newGameBtn.clipsToBounds = true
         openGameBtn.clipsToBounds = true
+        logoutBtn.clipsToBounds = true
         
     }
 
@@ -42,8 +45,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func newGameBtn(_ sender: UIButton) {
-        newGameDialog()
+        //newGameDialog()
+        self.sport = "Lacrosse"
+        self.performSegue(withIdentifier: "NewLaxGameSegue", sender: self)
     }
+    
+    @IBAction func logoutBtn(_ sender: UIButton) {
+    }
+    
     
     func newGameDialog() {
         let alertController = UIAlertController(title: "Select Sport", message: "Select the sport being played", preferredStyle: UIAlertControllerStyle.alert)
@@ -53,11 +62,11 @@ class ViewController: UIViewController {
         }
         alertController.addAction(cancelAction)
         
-        let footballAction = UIAlertAction(title: "Football", style: .default) { (action) in
+        /*let footballAction = UIAlertAction(title: "Football", style: .default) { (action) in
             self.sport = "Football"
             self.performSegue(withIdentifier: "NewFootballGameSegue", sender: self)
         }
-        alertController.addAction(footballAction)
+        alertController.addAction(footballAction)*/
         
         let laxAction = UIAlertAction(title: "Lacrosse", style: .default) { (action) in
             self.sport = "Lacrosse"
@@ -113,11 +122,11 @@ class ViewController: UIViewController {
         }
         alertController.addAction(cancelAction)
         
-        let footballAction = UIAlertAction(title: "Football", style: .default) { (action) in
+        /*let footballAction = UIAlertAction(title: "Football", style: .default) { (action) in
             self.sport = "Football"
             self.performSegue(withIdentifier: "OpenGameSegue", sender: self)
         }
-        alertController.addAction(footballAction)
+        alertController.addAction(footballAction)*/
         
         let laxAction = UIAlertAction(title: "Lacrosse", style: .default) { (action) in
             self.sport = "Lacrosse"

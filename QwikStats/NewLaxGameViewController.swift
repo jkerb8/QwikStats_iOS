@@ -9,7 +9,7 @@
 import UIKit
 import Toast_Swift
 
-class NewLaxGameViewController: UIViewController {
+class NewLaxGameViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var homeTeamTextField: UITextField!
     @IBOutlet var awayTeamTextField: UITextField!
@@ -29,6 +29,22 @@ class NewLaxGameViewController: UIViewController {
         let date = NSDate()
         datePicker.setDate(date as Date, animated: true)
         
+        homeTeamTextField.delegate = self
+        awayTeamTextField.delegate = self
+        homeTeamTextField.tag = 0;
+        awayTeamTextField.tag = 1;
+        homeTeamTextField.becomeFirstResponder()
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        }
+        else {
+            textField.resignFirstResponder()
+        }
+        return false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
