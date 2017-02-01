@@ -35,7 +35,7 @@ class LaxGameViewController: UIViewController, OEEventsObserverDelegate {
     @IBOutlet var awaySaveBtn: UIButton!
     @IBOutlet var awayTurnoverBtn: UIButton!
     @IBOutlet var awayShotBtn: UIButton!
-    @IBOutlet var awayPenaltyBtn: UIStackView!
+    @IBOutlet var awayPenaltyBtn: UIButton!
     
     @IBOutlet var vrSwitch: UISwitch!
     
@@ -52,10 +52,14 @@ class LaxGameViewController: UIViewController, OEEventsObserverDelegate {
     var vrEnabled = true
     var game: LaxGame!
     var openEarsEventsObserver = OEEventsObserver()
+    var gameFolder = ""
     var APIUser = "qwikcutappstats"
     var API_KEY = "ebd7a876-c8ad-11e6-9d9d-cec0c932ce01"
-    var userid = 0
-    var deviceUUID = "82c5ea27-d30e-4b13-8ed7-9151b7c61bff"
+    var userid = ""
+    var deviceUUID = "00000000-0000-0000-0000-000000000000"
+    var successDisplayed = false
+    var saved = true
+    let radius: CGFloat = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,9 +69,9 @@ class LaxGameViewController: UIViewController, OEEventsObserverDelegate {
         vrEnabled = false
         vrSwitch.setOn(vrEnabled, animated: true)
         vrSwitch.isEnabled = false
+        roundBtns()
         
-        
-        gameName = "\(month)_\(day)_\(year)_\(homeTeamName)_\(awayTeamName)"
+        gameName = "\(month)_\(day)_\(year)_\(homeTeamName)_vs_\(awayTeamName)"
         
         game = LaxGame(homeName: homeTeamName, awayName: awayTeamName, day: day, month: month, year: year)
         
@@ -76,6 +80,21 @@ class LaxGameViewController: UIViewController, OEEventsObserverDelegate {
         homeTeamLabel.text = homeTeamName
         awayTeamLabel.text = awayTeamName
         forcedTurnover = false
+        
+        userid = DefaultPreferences.getId()
+        deviceUUID = DefaultPreferences.getUUID()
+        
+        if !makeDirectory() {
+            return
+        }
+        
+        if openingPastGame {
+            openGame()
+            
+            if !(game.homeTeam.players.count == 0 && game.awayTeam.players.count == 0) {
+                sendStatsDialog()
+            }
+        }
         
         //startOESpeech()
     
@@ -86,7 +105,39 @@ class LaxGameViewController: UIViewController, OEEventsObserverDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    
+    func roundBtns() {
+        homeGrounderBtn.layer.cornerRadius = radius
+        homeAssistBtn.layer.cornerRadius = radius
+        homeGoalBtn.layer.cornerRadius = radius
+        homeSaveBtn.layer.cornerRadius = radius
+        homeTurnoverBtn.layer.cornerRadius = radius
+        homeShotBtn.layer.cornerRadius = radius
+        homePenaltyBtn.layer.cornerRadius = radius
+        
+        homeGrounderBtn.clipsToBounds = true
+        homeAssistBtn.clipsToBounds = true
+        homeGoalBtn.clipsToBounds = true
+        homeSaveBtn.clipsToBounds = true
+        homeTurnoverBtn.clipsToBounds = true
+        homeShotBtn.clipsToBounds = true
+        homePenaltyBtn.clipsToBounds = true
+        
+        awayGrounderBtn.layer.cornerRadius = radius
+        awayAssistBtn.layer.cornerRadius = radius
+        awayGoalBtn.layer.cornerRadius = radius
+        awaySaveBtn.layer.cornerRadius = radius
+        awayTurnoverBtn.layer.cornerRadius = radius
+        awayShotBtn.layer.cornerRadius = radius
+        awayPenaltyBtn.layer.cornerRadius = radius
+        
+        awayGrounderBtn.clipsToBounds = true
+        awayAssistBtn.clipsToBounds = true
+        awayGoalBtn.clipsToBounds = true
+        awaySaveBtn.clipsToBounds = true
+        awayTurnoverBtn.clipsToBounds = true
+        awayShotBtn.clipsToBounds = true
+        awayPenaltyBtn.clipsToBounds = true
+    }
     
     func inputDialog() {
         let dialogVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LaxDialogViewController") as! LaxDialogViewController
@@ -215,7 +266,6 @@ class LaxGameViewController: UIViewController, OEEventsObserverDelegate {
         else {
             game.awayTeam = temp
         }
-        showMessage("Stat Saved: " + String(num))
         postStats()
     }
     
@@ -255,11 +305,204 @@ class LaxGameViewController: UIViewController, OEEventsObserverDelegate {
         }
     }
     
-    func saveGame() {
-        showMessage("Saving Game...")
+    func openGame() {
+        let fileManager = FileManager.default
+        
+        for k in (0..<2) {
+            var fileName = ""
+            var players = [LaxPlayer]()
+            var text = ""
+            var lines = [String]()
+            var line = ""
+            var cntr = 0
+            switch k {
+            case 0:
+                fileName = "home_stats.csv"
+            default:
+                fileName = "away_stats.csv"
+                break
+            }
+            
+            let path = URL(fileURLWithPath: gameFolder).appendingPathComponent(fileName)
+            let pathString = path.path
+            
+            NSLog(path.absoluteString)
+            
+            if !fileManager.fileExists(atPath: pathString) {
+                continue
+            }
+            
+            do {
+                try text = NSString(contentsOf: path, encoding: String.Encoding.utf8.rawValue) as String
+                NSLog("File Length: \(text.characters.count)")
+                lines = text.components(separatedBy: "\n")
+                
+                var max = lines.count
+                for i in stride(from: 0, to: max, by: 1) {
+                    if i < lines.count {
+                        if lines[i] == "" {
+                            lines.remove(at: i)
+                            max -= 1
+                        }
+                    }
+                }
+                text = ""
+            }
+            catch {
+                showMessage("Could not open game file")
+                return
+            }
+            
+            while cntr < lines.count {
+                line = lines[cntr]
+                if line != "" && !line.contains("Number"){
+                    let words = line.components(separatedBy: ",")
+                    if words.count == 9 {
+                        let player = LaxPlayer(number: Int(words[0])!)
+                        player.goals = Int(words[1])!
+                        player.shots = Int(words[2])!
+                        player.assists = Int(words[3])!
+                        player.saves = Int(words[4])!
+                        player.grounders = Int(words[5])!
+                        player.turnovers = Int(words[6])!
+                        player.forcedTurnovers = Int(words[7])!
+                        player.penalties = Int(words[8])!
+                        players.append(player)
+                    }
+                    
+                    cntr += 1
+                }
+            }
+            
+            if k == 0 {
+                game.homeTeam.players = players
+            }
+            else {
+                game.awayTeam.players = players
+            }
+        }
     }
     
+    func makeDirectory() -> Bool {
+        if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
+            let qwikStatsFolder = URL(fileURLWithPath: dir).appendingPathComponent("QwikStats").path
+            let laxFolder = URL(fileURLWithPath: qwikStatsFolder).appendingPathComponent("Lacrosse").path
+            let fileManager = FileManager.default
+            if fileManager.fileExists(atPath: laxFolder) {
+                NSLog("Lacrosse folder exists...")
+                return createGameFolder(laxFolder)
+            }
+            else {
+                do {
+                    NSLog("Creating Lacrosse folder...")
+                    try fileManager.createDirectory(atPath: laxFolder, withIntermediateDirectories: false, attributes: nil)
+                    return createGameFolder(laxFolder)
+                }
+                catch let error as NSError{
+                    NSLog("Failed to create Lacrosse folder")
+                    NSLog(error.localizedDescription)
+                }
+            }
+        }
+        return false
+    }
+    
+    func createGameFolder(_ dir: String) -> Bool {
+        let fileManager = FileManager.default
+        let folder = URL(fileURLWithPath: dir).appendingPathComponent(gameName).path
+        gameFolder = folder
+        if fileManager.fileExists(atPath: folder) {
+            NSLog("Game Directory exists")
+            return true
+        }
+        else {
+            do {
+                NSLog("creating game folder...")
+                try fileManager.createDirectory(atPath: folder, withIntermediateDirectories: false, attributes: nil)
+                return true
+            }
+            catch let error as NSError{
+                NSLog("Failed to create Game folder")
+                NSLog(error.localizedDescription)
+            }
+        }
+        return false
+    }
+    
+    func saveGame() {
+        if makeDirectory() {
+            exportLocally()
+        }
+    }
+    
+    func exportLocally() {
+        let fileManager = FileManager.default
+        let header = "Number, Goals, Shots, Assists, Saves, Grounders, Turnovers, Forced TOs, Penalties"
+        
+        
+        for k in stride(from: 0, to: 2, by: 1) {
+            var fileName = ""
+            var players = [LaxPlayer]()
+            var output = ""
+            switch k {
+            case 0:
+                fileName = "home_stats.csv"
+                players = game.homeTeam.players
+            default:
+                fileName = "away_stats.csv"
+                players = game.awayTeam.players
+                break
+            }
+            
+            let path = URL(fileURLWithPath: gameFolder).appendingPathComponent(fileName)
+            let pathString = path.path
+            
+            if fileManager.fileExists(atPath: pathString) {
+                do {
+                    try fileManager.removeItem(at: path)
+                }
+                catch {
+                    showMessage("Error deleting old file")
+                    return
+                }
+            }
+            
+            if players.count == 0 {
+                continue
+            }
+            
+            do {
+                try header.write(to: path, atomically: false, encoding: String.Encoding.utf8)
+            }
+            catch {
+                showMessage("There was a problem writing data to your device")
+                return
+            }
+        
+            for player in players {
+                
+                output = "\(player.number), \(player.goals), \(player.shots), \(player.assists), \(player.saves), \(player.grounders), \(player.turnovers), \(player.forcedTurnovers), \(player.penalties) \n"
+                
+                if let fileHandle  = try? FileHandle(forWritingTo: path) {
+                    
+                    defer {
+                        fileHandle.closeFile()
+                    }
+                    
+                    let data = output.data(using: String.Encoding.utf8)
+                    fileHandle.seekToEndOfFile()
+                    fileHandle.write(data!)
+                }
+                else {
+                    NSLog("fileHandle not working - \(fileName)")
+                }
+            }
+        }
+        saved = true
+    }
+
     func postStats() {
+        successDisplayed = false
         if (game.homeTeam.players.count > 0) {
             postAllTeamStats(team: game.homeTeam)
         }
@@ -312,9 +555,18 @@ class LaxGameViewController: UIViewController, OEEventsObserverDelegate {
                     NSLog("\(team.teamName): \(statusCode)")
                     if statusCode == 201 {
                         team.removePlayer(number: player.number)
+                        self.saved = false
+                        if (!self.successDisplayed) {
+                            self.showMessage("Stats sent!")
+                        }
+                        self.successDisplayed = true
+                        self.saveGame()
                     }
                     else {
                         //post failed so that needs to be handled
+                        self.showMessage("Stats failed to send")
+                        self.saveGame()
+                        return
                     }
                 }
             }
@@ -336,12 +588,17 @@ class LaxGameViewController: UIViewController, OEEventsObserverDelegate {
         alertController.addAction(saveGameAction)
         
         let exitAction = UIAlertAction(title: "Exit Game", style: .default) { (action) in
-            self.exitGameDialog()
+            if !self.saved {
+                self.exitGameDialog()
+            }
+            else {
+                self.performSegue(withIdentifier: "laxUnwindSegue", sender: self)
+            }
         }
         alertController.addAction(exitAction)
         
         let exportAction = UIAlertAction(title: "Export", style: .default) { (action) in
-            //self.export()
+            self.postStats()
         }
         alertController.addAction(exportAction)
         
@@ -362,7 +619,7 @@ class LaxGameViewController: UIViewController, OEEventsObserverDelegate {
         alertController.addAction(cancelAction)
         
         let exitAction = UIAlertAction(title: "Save and Exit", style: .default) { (action) in
-            //self.saveGame()
+            self.saveGame()
             self.performSegue(withIdentifier: "laxUnwindSegue", sender: self)
         }
         alertController.addAction(exitAction)
@@ -371,6 +628,23 @@ class LaxGameViewController: UIViewController, OEEventsObserverDelegate {
             self.performSegue(withIdentifier: "laxUnwindSegue", sender: self)
         }
         alertController.addAction(nextQtrAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func sendStatsDialog() {
+        let alertController = UIAlertController(title: "Existing Data", message: "Local team data exists that is not on the QwikCut website, Send now?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let cancelAction = UIAlertAction(title: "No", style: .cancel) { (action) in
+            alertController.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(cancelAction)
+        
+        
+        let sendAction = UIAlertAction(title: "Send Stats", style: .default) { (action) in
+            self.postStats()
+        }
+        alertController.addAction(sendAction)
         
         self.present(alertController, animated: true, completion: nil)
     }

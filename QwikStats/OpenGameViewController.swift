@@ -16,6 +16,7 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet var openGameBtn: UIButton!
     
     var games = [Game]()
+    var laxGames = [LaxGame]()
     var gameInfo = [String]()
     var checked = [Bool]()
     var qwikPath : String!
@@ -44,7 +45,7 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.delegate = self
         
         resetChecks()
-        loadGames()
+        loadLaxGames()
         
         
     }
@@ -63,18 +64,33 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
             //get a reference to the destination view controller
             let destinationVC:GameViewController = segue.destination as! GameViewController
             
-            let index = checked.index(of: true)
-            let thisGame = games[index!]
+            if let index = checked.index(of: true) {
+                let thisGame = games[index]
+                
+                //set properties on the destination view controller
+                destinationVC.homeTeamName = thisGame.homeTeam.teamName
+                destinationVC.awayTeamName = thisGame.awayTeam.teamName
+                destinationVC.fldSize = thisGame.fieldSize
+                destinationVC.division = thisGame.division
+                destinationVC.year = thisGame.year
+                destinationVC.month = thisGame.month
+                destinationVC.day = thisGame.day
+                destinationVC.openingPastGame = true
+            }
+        }
+        else if (segue.identifier == "LoadLaxGameSegue") {
+            let destinationVC : LaxGameViewController = segue.destination as! LaxGameViewController
             
-            //set properties on the destination view controller
-            destinationVC.homeTeamName = thisGame.homeTeam.teamName
-            destinationVC.awayTeamName = thisGame.awayTeam.teamName
-            destinationVC.fldSize = thisGame.fieldSize
-            destinationVC.division = thisGame.division
-            destinationVC.year = thisGame.year
-            destinationVC.month = thisGame.month
-            destinationVC.day = thisGame.day
-            destinationVC.openingPastGame = true
+            if let index = checked.index(of: true) {
+                let thisGame = laxGames[index]
+                
+                destinationVC.homeTeamName = thisGame.homeTeam.teamName
+                destinationVC.awayTeamName = thisGame.awayTeam.teamName
+                destinationVC.year = thisGame.year
+                destinationVC.month = thisGame.month
+                destinationVC.day = thisGame.day
+                destinationVC.openingPastGame = true
+            }
         }
     }
     
@@ -93,16 +109,21 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
         let okAction = UIAlertAction(title: "Delete", style: .default) { (action) in
             let fileManager = FileManager.default
             
-            for i in stride(from: 0, to: self.checked.count, by: 1) {
+            for i in (0..<self.checked.count) {
                 if self.checked[i] {
                     do {
-                        print("deleting... \(self.gameURLs[i])")
+                        NSLog("deleting... \(self.gameURLs[i])")
                         try fileManager.removeItem(at: self.gameURLs[i])
                         self.checked.remove(at: i)
                         self.gamePaths.remove(at: i)
-                        self.games.remove(at: i)
                         self.gameInfo.remove(at: i)
                         self.tableView.reloadData()
+                        if (self.sport == "Football") {
+                            self.games.remove(at: i)
+                        }
+                        else {
+                            self.laxGames.remove(at: i)
+                        }
                     }
                     catch let error as NSError {
                         print(error)
@@ -119,14 +140,19 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func openGameBtn(_ sender: UIButton) {
         var canStart: Bool = false
-        for i in stride(from: 0, to: checked.count, by: 1) {
+        for i in (0..<checked.count) {
             if checked[i] {
                 canStart = true
             }
         }
         
         if canStart {
-            self.performSegue(withIdentifier: "LoadGameSegue", sender: self)
+            if sport == "Football" {
+                self.performSegue(withIdentifier: "LoadGameSegue", sender: self)
+            }
+            else {
+                self.performSegue(withIdentifier: "LoadLaxGameSegue", sender: self)
+            }
         }
         else {
             showMessage("Please select a game")
@@ -181,17 +207,18 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func loadGames() {
+    func loadFootballGames() {
         var words = [String]()
         
         let fileManager = FileManager.default
         if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
-            let folder = URL(fileURLWithPath: dir).appendingPathComponent("QwikStats").path
-            if fileManager.fileExists(atPath: folder) {
+            let qwikFolder = URL(fileURLWithPath: dir).appendingPathComponent("QwikStats").path
+            let fbFolder = URL(fileURLWithPath: qwikFolder).appendingPathComponent("Football").path
+            if fileManager.fileExists(atPath: fbFolder) {
                 do {
-                    qwikURL = URL(fileURLWithPath: folder)
-                    qwikPath = folder
-                    var dirContents = try fileManager.contentsOfDirectory(atPath: folder)
+                    qwikURL = URL(fileURLWithPath: fbFolder)
+                    qwikPath = fbFolder
+                    var dirContents = try fileManager.contentsOfDirectory(atPath: fbFolder)
                     if dirContents.contains(".DS_Store") {
                         dirContents.remove(at: dirContents.index(of: ".DS_Store")!)
                     }
@@ -204,7 +231,7 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
             
                     //tableView.beginUpdates()
                     
-                    for i in stride(from: 0, to: dirContents.count, by: 1) {
+                    for i in (0..<dirContents.count) {
                         words = [String]()
                         words = dirContents[i].components(separatedBy: "_")
                         let current = Game(awayName: words[7], homeName: words[5], division: words[3], day: Int(words[1])!, month: Int(words[0])!, year: Int(words[2])!, fieldSize: Int(words[4])!)
@@ -230,6 +257,60 @@ class OpenGameViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
 
+    }
+    
+    func loadLaxGames() {
+        var words = [String]()
+        
+        let fileManager = FileManager.default
+        if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
+            let qwikFolder = URL(fileURLWithPath: dir).appendingPathComponent("QwikStats").path
+            let laxFolder = URL(fileURLWithPath: qwikFolder).appendingPathComponent("Lacrosse").path
+            if fileManager.fileExists(atPath: laxFolder) {
+                do {
+                    qwikURL = URL(fileURLWithPath: laxFolder)
+                    qwikPath = laxFolder
+                    var dirContents = try fileManager.contentsOfDirectory(atPath: laxFolder)
+                    if dirContents.contains(".DS_Store"){
+                        dirContents.remove(at: dirContents.index(of: ".DS_Store")!)
+                    }
+                    if dirContents.count == 0 {
+                        showMessage("No saved games on this device")
+                        return
+                    }
+                    
+                    //tableView.beginUpdates()
+                    
+                    for i in (0..<dirContents.count) {
+                        words = [String]()
+                        words = dirContents[i].components(separatedBy: "_")
+                        if words.count != 6 {
+                            dirContents.remove(at: i)
+                            continue
+                        }
+                        let current = LaxGame(homeName: words[3], awayName: words[5], day: Int(words[1])!, month: Int(words[0])!, year: Int(words[2])!)
+                        laxGames.append(current)
+                        gameInfo.append("\(current.homeTeam.teamName) vs. \(current.awayTeam.teamName) \n\t\t \(intToMonth(current.month)) \(current.day) \(current.year)")
+                        checked.append(false)
+                        gamePaths.append(URL(fileURLWithPath: qwikPath).appendingPathComponent(dirContents[i]).absoluteString)
+                        gameURLs.append(qwikURL.appendingPathComponent(dirContents[i]))
+                        print(gameInfo[i])
+                    }
+                    
+                    tableView.reloadData()
+                    
+                    
+                }
+                catch let error as NSError {
+                    print(error.localizedDescription)
+                }
+            }
+            else {
+                showMessage("No saved games on this device")
+                return
+            }
+        }
+        
     }
     
     func intToMonth(_ m: Int) -> String {

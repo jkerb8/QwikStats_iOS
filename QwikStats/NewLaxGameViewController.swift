@@ -33,7 +33,10 @@ class NewLaxGameViewController: UIViewController, UITextFieldDelegate {
         awayTeamTextField.delegate = self
         homeTeamTextField.tag = 0;
         awayTeamTextField.tag = 1;
-        homeTeamTextField.becomeFirstResponder()
+        
+        homeTeamTextField.text = DefaultPreferences.getTeamName()
+        homeTeamTextField.isEnabled = false
+        awayTeamTextField.becomeFirstResponder()
         
     }
     

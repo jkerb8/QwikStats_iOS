@@ -24,6 +24,24 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         
+        if !DefaultPreferences.getNotFirstTime() {
+            DefaultPreferences.setUserName(username: "")
+            DefaultPreferences.setPassword(password: "")
+            DefaultPreferences.setId(id: "")
+            DefaultPreferences.setTeamName(teamname: "")
+            //let uuid = "82c5ea27-d30e-4b13-8ed7-9151b7c61bff"
+            //generate UUID
+            let uuid = UUID().uuidString
+            DefaultPreferences.setUUID(uuid: uuid)
+            DefaultPreferences.setNotFirstTime(firsttime: true)
+            
+        }
+        
+        if DefaultPreferences.getUserName() == "" {
+            //go to login screen
+            self.performSegue(withIdentifier: "LoginSegue", sender: self)
+        }
+        
         settingsBtn.layer.cornerRadius = radius
         newGameBtn.layer.cornerRadius = radius
         openGameBtn.layer.cornerRadius = radius
@@ -32,6 +50,8 @@ class ViewController: UIViewController {
         newGameBtn.clipsToBounds = true
         openGameBtn.clipsToBounds = true
         logoutBtn.clipsToBounds = true
+        
+        makeDirectory()
         
     }
 
@@ -51,6 +71,28 @@ class ViewController: UIViewController {
     }
     
     @IBAction func logoutBtn(_ sender: UIButton) {
+        logoutDialog()
+    }
+    
+    func logoutDialog(){
+        let alertController = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            alertController.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(cancelAction)
+        
+        let confirmAction = UIAlertAction(title: "Log Out", style: .default) { (action) in
+            DefaultPreferences.setUserName(username: "")
+            DefaultPreferences.setPassword(password: "")
+            DefaultPreferences.setId(id: "")
+            DefaultPreferences.setTeamName(teamname: "")
+            
+            self.performSegue(withIdentifier: "LoginSegue", sender: self)
+        }
+        alertController.addAction(confirmAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
     
@@ -88,22 +130,22 @@ class ViewController: UIViewController {
         
         let fileManager = FileManager.default
         if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
-            let folder = URL(fileURLWithPath: dir).appendingPathComponent("QwikStats").path
+            let qwikFolder = URL(fileURLWithPath: dir).appendingPathComponent("QwikStats").path
+            let folder = URL(fileURLWithPath: qwikFolder).appendingPathComponent("Lacrosse").path
             if fileManager.fileExists(atPath: folder) {
                 do {
                     let dirContents = try fileManager.contentsOfDirectory(atPath: folder)
-                    print(dirContents)
                     
                     if dirContents.count == 0 {
                         showMessage("No saved games on this device")
                         return
                     }
-                    
+                    sport = "Lacrosse"
                     self.performSegue(withIdentifier: "OpenGameSegue", sender: self)
                     
                 }
                 catch let error as NSError {
-                    print(error.localizedDescription)
+                    NSLog(error.localizedDescription)
                 }
             }
             else {
@@ -161,6 +203,29 @@ class ViewController: UIViewController {
     
     @IBAction func prepareForUnwind(_ segue: UIStoryboardSegue) {
         
+    }
+    
+    func makeDirectory() {
+        if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
+            let folder = URL(fileURLWithPath: dir).appendingPathComponent("QwikStats").path
+            let fileManager = FileManager.default
+            if fileManager.fileExists(atPath: folder) {
+                NSLog("QwikStats folder exists...")
+                return
+            }
+            else {
+                do {
+                    NSLog("Creating QwikStats folder...")
+                    try fileManager.createDirectory(atPath: folder, withIntermediateDirectories: false, attributes: nil)
+                    return
+                }
+                catch let error as NSError{
+                    NSLog("Failed to create Qwikstats folder")
+                    NSLog(error.localizedDescription)
+                }
+            }
+        }
+        return
     }
     
 }
