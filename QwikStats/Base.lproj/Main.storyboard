@@ -510,13 +510,13 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="156" translatesAutoresizingMaskIntoConstraints="NO" id="OEf-Zk-nPF">
-                                                        <rect key="frame" x="30" y="42" width="306" height="37"/>
+                                                        <rect key="frame" x="29.666666666666657" y="42" width="306" height="37"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6vR-LD-91F">
                                                                 <rect key="frame" x="0.0" y="0.0" width="75" height="37"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="h4Q-1w-45k">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="42" height="37"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="42.000000000000007" height="37"/>
                                                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="42" id="aiU-VX-gfi"/>
@@ -536,7 +536,7 @@
                                                                         </variation>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="possession_football" translatesAutoresizingMaskIntoConstraints="NO" id="Ei8-f8-mTe">
-                                                                        <rect key="frame" x="50" y="17" width="25" height="20"/>
+                                                                        <rect key="frame" x="50.000000000000007" y="17" width="24.999999999999993" height="20"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="20" id="Ceb-aA-EFD"/>
                                                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="25" id="HgL-J1-q1m"/>
